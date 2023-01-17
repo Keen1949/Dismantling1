@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationTakeLoad" Id="{984fad02-273e-4282-9934-903e53c4eb52}">
+    <Declaration><![CDATA[TYPE ST_StationTakeLoad :
+STRUCT
+	fbTakeLift1:		REFERENCE TO FB_Cylinder;// 升降气缸1
+	fbTakeLift2:		REFERENCE TO FB_Cylinder;// 升降气缸2
+	fbTakeClamp:		REFERENCE TO FB_Cylinder;// 加紧气缸
+	fbTakeZ:			REFERENCE TO FB_Axis;// Z轴
+	fbTakeY:			REFERENCE TO FB_Axis;// Y轴
+	eState:				E_StationState;
+	stHandshake:		ST_StationTakeLoadHandshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

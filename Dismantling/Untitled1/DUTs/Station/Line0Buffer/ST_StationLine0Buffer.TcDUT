@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationLine0Buffer" Id="{37c8a5e9-9da8-48eb-9bde-fb7ad50fbd30}">
+    <Declaration><![CDATA[TYPE ST_StationLine0Buffer :
+STRUCT
+	bPlace:				BOOL;// 到位光电
+	eState:				E_StationState;
+	stHandshake:		ST_StationLine0BufferHandshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

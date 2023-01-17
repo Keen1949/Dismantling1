@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_Axis" Id="{dea5fc20-99f0-44fb-afc9-fcc770b9d710}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_Axis :
+(
+	TakeY:=1,
+	TakeZ,
+	UC_Y
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

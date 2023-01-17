@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_LineClose" Id="{be1737bd-d5a9-4ae1-88ae-5311dc9788b0}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_LineClose :
+(
+	None := 0,
+	Line2,
+	Line3
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

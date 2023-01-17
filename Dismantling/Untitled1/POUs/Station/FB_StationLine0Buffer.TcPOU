@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_StationLine0Buffer" Id="{94a12182-4ec9-4eca-9145-d7e5062a4a49}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StationLine0Buffer
+VAR_INPUT
+	Enable:				BOOL;
+	System:				REFERENCE TO ST_System;
+	Station:			REFERENCE TO ST_SystemStation;
+	Error:				REFERENCE TO ST_Error;
+	Setting:			REFERENCE TO ST_Setting;
+	Recipe:				REFERENCE TO ST_Recipe;	
+	Parameter:			REFERENCE TO ST_StationLine0Buffer;	
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_i:					INT;
+	_arrTon:		    ARRAY[0..20] OF TON;
+	_arrFbErrorTag:		ARRAY[0..20] OF FB_ErrorTag;
+	_arrState:			ARRAY[0..20] OF BOOL;
+	
+	_stHandshake:		ST_StationLine0BufferHandshake;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_Home();
+A_Auto();]]></ST>
+    </Implementation>
+    <Action Name="A_Auto" Id="{19a4ad62-56ea-48c2-bc52-787995add936}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	1000:
+		Station.arrInfo[E_Language.Chinese]:="初始化完成 等待启动";
+		IF Enable THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1101:
+		Station.arrInfo[E_Language.Chinese]:="判断缓存位是否有料";
+		Parameter.eState:=E_StationState.Busy;
+		IF Parameter.bPlace AND NOT GVL.stSetting.bDryRun THEN
+			Station.iStepNext:=1501;
+		ELSE
+			Station.iStepNext:=1201;
+		END_IF
+	1201:
+		Station.arrInfo[E_Language.Chinese]:="请求上料站放料";
+		Parameter.stHandshake.bRequestLine0Load:=TRUE;
+		IF Parameter.stHandshake.bResponseLine0Buffer THEN
+			Station.iStepNext:=1301;
+		END_IF
+	1301:
+		Station.arrInfo[E_Language.Chinese]:="等待产品到位";
+		IF Parameter.bPlace THEN
+			Station.iStepNext:=1401;
+		END_IF
+	1401:
+		Station.arrInfo[E_Language.Chinese]:="复位请求信号";
+		Parameter.stHandshake.bRequestLine0Load:=FALSE;
+		IF NOT Parameter.stHandshake.bResponseLine0Buffer THEN
+			Station.iStepNext:=1501;
+		END_IF
+	1501:
+		Station.arrInfo[E_Language.Chinese]:="取料信号判断";
+		Parameter.eState:=E_StationState.Done;
+		Station.iStepNext:=1511;
+	1511:
+		IF Setting.eTakeModeBuffer=E_TakeMode.Take0 THEN
+			Parameter.eState:=E_StationState.Busy;
+			Station.iStepNext:=1551;
+		END_IF
+	1551:
+		Station.arrInfo[E_Language.Chinese]:="等取料站取料请求";
+		IF Parameter.stHandshake.bRequestLine0Buffer_T THEN
+			Parameter.stHandshake.bResponseTake_T:=TRUE;
+			Station.iStepNext:=1601;
+		END_IF
+	1601:
+		Station.arrInfo[E_Language.Chinese]:="等待取料站取料完成";
+		IF NOT Parameter.stHandshake.bRequestLine0Buffer_T THEN
+			Parameter.stHandshake.bResponseTake_T:=FALSE;
+			Station.iStepNext:=1101;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Home" Id="{665a2a92-bf72-4d50-91ef-c1ae1a2ee1f8}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	0:
+		Station.arrInfo[E_Language.Chinese]:="等待初始化";
+		Parameter.eState:=E_StationState.None;
+		Parameter.stHandshake:=_stHandshake;
+		Station.iStepNext:=1000;
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="FB_StationLine0Buffer">
+      <LineId Id="9" Count="0" />
+      <LineId Id="29" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationLine0Buffer.A_Auto">
+      <LineId Id="2" Count="0" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="80" Count="2" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="12" Count="4" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="17" Count="3" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="21" Count="4" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="77" Count="0" />
+      <LineId Id="70" Count="1" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="55" Count="1" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationLine0Buffer.A_Home">
+      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="2" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

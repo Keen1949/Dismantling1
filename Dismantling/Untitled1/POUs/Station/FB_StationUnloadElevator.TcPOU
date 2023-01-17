@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_StationUnloadElevator" Id="{210b3d4c-3b29-4224-b2f1-f2015b60c563}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StationUnloadElevator
+VAR_INPUT
+	Enable:				BOOL;
+	System:				REFERENCE TO ST_System;
+	Station:			REFERENCE TO ST_SystemStation;
+	Error:				REFERENCE TO ST_Error;
+	Setting:			REFERENCE TO ST_Setting;
+	Recipe:				REFERENCE TO ST_Recipe;	
+	Parameter:			REFERENCE TO ST_StationUnloadElevator;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_stHandshake: ST_StationUnloadElevatorHandshake;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_Auto();
+A_Home();]]></ST>
+    </Implementation>
+    <Action Name="A_Auto" Id="{a4d99731-efeb-4b35-a297-2da5d14c9920}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	1000:
+		Station.arrInfo[E_Language.Chinese]:="初始化完成 等待启动";
+		IF Enable THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1101:
+		Station.arrInfo[E_Language.Chinese]:="判断是否有料";
+		IF NOT Parameter.bFrockElevator1NoneCheck THEN
+			Station.iStepNext:=1201;
+		END_IF
+	1201:
+		Station.arrInfo[E_Language.Chinese]:="等待拆解站请求放料";
+		IF Parameter.stHandshake.bRequestElevator THEN
+			Parameter.stHandshake.bResponseDismantling_E:=TRUE;
+			Station.iStepNext:=1301;
+		END_IF
+	1301:
+		Station.arrInfo[E_Language.Chinese]:="等待产品到位";
+		IF Parameter.bFrockElevator1NoneCheck THEN
+			Station.iStepNext:=1351;
+		END_IF
+	1351:
+		Station.arrInfo[E_Language.Chinese]:="等待复位放料请求";
+		IF NOT Parameter.stHandshake.bRequestElevator THEN
+			Parameter.stHandshake.bResponseDismantling_E:=FALSE;
+			Station.iStepNext:=1401;
+		END_IF
+	1401:
+		Station.arrInfo[E_Language.Chinese]:="锁紧工装";
+		IF Parameter.fbFrockRotateDown.M_HomeRequest() THEN
+			Station.iStepNext:=1501;
+		END_IF
+	1501:
+		Station.arrInfo[E_Language.Chinese]:="提升气缸上升";
+		IF Parameter.fbFrockElevator.M_WorkRequest() THEN
+			Station.iStepNext:=1601;
+		END_IF
+	1601:
+		Station.arrInfo[E_Language.Chinese]:="松开工装";
+		IF Parameter.fbFrockRotateDown.M_WorkRequest() THEN
+			Station.iStepNext:= SEL(Parameter.bManualUnload,1701,1801);
+		END_IF
+	1701:
+		Station.arrInfo[E_Language.Chinese]:="向下线体请求放料";
+		Parameter.stHandshake.bRequestUnline:=TRUE;
+		IF Parameter.stHandshake.bResponseElevator THEN
+			Station.iStepNext:=1801;
+		END_IF
+	1801:
+		Station.arrInfo[E_Language.Chinese]:="拨料气缸伸出";
+		IF Parameter.fbFrockPush.M_WorkRequest() THEN
+			Station.iStepNext:=1901;
+		END_IF
+	1901:
+		Station.arrInfo[E_Language.Chinese]:="拨料气缸缩回";
+		IF Parameter.fbFrockPush.M_HomeRequest() THEN
+			Station.iStepNext:=SEL(Parameter.bManualUnload,2001,2101);
+		END_IF
+	2001:
+		Station.arrInfo[E_Language.Chinese]:="复位放料请求";
+		Parameter.stHandshake.bRequestUnline:=FALSE;
+		IF NOT Parameter.stHandshake.bResponseElevator THEN
+			Station.iStepNext:=2101;
+		END_IF
+	2101:
+		Station.arrInfo[E_Language.Chinese]:="旋转压紧气缸缩回";
+		IF Parameter.fbFrockRotateDown.M_HomeRequest() THEN
+			Station.iStepNext:=2201;
+		END_IF
+	2201:
+		Station.arrInfo[E_Language.Chinese]:="提升气缸下降";
+		IF Parameter.fbFrockElevator.M_HomeRequest() THEN
+			Station.iStepNext:=2301;
+		END_IF
+	2301:
+		Station.arrInfo[E_Language.Chinese]:="旋转压紧气缸伸出";
+		IF Parameter.fbFrockRotateDown.M_WorkRequest() THEN
+			Station.iStepNext:=1101;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Home" Id="{16aa9363-a193-455f-9c58-c26dec971fd7}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	0:
+		Station.arrInfo[E_Language.Chinese]:="等待初始化";
+		Parameter.stHandshake:=_stHandshake;
+		Station.iStepNext:=SEL(Enable,1000,100);
+	100:
+		Station.arrInfo[E_Language.Chinese]:="拨料气缸复位";
+		IF Parameter.fbFrockPush.M_HomeRequest() THEN
+			Station.iStepNext:=200;
+		END_IF
+	200:
+		Station.arrInfo[E_Language.Chinese]:="旋转压紧气缸缩回";
+		IF Parameter.fbFrockRotateDown.M_HomeRequest() THEN
+			Station.iStepNext:=300;
+		END_IF
+	300:
+		Station.arrInfo[E_Language.Chinese]:="提升气缸下降";
+		IF Parameter.fbFrockElevator.M_HomeRequest() THEN
+			Station.iStepNext:=400;
+		END_IF
+	400:
+		Station.arrInfo[E_Language.Chinese]:="旋转压紧气缸伸出";
+		IF Parameter.fbFrockRotateDown.M_WorkRequest() THEN
+			Station.iStepNext:=1000;
+		END_IF
+END_CASE
+]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="FB_StationUnloadElevator">
+      <LineId Id="9" Count="0" />
+      <LineId Id="17" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationUnloadElevator.A_Auto">
+      <LineId Id="21" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="92" Count="2" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="35" Count="3" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="43" Count="4" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="87" Count="1" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="48" Count="9" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="66" Count="2" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="58" Count="5" />
+      <LineId Id="69" Count="11" />
+      <LineId Id="82" Count="2" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="95" Count="1" />
+      <LineId Id="98" Count="1" />
+      <LineId Id="97" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="102" Count="2" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="105" Count="4" />
+      <LineId Id="25" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationUnloadElevator.A_Home">
+      <LineId Id="2" Count="2" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="46" Count="2" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="43" Count="2" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="16" Count="4" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="2" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

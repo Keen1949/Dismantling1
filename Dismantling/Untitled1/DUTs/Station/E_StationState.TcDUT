@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_StationState" Id="{a5ce44f0-2f78-4ff2-b728-7c4fefd44576}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_StationState :
+(
+	None:=0,
+	Load,// 等待上料
+	Busy,// 工作中
+	Done// 工作完成
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_TakeMode" Id="{3bb012a5-b6ca-4f7e-8633-c1cefe630a23}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_TakeMode :
+(
+	None := 0,// 不动作
+	Take0,// 取Line0料
+	Take1,// 取Line1料
+	Take3Load,// 取Line3上料站 产品
+	Place1,// 放Line1料
+	Place3Load// 放线体3上料站
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

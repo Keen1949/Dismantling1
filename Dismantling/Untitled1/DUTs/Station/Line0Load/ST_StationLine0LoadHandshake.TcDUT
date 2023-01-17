@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationLine0LoadHandshake" Id="{43395e78-4bf5-4dc2-97e9-5b67bda9ef81}">
+    <Declaration><![CDATA[TYPE ST_StationLine0LoadHandshake :
+STRUCT
+	bRequestLine0Load:			BOOL;// 请求线体0 上料站 放料 只读
+	bResponseLine0Buffer:		BOOL;// 收到线体0 上料缓存站 放料请求 只写
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

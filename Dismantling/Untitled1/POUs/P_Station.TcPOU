@@ -1,0 +1,743 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="P_Station" Id="{79a78cd0-f841-421e-a4ef-6ebd8d61ff55}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_Station
+VAR
+	_stParameter:				ST_StationParameter;
+	_stHandshake:				ST_StationHandshake;
+	
+	_fbTakeLoad:				FB_StationTakeLoad;// 取料站
+	_fbDismantling_L2:			FB_StationDismantling;// 线体2 拆解站 
+	_fbDismantling_L3:			FB_StationDismantling;// 线体3 拆解站 
+	_fbLine0Load:				FB_StationLine0Load;// 线体0 上料站
+	_fbLine0Buffer:				FB_StationLine0Buffer;// 线体0 缓存站
+	_fbLineLoad_L1:				FB_StationLineLoad;// 线体1 上料站
+	_fbLineLoad_L3:				FB_StationLineLoad;// 线体3 上料站
+	_fbUnloadUc_L2:				FB_StationUnloadUc;// 线体2 下UC
+	_fbUnloadUc_L3:				FB_StationUnloadUc;// 线体3 下UC
+	_fbUnloadElevator_L2:		FB_StationUnloadElevator;// 线体2 下工装
+	_fbUnloadElevator_L3:		FB_StationUnloadElevator;// 线体3 下工装
+	_fbUnloadLineUc:			FB_StationUnloadLine;//下UC 线体
+	_fbUnloadLineElevator:		FB_StationUnloadLine;// 下工装线体
+	_fbStationUnLoadUc_311:		FB_StationUnLoadUc_311;// 下UC 模组
+		
+	_vArrFbCylinder:			ARRAY[0..10] OF FB_Cylinder;// 虚拟气缸
+	_vArrCylinder:				ARRAY[0..10] OF ST_Cylinder;// 虚拟气缸
+	_vArrCylinderData:			ARRAY[0..10] OF ST_CylinderData;// 虚拟气缸
+	_i:							INT;
+	_bFistRun:					BOOL:=true;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[GVL.stSetting.eTakeMode:=M_LoadPriority(_stParameter,GVL_Data.stRecipe);
+IF _bFistRun THEN
+	A_Info();
+	_bFistRun:=FALSE;
+END_IF
+
+
+A_Handshake();// 交握
+
+A_Virtual();// 虚拟硬件
+
+
+
+A_TakeLoad();// 取料站
+
+A_Dismantling_L2();// 拆解站
+
+A_Dismantling_L3();// 拆解站
+
+A_Line0Buffer();// 线体0 上料缓存
+
+A_Line0Load();// 线体0 上料站
+
+A_LineLoad_L1();// 线体1 上料
+
+A_LineLoad_L3();// 线体3 上料
+
+A_UnloadElevator_L2();// 线体2 下工装
+
+A_UnloadElevator_L3();// 线体3 下工装
+
+A_UnloadLineElevator();// 下工装 流线
+
+A_UnLoadUc_311();// 下UC模组  紧311使用
+
+A_UnloadLineUc();// 下UC 流线 311以为下料程序
+
+A_UnloadUc_L2();// 线体2下UC 311以外下料程序
+
+A_UnloadUc_L3();// 线体3 下UC 311以为下料程序
+
+
+	
+
+	
+]]></ST>
+    </Implementation>
+    <Action Name="A_Dismantling_L2" Id="{b01f12b6-60a3-4639-b368-e374f1faa4f5}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine2Dismantling.bPalletCheck1:=GVL.I.bLine2PalletCheck1;
+_stParameter.stLine2Dismantling.bPalletCheck2:=GVL.I.bLine2PalletCheck2;
+_stParameter.stLine2Dismantling.bPalletCheck3:=GVL.I.bLine2PalletCheck3;
+_stParameter.stLine2Dismantling.fbLateral1 REF=G_arrFbCylinder[E_Cylinder.Line2OpenLateral1];
+_stParameter.stLine2Dismantling.fbLateral2 REF=G_arrFbCylinder[E_Cylinder.Line2OpenLateral2];
+_stParameter.stLine2Dismantling.fbLift REF= G_arrFbCylinder[E_Cylinder.Line2Lift];
+_stParameter.stLine2Dismantling.fbPrevent REF= G_arrFbCylinder[E_Cylinder.Line2Prevent];
+_stParameter.stLine2Dismantling.fbRotate REF= G_arrFbCylinder[E_Cylinder.Line2OpenRotate];
+_stParameter.stLine2Dismantling.fbStandard1 REF= G_arrFbCylinder[E_Cylinder.Line2Standard1];
+_stParameter.stLine2Dismantling.fbStandard2 REF= G_arrFbCylinder[E_Cylinder.Line2Standard2];
+_stParameter.stLine2Dismantling.bClose:=GVL_Data.stRecipe.eLineClose=E_LineClose.Line2;
+_stParameter.stLine2Dismantling.bCloseUnloadElevator:=FALSE;
+
+_fbDismantling_L2(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line2Dismantling] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine2Dismantling);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Dismantling_L3" Id="{06e81362-3cd9-4009-9cc8-dae5d0f41afb}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine3Dismantling.bPalletCheck1:=GVL.I.bLine3OpenCheck1;
+_stParameter.stLine3Dismantling.bPalletCheck2:=GVL.I.bLine3OpenCheck2;
+_stParameter.stLine3Dismantling.bPalletCheck3:=GVL.I.bLine3OpenCheck3;
+_stParameter.stLine3Dismantling.fbLateral1 REF=G_arrFbCylinder[E_Cylinder.Line3OpenLateral1];
+_stParameter.stLine3Dismantling.fbLateral2 REF=G_arrFbCylinder[E_Cylinder.Line3OpenLateral2];
+_stParameter.stLine3Dismantling.fbLift REF= G_arrFbCylinder[E_Cylinder.Line3OpenLift];
+_stParameter.stLine3Dismantling.fbPrevent REF= G_arrFbCylinder[E_Cylinder.Line3OpenPrevent];
+_stParameter.stLine3Dismantling.fbRotate REF= G_arrFbCylinder[E_Cylinder.Line3OpenRotate];
+_stParameter.stLine3Dismantling.fbStandard1 REF= G_arrFbCylinder[E_Cylinder.Line3Standard1];
+_stParameter.stLine3Dismantling.fbStandard2 REF= G_arrFbCylinder[E_Cylinder.Line3Standard2];
+_stParameter.stLine3Dismantling.bClose:=GVL_Data.stRecipe.eLineClose=E_LineClose.Line3;
+_stParameter.stLine3Dismantling.bCloseUnloadElevator:=FALSE;
+
+_fbDismantling_L3(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line3Dismantling] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine3Dismantling);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Handshake" Id="{4cd92d19-1b07-440d-87b6-562e0563fd0c}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine0Load.stHandshake.bRequestLine0Load:=_stParameter.stLine0Buffer.stHandshake.bRequestLine0Load;
+
+_stParameter.stLine0Buffer.stHandshake.bRequestLine0Buffer_T:=_stParameter.stTakeLoad.stHandshake.bRequestLine0Buffer_T0;
+_stParameter.stLine0Buffer.stHandshake.bResponseLine0Buffer:=_stParameter.stLine0Load.stHandshake.bResponseLine0Buffer;
+
+_stParameter.stLine1Load.stHandshake.bRequestLineLoad_D:=_stParameter.stLine2Dismantling.stHandshake.bRequestLineLoad_D;
+_stParameter.stLine1Load.stHandshake.bRequestLineLoad_P:=_stParameter.stTakeLoad.stHandshake.bRequestLineLoad_P1;
+_stParameter.stLine1Load.stHandshake.bRequestLineLoad_T:=_stParameter.stTakeLoad.stHandshake.bRequestLineLoad_T1;
+_stParameter.stLine1Load.stHandshake.bRequestTake_P_M:=FALSE;
+_stParameter.stLine1Load.stHandshake.bResponseMachine_P:=FALSE;
+
+_stParameter.stLine2UnloadElevator.stHandshake.bRequestElevator:=_stParameter.stLine2Dismantling.stHandshake.bRequestElevator;
+_stParameter.stLine2UnloadElevator.stHandshake.bResponseElevator:=_stParameter.stUnloadLineElevator.stHandshake.bResponseUnladLine2;
+
+_stParameter.stLine2UnloadUc.stHandshake.bResponseUnladLine:=_stParameter.stUnloadLineUc.stHandshake.bResponseUnladLine2;
+
+_stParameter.stLine3Load.stHandshake.bRequestLineLoad_D:=_stParameter.stLine3Dismantling.stHandshake.bRequestLineLoad_D;
+_stParameter.stLine3Load.stHandshake.bRequestLineLoad_P:=_stParameter.stTakeLoad.stHandshake.bRequestLineLoad_P3;
+_stParameter.stLine3Load.stHandshake.bRequestLineLoad_T:=_stParameter.stTakeLoad.stHandshake.bRequestLineLoad_T3;
+_stParameter.stLine3Load.stHandshake.bRequestTake_P_M:=FALSE;
+_stParameter.stLine3Load.stHandshake.bResponseMachine_P:=FALSE;
+
+_stParameter.stLine3UnloadElevator.stHandshake.bRequestElevator:=_stParameter.stLine3Dismantling.stHandshake.bRequestElevator;
+_stParameter.stLine3UnloadElevator.stHandshake.bResponseElevator:=_stParameter.stUnloadLineElevator.stHandshake.bResponseUnladLine3;
+
+_stParameter.stLine3UnloadUc.stHandshake.bResponseUnladLine:=_stParameter.stUnloadLineUc.stHandshake.bResponseUnladLine3;
+
+_stParameter.stTakeLoad.stHandshake.bResponseTake_P1:=_stParameter.stLine1Load.stHandshake.bResponseTake_P;
+_stParameter.stTakeLoad.stHandshake.bResponseTake_P3:=_stParameter.stLine3Load.stHandshake.bResponseTake_P;
+_stParameter.stTakeLoad.stHandshake.bResponseTake_T0:=_stParameter.stLine0Buffer.stHandshake.bResponseTake_T;
+_stParameter.stTakeLoad.stHandshake.bResponseTake_T1:=_stParameter.stLine1Load.stHandshake.bResponseTake_T;
+_stParameter.stTakeLoad.stHandshake.bResponseTake_T3:=_stParameter.stLine3Load.stHandshake.bResponseTake_T;
+
+_stParameter.stUnloadLineElevator.stHandshake.bRequestUnloadLine2:=_stParameter.stLine2UnloadElevator.stHandshake.bRequestUnline;
+_stParameter.stUnloadLineElevator.stHandshake.bRequestUnloadLine3:=_stParameter.stLine3UnloadElevator.stHandshake.bRequestUnline;
+
+_stParameter.stUnloadLineUc.stHandshake.bRequestUnloadLine2:=_stParameter.stLine2UnloadUc.stHandshake.bRequestUnloadLine;
+_stParameter.stUnloadLineUc.stHandshake.bRequestUnloadLine3:=_stParameter.stLine3UnloadUc.stHandshake.bRequestUnloadLine;
+
+_stParameter.stLine2Dismantling.stHandshake.bResponseDismantling_D:=_stParameter.stLine1Load.stHandshake.bResponseDismantling_D;
+_stParameter.stLine2Dismantling.stHandshake.bResponseDismantling_E:=_stParameter.stLine2UnloadElevator.stHandshake.bResponseDismantling_E;
+_stParameter.stLine3Dismantling.stHandshake.bResponseDismantling_D:=_stParameter.stLine3Load.stHandshake.bResponseDismantling_D;
+_stParameter.stLine3Dismantling.stHandshake.bResponseDismantling_E:=_stParameter.stLine3UnloadElevator.stHandshake.bResponseDismantling_E;
+
+IF GVL_Data.stRecipe.eMachineType =E_MachineType.RH311 OR GVL_Data.stRecipe.eMachineType =E_MachineType.LH311 THEN
+	_stParameter.stUnloadUc_311.stHandshake.bRequestUc_L2:=_stParameter.stLine2Dismantling.stHandshake.bRequestUc;
+	_stParameter.stUnloadUc_311.stHandshake.bRequestUc_L3:=_stParameter.stLine3Dismantling.stHandshake.bRequestUc;
+	_stParameter.stLine2Dismantling.stHandshake.bResponseDismantling_Uc:=_stParameter.stUnloadUc_311.stHandshake.bResponseDismantling_Uc_L2;
+	_stParameter.stLine3Dismantling.stHandshake.bResponseDismantling_Uc:=_stParameter.stUnloadUc_311.stHandshake.bResponseDismantling_Uc_L3;
+ELSE
+	_stParameter.stLine2UnloadUc.stHandshake.bRequestUc:=_stParameter.stLine2Dismantling.stHandshake.bRequestUc;
+	_stParameter.stLine3UnloadUc.stHandshake.bRequestUc:=_stParameter.stLine3Dismantling.stHandshake.bRequestUc;
+	_stParameter.stLine2Dismantling.stHandshake.bResponseDismantling_Uc:=_stParameter.stLine2UnloadUc.stHandshake.bResponseDismantling_Uc;
+	_stParameter.stLine3Dismantling.stHandshake.bResponseDismantling_Uc:=_stParameter.stLine3UnloadUc.stHandshake.bResponseDismantling_Uc;
+END_IF
+
+
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Info" Id="{e3cbee2e-0c6d-4e1e-9333-7eeb974869ab}">
+      <Implementation>
+        <ST><![CDATA[_i:=E_Station.Line0Load;
+G_arrStation[_i].arrName[E_Language.Chinese]:="主流线上料工站";
+G_arrStation[_i].arrName[E_Language.English]:="Line0Load";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Trạm vật liệu dòng chính";
+
+_i:=E_Station.Line0Buffer;
+G_arrStation[_i].arrName[E_Language.Chinese]:="主流线缓存工站";
+G_arrStation[_i].arrName[E_Language.English]:="Line0Buffer";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Trạm bộ nhớ nhớ đường chính";
+
+_i:=E_Station.TakeLoad;
+G_arrStation[_i].arrName[E_Language.Chinese]:="上料取料工站";
+G_arrStation[_i].arrName[E_Language.English]:="TakeLoad";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Nhà ga ăn uống";
+
+_i:=E_Station.Line3Load;
+G_arrStation[_i].arrName[E_Language.Chinese]:="流线3上料工站";
+G_arrStation[_i].arrName[E_Language.English]:="Line3Load";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Trạm sạc 3 dòng";
+
+_i:=E_Station.Line1Load;
+G_arrStation[_i].arrName[E_Language.Chinese]:="流线2上料工站";
+G_arrStation[_i].arrName[E_Language.English]:="Line1Load";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Trạm lên men dòng 2";
+
+_i:=E_Station.Line2Dismantling;
+G_arrStation[_i].arrName[E_Language.Chinese]:="流线2拆解工站";
+G_arrStation[_i].arrName[E_Language.English]:="Line2Dismantling";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Trạm tháo dỡ dòng 2";
+
+_i:=E_Station.Line3Dismantling;
+G_arrStation[_i].arrName[E_Language.Chinese]:="流线3拆解工站";
+G_arrStation[_i].arrName[E_Language.English]:="Line3Dismantling";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Trạm tháo dỡ dòng 3";
+
+_i:=E_Station.Line2UnloadElevator;
+G_arrStation[_i].arrName[E_Language.Chinese]:="线体2下工装";
+G_arrStation[_i].arrName[E_Language.English]:="Line2UnloadElevator";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Thiết bị dây chuyền 2";
+
+_i:=E_Station.Line3UnloadElevator;
+G_arrStation[_i].arrName[E_Language.Chinese]:="线体3下工装";
+G_arrStation[_i].arrName[E_Language.English]:="Line3UnloadElevator";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Dây số 3 dưới công cụ";
+
+_i:=E_Station.Line2UnloadUc;
+G_arrStation[_i].arrName[E_Language.Chinese]:="线体2 下UC";
+G_arrStation[_i].arrName[E_Language.English]:="Line2UnloadUc";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Máy dò 2 ở UC";
+
+_i:=E_Station.Line3UnloadUc;
+G_arrStation[_i].arrName[E_Language.Chinese]:="线体3 下UC";
+G_arrStation[_i].arrName[E_Language.English]:="Line3UnloadUc";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Máy dò 3 ở UC";
+
+_i:=E_Station.UnloadLineUc;
+G_arrStation[_i].arrName[E_Language.Chinese]:="下UC 线体";
+G_arrStation[_i].arrName[E_Language.English]:="UnloadLineUc";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Ống dẫn dưới UC";
+
+_i:=E_Station.UnloadLineElevator;
+G_arrStation[_i].arrName[E_Language.Chinese]:="下工装 线体";
+G_arrStation[_i].arrName[E_Language.English]:="UnloadLineElevator";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Thiết bị dây";
+
+_i:=E_Station.UnloadUc_311;
+G_arrStation[_i].arrName[E_Language.Chinese]:="下UC模组";
+G_arrStation[_i].arrName[E_Language.English]:="UnloadUc_311";
+G_arrStation[_i].arrName[E_Language.Vietnamese]:="Mô-đun dưới UC";
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Line0Buffer" Id="{3c682dc6-e395-440e-8dfc-056387168c36}">
+      <Implementation>
+        <ST><![CDATA[
+_stParameter.stLine0Buffer.bPlace:=GVL.I.bLine0Place;
+
+
+_fbLine0Buffer(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line0Buffer] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine0Buffer);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Line0Load" Id="{dba4453f-7678-4827-939f-b06b9b20f201}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine0Load.bPartCheck:=GVL.I.bLine0Part;
+_stParameter.stLine0Load.bPreventCheck:=GVL.I.bLine0Prevent;
+_stParameter.stLine0Load.fbPart REF= G_arrFbCylinder[E_Cylinder.Line0Part];
+_stParameter.stLine0Load.fbPrevent REF= G_arrFbCylinder[E_Cylinder.Line0Prevent];
+
+_fbLine0Load(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line0Load] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine0Load);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_LineLoad_L1" Id="{d92e3f6f-3284-41b5-b4d6-24b94807dc78}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine1Load.bIsClosed:=GVL_Data.stRecipe.eLoadClose=E_LoadClose.Line1;
+_stParameter.stLine1Load.bIsPlacing:=GVL.stSetting.eTakeModeBuffer=E_TakeMode.Place1;
+_stParameter.stLine1Load.bIsTaking:=GVL.stSetting.eTakeModeBuffer=E_TakeMode.Take1;
+_stParameter.stLine1Load.bPalletCheck1:=GVL.I.bLine1PalletCheck1;
+_stParameter.stLine1Load.bPalletCheck2:=GVL.I.bLine1PalletCheck2;
+_stParameter.stLine1Load.bPalletCheck3:=GVL.I.bLine1PalletCheck3;
+_stParameter.stLine1Load.fbAdjust1 REF= G_arrFbCylinder[E_Cylinder.Line1Adjust1];
+_stParameter.stLine1Load.fbElevator REF= G_arrFbCylinder[E_Cylinder.Line1Elevator];
+_stParameter.stLine1Load.fbLift REF= G_arrFbCylinder[E_Cylinder.Line1Lift];
+_stParameter.stLine1Load.fbPrevent REF= G_arrFbCylinder[E_Cylinder.Line1Prevent];
+_stParameter.stLine1Load.fbRotate REF= G_arrFbCylinder[E_Cylinder.Line1Rotate];
+_stParameter.stLine1Load.bManualLoad:=FALSE;
+_fbLineLoad_L1(
+	Enable:=true,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line1Load] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine1Load);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_LineLoad_L3" Id="{b507f1d5-e932-43d6-abaa-167c55cb752d}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine3Load.bIsClosed:=FALSE;
+_stParameter.stLine3Load.bIsPlacing:=GVL.stSetting.eTakeModeBuffer=E_TakeMode.Place3Load;
+_stParameter.stLine3Load.bIsTaking:=GVL.stSetting.eTakeModeBuffer=E_TakeMode.Take3Load;
+_stParameter.stLine3Load.bPalletCheck1:=GVL.I.bLine3PalletCheck1;
+_stParameter.stLine3Load.bPalletCheck2:=GVL.I.bLine3PalletCheck2;
+_stParameter.stLine3Load.bPalletCheck3:=GVL.I.bLine3PalletCheck3;
+_stParameter.stLine3Load.fbAdjust1 REF= _vArrFbCylinder[0];
+_stParameter.stLine3Load.fbElevator REF=_vArrFbCylinder[1];
+_stParameter.stLine3Load.fbLift REF= G_arrFbCylinder[E_Cylinder.Line3LoadLift];
+_stParameter.stLine3Load.fbPrevent REF= G_arrFbCylinder[E_Cylinder.Line3LoadPrevent];
+_stParameter.stLine3Load.fbRotate REF= G_arrFbCylinder[E_Cylinder.Line3LoadRotate];
+_stParameter.stLine3Load.bManualLoad:=FALSE;
+
+_fbLineLoad_L3(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line3Load] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine3Load);
+	]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_TakeLoad" Id="{aabca987-a068-415b-aaa7-c4e58e7fb99d}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stTakeLoad.fbTakeClamp REF= G_arrFbCylinder[E_Cylinder.TakeClamp];
+_stParameter.stTakeLoad.fbTakeLift1 REF= G_arrFbCylinder[E_Cylinder.TakeLift1];
+_stParameter.stTakeLoad.fbTakeLift2 REF= G_arrFbCylinder[E_Cylinder.TakeLift2];
+_stParameter.stTakeLoad.fbTakeY REF= G_arrFbAxis[E_Axis.TakeY];
+_stParameter.stTakeLoad.fbTakeZ REF= G_arrFbAxis[E_Axis.TakeZ];
+
+_fbTakeLoad(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.TakeLoad] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stTakeLoad);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_UnloadElevator_L2" Id="{429ef40b-80da-4ad2-89d3-54f75010941e}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine2UnloadElevator.bFrockElevator1NoneCheck:=GVL.I.bFrockElevator1NoneCheck;
+_stParameter.stLine2UnloadElevator.fbFrockElevator REF= G_arrFbCylinder[E_Cylinder.FrockElevator1];
+_stParameter.stLine2UnloadElevator.fbFrockPush REF= G_arrFbCylinder[E_Cylinder.FrockPush1];
+_stParameter.stLine2UnloadElevator.fbFrockRotateDown REF= G_arrFbCylinder[E_Cylinder.FrockRotateDown1];
+_stParameter.stLine2UnloadElevator.bManualUnload:=FALSE;
+
+
+_fbUnloadElevator_L2(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line2UnloadElevator] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine2UnloadElevator);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_UnloadElevator_L3" Id="{e148bbd6-1eb7-4ca1-af65-fb7edc507d40}">
+      <Implementation>
+        <ST><![CDATA[
+_stParameter.stLine3UnloadElevator.bFrockElevator1NoneCheck:=GVL.I.bFrockElevator2NoneCheck;
+_stParameter.stLine3UnloadElevator.fbFrockElevator REF= G_arrFbCylinder[E_Cylinder.FrockElevator2];
+_stParameter.stLine3UnloadElevator.fbFrockPush REF= G_arrFbCylinder[E_Cylinder.FrockPush2];
+_stParameter.stLine3UnloadElevator.fbFrockRotateDown REF= G_arrFbCylinder[E_Cylinder.FrockRotateDown2];
+_stParameter.stLine3UnloadElevator.bManualUnload:=FALSE;
+
+_fbUnloadElevator_L3(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line3UnloadElevator] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine3UnloadElevator);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_UnloadLineElevator" Id="{435894e7-c2dc-4c13-b90c-d062ebb83a2a}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stUnloadLineElevator.bBeltDone:=GVL.I.bFrockBeltDone;
+_stParameter.stUnloadLineElevator.bBeltNoneCheck:=GVL.I.bFrockBeltNoneCheck3;
+_stParameter.stUnloadLineElevator.bCheck1:=GVL.I.bFrockBeltNoneCheck1;
+_stParameter.stUnloadLineElevator.bCheck2:=GVL.I.bFrockBeltNoneCheck2;
+_stParameter.stUnloadLineElevator.fbDrive REF= G_arrFbCylinder[E_Cylinder.FrockBelt];
+_stParameter.stUnloadLineElevator.fbLineAxis REF= GVL.arrFbLine[E_Line.UnloadElevator];
+_stParameter.stUnloadLineElevator.bManualUnload:=FALSE;
+
+_fbUnloadLineElevator(
+	Enable:=TRUE,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.UnloadLineElevator] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stUnloadLineElevator);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_UnloadLineUc" Id="{83d00882-42dd-4202-9c11-b79a6589fac3}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stUnloadLineUc.bBeltDone:=GVL.I.bUcBeltDone;
+_stParameter.stUnloadLineUc.bBeltNoneCheck:=GVL.I.bUcBeltNoneCheck;
+_stParameter.stUnloadLineUc.bCheck1:=GVL.I.bUcCheck2;
+_stParameter.stUnloadLineUc.bCheck2:=GVL.I.bUcCheck3;
+_stParameter.stUnloadLineUc.fbDrive REF= G_arrFbCylinder[E_Cylinder.UcDrive];
+_stParameter.stUnloadLineUc.fbLineAxis REF= GVL.arrFbLine[E_Line.UnloadUC];
+_stParameter.stUnloadLineUc.bManualUnload:=FALSE;
+
+_fbUnloadLineUc(
+	Enable:=NOT(GVL_Data.stRecipe.eMachineType=E_MachineType.LH311 OR GVL_Data.stRecipe.eMachineType=E_MachineType.RH311),
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.UnloadLineUc] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stUnloadLineUc);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_UnLoadUc_311" Id="{60121d26-0a8f-4cdd-ab14-c744b69a556d}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stUnloadUc_311.bUcCheck1:=GVL.I.bUcCheck1;
+_stParameter.stUnloadUc_311.fbAxisY REF= G_arrFbAxis[E_Axis.UC_Y];
+_stParameter.stUnloadUc_311.fbClamp REF= G_arrFbCylinder[E_Cylinder.UcClamp];
+_stParameter.stUnloadUc_311.fbLift REF= G_arrFbCylinder[E_Cylinder.UcLift];
+_stParameter.stUnloadUc_311.fbSwing REF= G_arrFbCylinder[E_Cylinder.UcSwing];
+
+_fbStationUnLoadUc_311(
+	Enable:=GVL_Data.stRecipe.eMachineType=E_MachineType.LH311 OR GVL_Data.stRecipe.eMachineType=E_MachineType.RH311,
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.UnloadUc_311] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stUnloadUc_311);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_UnloadUc_L2" Id="{a65e0f00-d046-4752-bae9-0e435ea1babb}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine2UnloadUc.fbClamp REF= G_arrFbCylinder[E_Cylinder.UcClamp1];
+_stParameter.stLine2UnloadUc.fbLift REF= G_arrFbCylinder[E_Cylinder.UcLift1];
+_stParameter.stLine2UnloadUc.fbRotate REF= G_arrFbCylinder[E_Cylinder.UcRotate1];
+
+_fbUnloadUc_L2(
+	Enable:=NOT(GVL_Data.stRecipe.eMachineType=E_MachineType.LH311 OR GVL_Data.stRecipe.eMachineType=E_MachineType.RH311),
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line2UnloadUc] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine2UnloadUc);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_UnloadUc_L3" Id="{af63726c-2292-41d9-b43d-84bf4ea87ffa}">
+      <Implementation>
+        <ST><![CDATA[_stParameter.stLine3UnloadUc.fbClamp REF= G_arrFbCylinder[E_Cylinder.UcClamp2];
+_stParameter.stLine3UnloadUc.fbLift REF= G_arrFbCylinder[E_Cylinder.UcLift2];
+_stParameter.stLine3UnloadUc.fbRotate REF= G_arrFbCylinder[E_Cylinder.UcRotate2];
+
+	
+_fbUnloadUc_L3(
+	Enable:=NOT(GVL_Data.stRecipe.eMachineType=E_MachineType.LH311 OR GVL_Data.stRecipe.eMachineType=E_MachineType.RH311),
+	System:=G_stSystem , 
+	Station:=G_arrStation[E_Station.Line3UnloadUc] , 
+	Error:=G_stError , 
+	Setting:=GVL.stSetting , 
+	Recipe:=GVL_Data.stRecipe , 
+	Parameter:=_stParameter.stLine3UnloadUc);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Virtual" Id="{9ea1df27-9ec0-40a8-871b-324c9f2f1f9b}">
+      <Implementation>
+        <ST><![CDATA[FOR _i:=0 TO 10 BY 1 DO
+	_vArrCylinder[_i].stInput.bHome:=_vArrCylinder[_i].stOutput.bHome;
+	_vArrCylinder[_i].stInput.bWork:=_vArrCylinder[_i].stOutput.bWork;
+	_vArrFbCylinder[_i](System:=G_stSystem , Cylinder:=_vArrCylinder[_i] , Data:=_vArrCylinderData[_i] , Error:=G_stError );
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Method Name="M_LoadPriority" Id="{ab313c0c-22fc-4a11-84d5-bc2b1c22c5cb}">
+      <Declaration><![CDATA[METHOD M_LoadPriority : E_TakeMode
+VAR_INPUT
+	Parameter:		 REFERENCE TO ST_StationParameter;
+	Recipe:			 REFERENCE TO ST_Recipe;	
+END_VAR
+VAR
+	_iTemp:					INT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[M_LoadPriority:=E_TakeMode.None;
+
+
+IF Parameter.stTakeLoad.eState=E_StationState.Done THEN
+	IF Parameter.stLine1Load.eState=E_StationState.Load AND Recipe.eLineClose<>E_LineClose.Line2 THEN
+		M_LoadPriority:=E_TakeMode.Place1;
+	END_IF
+	IF Parameter.stLine3Load.eState=E_StationState.Load AND Recipe.eLineClose<>E_LineClose.Line3 THEN
+		M_LoadPriority:=E_TakeMode.Place3Load;
+	END_IF
+END_IF
+
+IF Parameter.stTakeLoad.eState=E_StationState.Load THEN
+	IF Parameter.stLine3Load.eState=E_StationState.Done AND Recipe.eLineClose=E_LineClose.Line3 THEN
+		M_LoadPriority:=E_TakeMode.Take3Load;
+	END_IF
+	CASE Recipe.eLoadPriority OF
+	E_LoadPriority.None,E_LoadPriority.Line0:
+		IF Parameter.stLine1Load.eState=E_StationState.Done AND ((Parameter.stLine3Dismantling.eState=E_StationState.Load AND Parameter.stLine3Load.eState=E_StationState.Load) OR Recipe.eLineClose=E_LineClose.Line2) THEN
+			M_LoadPriority:=E_TakeMode.Take1;
+		END_IF
+		IF Parameter.stLine0Buffer.eState=E_StationState.Done THEN
+			M_LoadPriority:=E_TakeMode.Take0;
+		END_IF
+	E_LoadPriority.Line1:
+		IF Parameter.stLine0Buffer.eState=E_StationState.Done THEN
+			M_LoadPriority:=E_TakeMode.Take0;
+		END_IF
+		IF Parameter.stLine1Load.eState=E_StationState.Done AND (Parameter.stLine3Load.eState=E_StationState.Load OR Recipe.eLineClose=E_LineClose.Line2) THEN
+			M_LoadPriority:=E_TakeMode.Take1;
+		END_IF
+	END_CASE
+END_IF
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="P_Station">
+      <LineId Id="5" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="267" Count="0" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="133" Count="1" />
+      <LineId Id="132" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="135" Count="0" />
+      <LineId Id="138" Count="0" />
+      <LineId Id="137" Count="0" />
+      <LineId Id="140" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="142" Count="0" />
+      <LineId Id="141" Count="0" />
+      <LineId Id="144" Count="0" />
+      <LineId Id="143" Count="0" />
+      <LineId Id="146" Count="0" />
+      <LineId Id="145" Count="0" />
+      <LineId Id="148" Count="0" />
+      <LineId Id="147" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="149" Count="0" />
+      <LineId Id="196" Count="0" />
+      <LineId Id="195" Count="0" />
+      <LineId Id="198" Count="0" />
+      <LineId Id="197" Count="0" />
+      <LineId Id="205" Count="0" />
+      <LineId Id="204" Count="0" />
+      <LineId Id="166" Count="0" />
+      <LineId Id="165" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="98" Count="1" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="86" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_Dismantling_L2">
+      <LineId Id="35" Count="9" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="48" Count="4" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_Dismantling_L3">
+      <LineId Id="35" Count="9" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="48" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_Handshake">
+      <LineId Id="257" Count="0" />
+      <LineId Id="256" Count="0" />
+      <LineId Id="111" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="119" Count="0" />
+      <LineId Id="118" Count="0" />
+      <LineId Id="120" Count="1" />
+      <LineId Id="123" Count="0" />
+      <LineId Id="157" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="134" Count="0" />
+      <LineId Id="136" Count="0" />
+      <LineId Id="139" Count="0" />
+      <LineId Id="146" Count="4" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="165" Count="1" />
+      <LineId Id="169" Count="0" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="180" Count="3" />
+      <LineId Id="198" Count="1" />
+      <LineId Id="185" Count="1" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="191" Count="2" />
+      <LineId Id="207" Count="0" />
+      <LineId Id="251" Count="1" />
+      <LineId Id="254" Count="0" />
+      <LineId Id="208" Count="0" />
+      <LineId Id="255" Count="0" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="214" Count="1" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="248" Count="0" />
+      <LineId Id="209" Count="0" />
+      <LineId Id="237" Count="0" />
+      <LineId Id="222" Count="0" />
+      <LineId Id="242" Count="1" />
+      <LineId Id="210" Count="0" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="155" Count="0" />
+      <LineId Id="201" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_Info">
+      <LineId Id="11" Count="69" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_Line0Buffer">
+      <LineId Id="21" Count="4" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="26" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_Line0Load">
+      <LineId Id="21" Count="5" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="27" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_LineLoad_L1">
+      <LineId Id="30" Count="12" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="43" Count="4" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_LineLoad_L3">
+      <LineId Id="35" Count="13" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="49" Count="5" />
+      <LineId Id="32" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_TakeLoad">
+      <LineId Id="22" Count="6" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="29" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_UnloadElevator_L2">
+      <LineId Id="21" Count="3" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="25" Count="2" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="28" Count="4" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_UnloadElevator_L3">
+      <LineId Id="25" Count="7" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="33" Count="4" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_UnloadLineElevator">
+      <LineId Id="27" Count="14" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_UnloadLineUc">
+      <LineId Id="26" Count="14" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_UnLoadUc_311">
+      <LineId Id="22" Count="12" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_UnloadUc_L2">
+      <LineId Id="22" Count="10" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_UnloadUc_L3">
+      <LineId Id="27" Count="11" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Station.A_Virtual">
+      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="2" Count="1" />
+    </LineIds>
+    <LineIds Name="P_Station.M_LoadPriority">
+      <LineId Id="12" Count="15" />
+      <LineId Id="53" Count="14" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="28" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

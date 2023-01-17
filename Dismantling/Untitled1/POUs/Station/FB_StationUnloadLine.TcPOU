@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_StationUnloadLine" Id="{cbb49e18-c349-42ca-b939-708697f3a1e5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StationUnloadLine
+VAR_INPUT
+	Enable:				BOOL;
+	System:				REFERENCE TO ST_System;
+	Station:			REFERENCE TO ST_SystemStation;
+	Error:				REFERENCE TO ST_Error;
+	Setting:			REFERENCE TO ST_Setting;
+	Recipe:				REFERENCE TO ST_Recipe;	
+	Parameter:			REFERENCE TO ST_StationUnloadLine;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_iState:			INT;// 放料请求状态
+	_stHandshake: ST_StationUnloadLineHandshake;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_Auto();
+A_Home();]]></ST>
+    </Implementation>
+    <Action Name="A_Auto" Id="{f519b73e-d0bf-4e6a-980d-21e8679938be}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	1000:
+		Station.arrInfo[E_Language.Chinese]:="初始化完成 等待启动";
+		IF Enable THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1101:
+		Station.arrInfo[E_Language.Chinese]:="判断推料位是否有料";
+		IF Parameter.bBeltDone AND NOT GVL.stSetting.bDryRun THEN
+			Station.iStepNext:=1901;
+		ELSE
+			Station.iStepNext:=1201;
+		END_IF
+	1201:
+		Station.arrInfo[E_Language.Chinese]:="判断缓存位是否有料";
+		IF Parameter.bCheck1 OR Parameter.bCheck2  THEN
+			Station.iStepNext:=1601;
+		ELSE
+			Station.iStepNext:=1301;
+		END_IF
+	1301:
+		Station.arrInfo[E_Language.Chinese]:="等待请求放料";
+		IF Parameter.stHandshake.bRequestUnloadLine2 AND Station.iStepNext=Station.iStepNow THEN
+			_iState:=2;
+			Parameter.stHandshake.bResponseUnladLine2:=TRUE;
+			Station.iStepNext:=1601;
+		END_IF
+		IF Parameter.stHandshake.bRequestUnloadLine3 AND Station.iStepNext=Station.iStepNow THEN
+			_iState:=3;
+			Parameter.stHandshake.bResponseUnladLine3:=TRUE;
+			Station.iStepNext:=1601;
+		END_IF
+	1601:
+		Station.arrInfo[E_Language.Chinese]:="线体正转 等待到位";
+		IF Parameter.fbLineAxis.M_Jog(1) AND Parameter.bBeltDone THEN
+			Station.iStepNext:=1701;
+		END_IF
+	1701:
+		Station.arrInfo[E_Language.Chinese]:="线体停止";
+		IF Parameter.fbLineAxis.M_Jog(0) THEN
+			Station.iStepNext:=1751;
+		END_IF
+	1751:
+		Station.arrInfo[E_Language.Chinese]:="等待复位放料请求"; 
+		CASE _iState OF
+			2:// 线体2请求放料
+				IF NOT Parameter.stHandshake.bRequestUnloadLine2 THEN
+					Parameter.stHandshake.bResponseUnladLine2:=FALSE;
+					_iState:=0;
+				END_IF
+			3:// 线体3请求放料
+				IF NOT Parameter.stHandshake.bRequestUnloadLine3 THEN
+					Parameter.stHandshake.bResponseUnladLine3:=FALSE;
+					_iState:=0;
+				END_IF
+			ELSE
+				Station.iStepNext:=1801;
+		END_CASE
+	1801:
+		Station.arrInfo[E_Language.Chinese]:="判断下料斜坡是否有料";
+		IF NOT Parameter.bBeltNoneCheck THEN
+			Station.iStepNext:=SEL(Parameter.bManualUnload,1901,1851);
+		END_IF
+	1851:
+		Station.arrInfo[E_Language.Chinese]:="等待取料";
+		IF NOT Parameter.bBeltDone THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1901:
+		Station.arrInfo[E_Language.Chinese]:="推料气缸伸出";
+		IF Parameter.fbDrive.M_WorkRequest() THEN
+			Station.iStepNext:=2001;
+		END_IF
+	2001:
+		Station.arrInfo[E_Language.Chinese]:="推料气缸缩回";
+		IF Parameter.fbDrive.M_HomeRequest() THEN
+			Station.iStepNext:=1101;
+		END_IF
+END_CASE
+	
+	]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Home" Id="{83530753-7e7c-4991-96d8-8cee6a404601}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	0:
+		Station.arrInfo[E_Language.Chinese]:="等待初始化";
+		Parameter.stHandshake:=_stHandshake;
+		_iState:=0;
+		Station.iStepNext:=SEL(Enable,1000,100);
+	100:
+		Station.arrInfo[E_Language.Chinese]:="推料气缸复位";
+		IF  Parameter.fbDrive.M_HomeRequest() THEN
+			Station.iStepNext:=1000;
+		END_IF
+END_CASe]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="FB_StationUnloadLine">
+      <LineId Id="9" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationUnloadLine.A_Auto">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="147" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="154" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="18" Count="3" />
+      <LineId Id="52" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="54" Count="1" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="216" Count="0" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="189" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="218" Count="0" />
+      <LineId Id="193" Count="1" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="41" Count="2" />
+      <LineId Id="206" Count="0" />
+      <LineId Id="208" Count="0" />
+      <LineId Id="221" Count="1" />
+      <LineId Id="225" Count="2" />
+      <LineId Id="224" Count="0" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="230" Count="2" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="233" Count="1" />
+      <LineId Id="223" Count="0" />
+      <LineId Id="45" Count="4" />
+      <LineId Id="149" Count="4" />
+      <LineId Id="136" Count="9" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationUnloadLine.A_Home">
+      <LineId Id="2" Count="2" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="5" Count="5" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

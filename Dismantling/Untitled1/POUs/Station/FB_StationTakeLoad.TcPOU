@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_StationTakeLoad" Id="{44e51563-5233-4a3b-af5c-f0758ecc2e44}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StationTakeLoad
+VAR_INPUT
+	Enable:				BOOL;
+	System:				REFERENCE TO ST_System;
+	Station:			REFERENCE TO ST_SystemStation;
+	Error:				REFERENCE TO ST_Error;
+	Setting:			REFERENCE TO ST_Setting;
+	Recipe:				REFERENCE TO ST_Recipe;	
+	Parameter:			REFERENCE TO ST_StationTakeLoad;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_i:					INT;
+	_arrTon:		    ARRAY[0..20] OF TON;
+	_arrFbErrorTag:		ARRAY[0..20] OF FB_ErrorTag;
+	_arrState:			ARRAY[0..20] OF BOOL;
+	
+	_iMoveAbsIndex1:	UINT;
+	_iMoveAbsIndex2:	UINT;
+	_bIsZWork:			BOOL;// 取Line0为真 其他情况为假
+	_stHandshake: ST_StationTakeLoadHandshake;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_Auto();
+A_Home();]]></ST>
+    </Implementation>
+    <Action Name="A_Auto" Id="{e67ac0db-1360-4197-89c1-be0f8410c1c6}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	1000:
+		Station.arrInfo[E_Language.Chinese]:="初始化完成 等待启动";
+		IF Enable THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1101:
+		Station.arrInfo[E_Language.Chinese]:="取料信号判断";
+		Parameter.eState:=E_StationState.Load;
+		Setting.eTakeModeBuffer:=E_TakeMode.None;
+		Station.iStepNext:=1111;
+	1111:
+		IF Setting.eTakeModeBuffer=E_TakeMode.None THEN
+			Setting.eTakeModeBuffer:=Setting.eTakeMode;
+		ELSE
+			Parameter.eState:=E_StationState.Busy;
+			Station.iStepNext:=1151;
+		END_IF
+	1151:
+		Station.arrInfo[E_Language.Chinese]:="请求取料";
+		CASE Setting.eTakeModeBuffer OF
+			E_TakeMode.Take0:
+				_iMoveAbsIndex1:=2;
+				_bIsZWork:=TRUE;
+				Parameter.stHandshake.bRequestLine0Buffer_T0 :=TRUE;
+				IF Parameter.stHandshake.bResponseTake_T0 THEN
+					Station.iStepNext:=1201;
+				END_IF
+			E_TakeMode.Take1:
+				_iMoveAbsIndex1:=3;
+				_bIsZWork:=FALSE;
+				Parameter.stHandshake.bRequestLineLoad_T1:=TRUE;
+				IF Parameter.stHandshake.bResponseTake_T1 THEN
+					Station.iStepNext:=1201;
+				END_IF
+			E_TakeMode.Take3Load:
+				_iMoveAbsIndex1:=4;
+				_bIsZWork:=FALSE;
+				Parameter.stHandshake.bRequestLineLoad_T3:=TRUE;
+				IF Parameter.stHandshake.bResponseTake_T3 THEN
+					Station.iStepNext:=1201;
+				END_IF
+			E_TakeMode.None:
+				Station.iStepNext:=1101;
+		END_CASE
+	1201:
+		Station.arrInfo[E_Language.Chinese]:="Y轴至取料位";
+		Parameter.eState:=E_StationState.Busy;
+		IF Parameter.fbTakeY.M_MoveAbs(_iMoveAbsIndex1) THEN
+			Station.iStepNext:=1301;
+		END_IF
+	1301:
+		Station.arrInfo[E_Language.Chinese]:="Z模组下降";
+		IF M_ZWork()  THEN
+			Station.iStepNext:=1401;
+		END_IF
+	1401:
+		Station.arrInfo[E_Language.Chinese]:="夹紧气缸夹紧";
+		IF Parameter.fbTakeClamp.M_WorkRequest() THEN
+			Station.iStepNext:=1501;
+		END_IF
+	1501:
+		Station.arrInfo[E_Language.Chinese]:="Z模组上升";
+		IF M_ZHome() THEN
+			Station.iStepNext:=1511;
+		END_IF
+	1511:
+		Station.arrInfo[E_Language.Chinese]:="复位取料请求 ";
+		CASE Setting.eTakeModeBuffer OF
+			E_TakeMode.Take0:
+				Parameter.stHandshake.bRequestLine0Buffer_T0 :=FALSE;
+				IF NOT Parameter.stHandshake.bResponseTake_T0 THEN
+					Station.iStepNext:=1601;
+				END_IF
+			E_TakeMode.Take1:
+				Parameter.stHandshake.bRequestLineLoad_T1:=FALSE;
+				IF NOT Parameter.stHandshake.bResponseTake_T1 THEN
+					Station.iStepNext:=1601;
+				END_IF
+			E_TakeMode.Take3Load:
+				Parameter.stHandshake.bRequestLineLoad_T3:=FALSE;
+				IF NOT Parameter.stHandshake.bResponseTake_T3 THEN
+					Station.iStepNext:=1601;
+				END_IF
+		END_CASE
+	1601:
+		Station.arrInfo[E_Language.Chinese]:="请求放料";
+		Parameter.eState:=E_StationState.Done;
+		Setting.eTakeModeBuffer:=E_TakeMode.None;
+		Station.iStepNext:=1611;
+	1611:
+		IF Setting.eTakeModeBuffer=E_TakeMode.None THEN
+			Setting.eTakeModeBuffer:=Setting.eTakeMode;
+		ELSE
+			Parameter.eState:=E_StationState.Busy;
+			Station.iStepNext:=1651;
+		END_IF
+	1651:
+		_bIsZWork:=FALSE;
+		CASE Setting.eTakeModeBuffer OF
+			E_TakeMode.Place1:
+				_iMoveAbsIndex2:=3;
+				Parameter.stHandshake.bRequestLineLoad_P1:=TRUE;
+				IF Parameter.stHandshake.bResponseTake_P1 THEN
+					Station.iStepNext:=1701;
+				END_IF
+			E_TakeMode.Place3Load:
+				_iMoveAbsIndex2:=4;
+				Parameter.stHandshake.bRequestLineLoad_P3:=TRUE;
+				IF Parameter.stHandshake.bResponseTake_P3 THEN
+					Station.iStepNext:=1701;
+				END_IF
+		END_CASE
+	1701:
+		Station.arrInfo[E_Language.Chinese]:="等待Y轴至放料位";
+		IF Parameter.fbTakeY.M_MoveAbs(_iMoveAbsIndex2) THEN
+			Station.iStepNext:=1801;
+		END_IF
+	1801:
+		Station.arrInfo[E_Language.Chinese]:="Z模组下降";
+		IF M_ZWork() THEN
+			Station.iStepNext:=1901;
+		END_IF
+	1901:
+		Station.arrInfo[E_Language.Chinese]:="夹紧气缸松开";
+		IF Parameter.fbTakeClamp.M_HomeRequest() THEN
+			Station.iStepNext:=2001;
+		END_IF
+	2001:
+		Station.arrInfo[E_Language.Chinese]:="Z模组上升";
+		IF M_ZHome() THEN
+			Station.iStepNext:=2101;
+		END_IF
+	2101:
+		Station.arrInfo[E_Language.Chinese]:="复位放料请求";
+		CASE Setting.eTakeModeBuffer OF
+			E_TakeMode.Place1:
+				Parameter.stHandshake.bRequestLineLoad_P1:=FALSE;
+				IF NOT Parameter.stHandshake.bResponseTake_P1 THEN
+					Station.iStepNext:=2201;
+				END_IF
+			E_TakeMode.Place3Load:
+				Parameter.stHandshake.bRequestLineLoad_P3:=FALSE;
+				IF NOT Parameter.stHandshake.bResponseTake_P3 THEN
+					Station.iStepNext:=2201;
+				END_IF
+		END_CASE
+	2201:
+		Station.arrInfo[E_Language.Chinese]:="Y轴至初始位";
+		IF Parameter.fbTakeY.M_MoveAbs(1) THEN
+			Station.iStepNext:=1101;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Home" Id="{78e05fe3-7f8d-4689-bb0e-3db8190b8255}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	0:
+		Station.arrInfo[E_Language.Chinese]:="等待初始化";
+		Parameter.stHandshake:=_stHandshake;
+		Parameter.eState:=E_StationState.None;
+		Setting.eTakeModeBuffer:=E_TakeMode.None;
+		Station.iStepNext:=SEL(Enable,1000,500);
+	500:
+		Station.arrInfo[E_Language.Chinese]:="夹紧气缸松开";
+		IF Parameter.fbTakeClamp.M_HomeRequest() THEN
+			Station.iStepNext:=600;
+		END_IF
+	600:
+		Station.arrInfo[E_Language.Chinese]:="Z模组初始化";
+		IF M_ZInit() THEN
+			Station.iStepNext:=700;
+		END_IF
+	700:
+		Station.arrInfo[E_Language.Chinese]:="Z模组至上升位";
+		IF M_ZHome() THEN
+			Station.iStepNext:=800;
+		END_IF
+	800:
+		Station.arrInfo[E_Language.Chinese]:="Y模组回零";
+		IF Parameter.fbTakeY.M_Home() THEN
+			Station.iStepNext:=900;
+		END_IF
+	900:
+		Station.arrInfo[E_Language.Chinese]:="Y模组至初始位";
+		IF Parameter.fbTakeY.M_MoveAbs(1) THEN
+			Station.iStepNext:=1000;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Method Name="M_ZHome" Id="{23ccd6e4-3dd2-420a-955f-6f2f01f3b9cf}">
+      <Declaration><![CDATA[METHOD M_ZHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		M_ZHome:=Parameter.fbTakeLift1.M_HomeRequest() AND Parameter.fbTakeLift2.M_HomeRequest();
+	E_MachineType.LH353,E_MachineType.RH353:
+		M_ZHome:=Parameter.fbTakeZ.M_MoveAbs(1);
+	E_MachineType.LH367,E_MachineType.RH367:
+		M_ZHome:=Parameter.fbTakeLift1.M_HomeRequest() AND Parameter.fbTakeLift2.M_HomeRequest();
+	E_MachineType.LH201,E_MachineType.RH201:
+		M_ZHome:=Parameter.fbTakeZ.M_MoveAbs(1);
+	E_MachineType.LH069,E_MachineType.RH069:
+		M_ZHome:=Parameter.fbTakeZ.M_MoveAbs(1);
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_ZHome:=Parameter.fbTakeZ.M_MoveAbs(1);
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_ZInit" Id="{1f4f8bd6-cd62-4dcf-aba0-594630fd9ffd}">
+      <Declaration><![CDATA[METHOD M_ZInit : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		M_ZInit:=TRUE;
+	E_MachineType.LH353,E_MachineType.RH353:
+		M_ZInit:=Parameter.fbTakeZ.M_Home();
+	E_MachineType.LH367,E_MachineType.RH367:
+		M_ZInit:=TRUE;
+	E_MachineType.LH201,E_MachineType.RH201:
+		M_ZInit:=Parameter.fbTakeZ.M_Home();
+	E_MachineType.LH069,E_MachineType.RH069:
+		M_ZInit:=Parameter.fbTakeZ.M_Home();
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_ZInit:=Parameter.fbTakeZ.M_Home();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_ZWork" Id="{69eddb07-6a77-4cbf-a886-69bb012a7c39}">
+      <Declaration><![CDATA[METHOD M_ZWork : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		M_ZWork:=Parameter.fbTakeLift1.M_WorkRequest() AND Parameter.fbTakeLift2.M_WorkRequest();
+	E_MachineType.LH353,E_MachineType.RH353:
+		M_ZWork:=SEL(_bIsZWork,Parameter.fbTakeZ.M_MoveAbs(3) ,Parameter.fbTakeZ.M_MoveAbs(2));
+	E_MachineType.LH367,E_MachineType.RH367:
+		M_ZWork:=Parameter.fbTakeLift1.M_WorkRequest() AND SEL(_bIsZWork,TRUE ,Parameter.fbTakeLift2.M_WorkRequest()) ;
+	E_MachineType.LH201,E_MachineType.RH201:
+		M_ZWork:=SEL(_bIsZWork,Parameter.fbTakeZ.M_MoveAbs(3) ,Parameter.fbTakeZ.M_MoveAbs(2));
+	E_MachineType.LH069,E_MachineType.RH069:
+		M_ZWork:=SEL(_bIsZWork,Parameter.fbTakeZ.M_MoveAbs(3) ,Parameter.fbTakeZ.M_MoveAbs(2));
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_ZWork:=SEL(_bIsZWork,Parameter.fbTakeZ.M_MoveAbs(3) ,Parameter.fbTakeZ.M_MoveAbs(2));
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_StationTakeLoad">
+      <LineId Id="9" Count="0" />
+      <LineId Id="36" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationTakeLoad.A_Auto">
+      <LineId Id="2" Count="0" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="599" Count="2" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="403" Count="0" />
+      <LineId Id="585" Count="0" />
+      <LineId Id="587" Count="0" />
+      <LineId Id="586" Count="0" />
+      <LineId Id="582" Count="1" />
+      <LineId Id="589" Count="2" />
+      <LineId Id="584" Count="0" />
+      <LineId Id="489" Count="0" />
+      <LineId Id="492" Count="0" />
+      <LineId Id="347" Count="0" />
+      <LineId Id="400" Count="0" />
+      <LineId Id="404" Count="0" />
+      <LineId Id="429" Count="0" />
+      <LineId Id="413" Count="0" />
+      <LineId Id="417" Count="2" />
+      <LineId Id="402" Count="0" />
+      <LineId Id="405" Count="0" />
+      <LineId Id="430" Count="0" />
+      <LineId Id="502" Count="2" />
+      <LineId Id="422" Count="0" />
+      <LineId Id="406" Count="1" />
+      <LineId Id="431" Count="0" />
+      <LineId Id="505" Count="2" />
+      <LineId Id="425" Count="0" />
+      <LineId Id="574" Count="1" />
+      <LineId Id="401" Count="0" />
+      <LineId Id="61" Count="1" />
+      <LineId Id="428" Count="0" />
+      <LineId Id="284" Count="1" />
+      <LineId Id="283" Count="0" />
+      <LineId Id="94" Count="4" />
+      <LineId Id="135" Count="1" />
+      <LineId Id="133" Count="1" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="106" Count="1" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="432" Count="1" />
+      <LineId Id="535" Count="2" />
+      <LineId Id="439" Count="1" />
+      <LineId Id="538" Count="2" />
+      <LineId Id="446" Count="1" />
+      <LineId Id="541" Count="2" />
+      <LineId Id="453" Count="0" />
+      <LineId Id="350" Count="1" />
+      <LineId Id="376" Count="0" />
+      <LineId Id="458" Count="0" />
+      <LineId Id="592" Count="0" />
+      <LineId Id="596" Count="0" />
+      <LineId Id="593" Count="0" />
+      <LineId Id="576" Count="0" />
+      <LineId Id="594" Count="1" />
+      <LineId Id="597" Count="0" />
+      <LineId Id="532" Count="0" />
+      <LineId Id="578" Count="0" />
+      <LineId Id="524" Count="0" />
+      <LineId Id="598" Count="0" />
+      <LineId Id="455" Count="1" />
+      <LineId Id="460" Count="0" />
+      <LineId Id="465" Count="3" />
+      <LineId Id="459" Count="0" />
+      <LineId Id="462" Count="0" />
+      <LineId Id="544" Count="2" />
+      <LineId Id="469" Count="0" />
+      <LineId Id="457" Count="0" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="348" Count="1" />
+      <LineId Id="235" Count="0" />
+      <LineId Id="176" Count="1" />
+      <LineId Id="181" Count="8" />
+      <LineId Id="191" Count="2" />
+      <LineId Id="190" Count="0" />
+      <LineId Id="194" Count="0" />
+      <LineId Id="487" Count="0" />
+      <LineId Id="474" Count="1" />
+      <LineId Id="547" Count="2" />
+      <LineId Id="480" Count="1" />
+      <LineId Id="550" Count="2" />
+      <LineId Id="486" Count="0" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="260" Count="0" />
+      <LineId Id="262" Count="2" />
+      <LineId Id="261" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationTakeLoad.A_Home">
+      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="25" Count="4" />
+      <LineId Id="8" Count="9" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="30" Count="7" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationTakeLoad.M_ZHome">
+      <LineId Id="6" Count="12" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationTakeLoad.M_ZInit">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="10" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationTakeLoad.M_ZWork">
+      <LineId Id="6" Count="12" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

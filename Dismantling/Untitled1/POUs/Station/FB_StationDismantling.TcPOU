@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_StationDismantling" Id="{a1d9aa93-cb9b-4363-9924-ff669d3c1f5e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StationDismantling
+VAR_INPUT
+	Enable:				BOOL;
+	System:				REFERENCE TO ST_System;
+	Station:			REFERENCE TO ST_SystemStation;
+	Error:				REFERENCE TO ST_Error;
+	Setting:			REFERENCE TO ST_Setting;
+	Recipe:				REFERENCE TO ST_Recipe;	
+	Parameter:			REFERENCE TO ST_StationDismantling;	
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_i:					INT;
+	_arrTon:		    ARRAY[0..20] OF TON;
+	_arrFbErrorTag:		ARRAY[0..20] OF FB_ErrorTag;
+	_arrState:			ARRAY[0..20] OF BOOL;
+	_bOpenLockTemp:		BOOL;
+	_bResetLockTemp:	BOOL;
+	_stHandshake:		ST_StationDismantlingHandshake;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_Home();
+A_Auto();]]></ST>
+    </Implementation>
+    <Action Name="A_Auto" Id="{dec06b43-b120-45f8-a55c-c24959594709}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	1000:
+		Station.arrInfo[E_Language.Chinese]:="初始化完成 等待启动";
+		IF  Enable THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1101:
+		Station.arrInfo[E_Language.Chinese]:="判断是否有料";
+		Parameter.eState:=E_StationState.Busy;
+		IF NOT Parameter.bClose AND NOT Parameter.bPalletCheck2 THEN
+			Station.iStepNext:=1201;
+		END_IF
+	1201:
+		Station.arrInfo[E_Language.Chinese]:="请求放料";
+		Parameter.eState:=E_StationState.Load;
+		Station.iStepNext:=1301;
+	1301:
+		Parameter.stHandshake.bRequestLineLoad_D:=TRUE;
+		IF Parameter.stHandshake.bResponseDismantling_D THEN
+			Parameter.eState:=E_StationState.Busy;
+			Station.iStepNext:=1401;
+		END_IF
+	1401:
+		Station.arrInfo[E_Language.Chinese]:="等待产品流入";
+		IF Parameter.bPalletCheck2 THEN
+			Station.iStepNext:=1501;
+		END_IF
+	1501:
+		Station.arrInfo[E_Language.Chinese]:="复位放料请求";
+		Parameter.stHandshake.bRequestLineLoad_D:=FALSE;
+		IF NOT Parameter.stHandshake.bResponseDismantling_D THEN
+			Station.iStepNext:=1601;
+		END_IF
+	1601:
+		Station.arrInfo[E_Language.Chinese]:="等待产品到位";
+		IF Parameter.bPalletCheck2 THEN
+			Station.iStepNext:=1701;
+		END_IF
+	1701:
+		Station.arrInfo[E_Language.Chinese]:="顶升气缸上升 阻挡气缸缩回";
+		_bOpenLockTemp:=FALSE;
+		_arrState[0]:=Parameter.fbLift.M_WorkRequest() ;
+		_arrState[1]:=Parameter.fbPrevent.M_HomeRequest();
+		IF _arrState[0] AND _arrState[1]THEN
+			Station.iStepNext:=1801;
+		END_IF
+	1801:
+		Station.arrInfo[E_Language.Chinese]:="载具解锁";
+		IF M_OpenLock() THEN
+			Station.iStepNext:=1901;
+		END_IF
+	1901:
+		Station.arrInfo[E_Language.Chinese]:="校平气缸伸出";
+		IF M_StandardWork() THEN
+			Station.iStepNext:=2001;
+		END_IF
+	2001:
+		Station.arrInfo[E_Language.Chinese]:="请求取UC";
+		Parameter.stHandshake.bRequestUc:=TRUE;
+		IF Parameter.stHandshake.bResponseDismantling_Uc THEN
+			Station.iStepNext:=2201;
+		END_IF
+	2201:
+		Parameter.stHandshake.bRequestUc:=FALSE;
+		IF NOT Parameter.stHandshake.bResponseDismantling_Uc THEN
+			Station.iStepNext:=2301;
+		END_IF
+	2301:
+		Station.arrInfo[E_Language.Chinese]:="校平气缸缩回";
+		_bResetLockTemp:=FALSE;
+		IF M_StandardHome() THEN
+			Station.iStepNext:=2401;
+		END_IF
+	2401:
+		Station.arrInfo[E_Language.Chinese]:="载具复位";
+		IF M_ResetLock() THEN
+			Station.iStepNext:=2501;
+		END_IF
+	2501:
+		Station.arrInfo[E_Language.Chinese]:="判断下工装站是否屏蔽";
+		IF NOT  Parameter.bCloseUnloadElevator THEN
+			Station.iStepNext:=2551;
+		ELSIF Parameter.fbLift.M_HomeRequest() THEN
+			Station.iStepNext:=2801;
+		END_IF
+	2551:
+		Station.arrInfo[E_Language.Chinese]:="请求下工装";
+		Parameter.stHandshake.bRequestElevator:=TRUE;
+		IF Parameter.stHandshake.bResponseDismantling_E THEN
+			Station.iStepNext:=2601;
+		END_IF
+	2601:
+		Station.arrInfo[E_Language.Chinese]:="顶升气缸下降";
+		IF Parameter.fbLift.M_HomeRequest() THEN
+			Station.iStepNext:=2701;
+		END_IF
+	2701:
+		Station.arrInfo[E_Language.Chinese]:="复位请求";
+		Parameter.stHandshake.bRequestElevator:=FALSE;
+		IF NOT Parameter.stHandshake.bResponseDismantling_E THEN
+			Station.iStepNext:=2801;
+		END_IF
+	2801:
+		Station.arrInfo[E_Language.Chinese]:="等待产品流出";
+		IF NOT Parameter.bPalletCheck1 AND NOT Parameter.bPalletCheck2 AND NOT Parameter.bPalletCheck3 THEN
+			Station.iStepNext:=2901;
+		END_IF
+	2901:
+		Station.arrInfo[E_Language.Chinese]:="阻挡气缸伸出";
+		IF  Parameter.fbPrevent.M_WorkRequest() THEN
+			Station.iStepNext:=1101;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Home" Id="{90e646ee-b30c-4cb8-a7d1-4bdf1d23fb1e}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	0:
+		Station.arrInfo[E_Language.Chinese]:="等待初始化";
+		Parameter.stHandshake:=_stHandshake;
+		Parameter.eState:=E_StationState.Done;
+		Station.iStepNext:=SEL(Enable,1000,100);
+	100:
+		Station.arrInfo[E_Language.Chinese]:="阻挡气缸伸出";
+		IF Parameter.fbPrevent.M_WorkRequest() THEN
+			Station.iStepNext:=200;
+		END_IF
+	200:
+		Station.arrInfo[E_Language.Chinese]:="侧推气缸缩回";
+		IF M_LateralHome() THEN
+			Station.iStepNext:=300;
+		END_IF
+	300:
+		Station.arrInfo[E_Language.Chinese]:="旋转气缸复位";
+		IF Parameter.fbRotate.M_HomeRequest() THEN
+			Station.iStepNext:=400;
+		END_IF
+	400:
+		Station.arrInfo[E_Language.Chinese]:="校平气缸缩回";
+		IF M_StandardHome() THEN
+			Station.iStepNext:=500;
+		END_IF
+	500:
+		Station.arrInfo[E_Language.Chinese]:="顶升气缸缩回";
+		IF Parameter.fbLift.M_HomeRequest() THEN
+			Station.iStepNext:=1000;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Method Name="M_LateralHome" Id="{cd2b8726-2fc4-40c0-9dcb-89fdc8100078}">
+      <Declaration><![CDATA[METHOD M_LateralHome : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	_temp:			ARRAY[0..10] OF BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		M_LateralHome:=Parameter.fbLateral1.M_HomeRequest();
+	E_MachineType.LH353,E_MachineType.RH353:
+		_temp[0]:=Parameter.fbLateral1.M_HomeRequest();
+		_temp[1]:=Parameter.fbLateral2.M_HomeRequest();
+		M_LateralHome:=_temp[0] AND _temp[1];
+	E_MachineType.LH367,E_MachineType.RH367:
+		_temp[0]:=Parameter.fbLateral1.M_HomeRequest();
+		_temp[1]:=Parameter.fbLateral2.M_HomeRequest();
+		M_LateralHome:=_temp[0] AND _temp[1];
+	E_MachineType.LH201,E_MachineType.RH201:
+		_temp[0]:=Parameter.fbLateral1.M_HomeRequest();
+		_temp[1]:=Parameter.fbLateral2.M_HomeRequest();
+		M_LateralHome:=_temp[0] AND _temp[1];
+	E_MachineType.LH069,E_MachineType.RH069:
+		_temp[0]:=Parameter.fbLateral1.M_HomeRequest();
+		_temp[1]:=Parameter.fbLateral2.M_HomeRequest();
+		M_LateralHome:=_temp[0] AND _temp[1];
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_LateralHome:=Parameter.fbLateral1.M_HomeRequest();
+END_CASE
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_LateralWork" Id="{6ed579ac-728a-4ab9-820b-430eb7174114}">
+      <Declaration><![CDATA[METHOD M_LateralWork : BOOL
+VAR_INPUT
+END_VAR
+
+VAR
+	_temp: array[0..10] of bool;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		M_LateralWork:=Parameter.fbLateral1.M_WorkRequest();
+	E_MachineType.LH353,E_MachineType.RH353:
+		_temp[0]:=Parameter.fbLateral1.M_WorkRequest();
+		_temp[1]:=Parameter.fbLateral2.M_WorkRequest();
+		M_LateralWork:=_temp[0] AND _temp[1];
+	E_MachineType.LH367,E_MachineType.RH367:
+		_temp[0]:=Parameter.fbLateral1.M_WorkRequest();
+		_temp[1]:=Parameter.fbLateral2.M_WorkRequest();
+		M_LateralWork:=_temp[0] AND _temp[1];
+	E_MachineType.LH201,E_MachineType.RH201:
+		_temp[0]:=Parameter.fbLateral1.M_WorkRequest();
+		_temp[1]:=Parameter.fbLateral2.M_WorkRequest();
+		M_LateralWork:=_temp[0] AND _temp[1];
+	E_MachineType.LH069,E_MachineType.RH069:
+		_temp[0]:=Parameter.fbLateral1.M_WorkRequest();
+		_temp[1]:=Parameter.fbLateral2.M_WorkRequest();
+		M_LateralWork:=_temp[0] AND _temp[1];
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_LateralWork:=Parameter.fbLateral1.M_WorkRequest();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_OpenLock" Id="{04a3adc7-531b-498b-8990-e0e022908dce}">
+      <Declaration><![CDATA[METHOD M_OpenLock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Recipe.eMachineType=E_MachineType.LH311 OR Recipe.eMachineType=E_MachineType.RH311 THEN
+	IF M_LateralWork() THEN
+		M_OpenLock:=Parameter.fbRotate.M_WorkRequest();
+	END_IF
+ELSE
+	IF NOT _bOpenLockTemp THEN
+		IF M_LateralWork() THEN
+			_bOpenLockTemp:=Parameter.fbRotate.M_WorkRequest();
+		END_IF
+	ELSE
+		CASE  Recipe.eMachineType OF
+			E_MachineType.LH201,E_MachineType.RH201:
+				M_OpenLock:=Parameter.fbLateral2.M_HomeRequest();
+			ELSE
+				M_OpenLock:=M_LateralHome();
+		END_CASE
+	END_IF
+END_IF
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_ResetLock" Id="{ae361eed-a379-4e59-ad4f-f639d9a12f80}">
+      <Declaration><![CDATA[METHOD M_ResetLock : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Recipe.eMachineType=E_MachineType.LH311 OR Recipe.eMachineType=E_MachineType.RH311 THEN
+	IF M_LateralHome() THEN
+		M_ResetLock:=Parameter.fbRotate.M_HomeRequest();;
+	END_IF
+ELSE
+	IF NOT _bResetLockTemp THEN
+		IF Parameter.fbLateral1.M_WorkRequest() THEN
+			_bResetLockTemp:=Parameter.fbRotate.M_HomeRequest();
+		END_IF
+	ELSE
+		M_ResetLock:=Parameter.fbLateral1.M_HomeRequest();
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_StandardHome" Id="{52a5c25a-bd78-4a64-99bf-f5691526a479}">
+      <Declaration><![CDATA[METHOD M_StandardHome : BOOL
+VAR_INPUT
+END_VAR
+VAR
+	_temp:			ARRAY[0..10] OF BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		_temp[0]:=Parameter.fbStandard1.M_HomeRequest();
+		_temp[1]:=Parameter.fbStandard2.M_HomeRequest();
+		M_StandardHome:=_temp[0] AND _temp[1];
+	E_MachineType.LH353,E_MachineType.RH353:
+		M_StandardHome:=Parameter.fbStandard1.M_HomeRequest();
+	E_MachineType.LH367,E_MachineType.RH367:
+		M_StandardHome:=Parameter.fbStandard1.M_HomeRequest();
+	E_MachineType.LH201,E_MachineType.RH201:
+		M_StandardHome:=TRUE;
+	E_MachineType.LH069,E_MachineType.RH069:
+		M_StandardHome:=TRUE;
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_StandardHome:=Parameter.fbStandard1.M_HomeRequest();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_StandardWork" Id="{1ca86bad-8d4c-45f1-8041-3fd933d3111a}">
+      <Declaration><![CDATA[METHOD M_StandardWork : BOOL
+VAR_INPUT
+END_VAR
+
+VAR
+	_temp: array[0..10] of bool;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		_temp[0]:=Parameter.fbStandard1.M_WorkRequest();
+		_temp[1]:=Parameter.fbStandard2.M_WorkRequest();
+		M_StandardWork:=_temp[0] AND _temp[1];
+	E_MachineType.LH353,E_MachineType.RH353:
+		M_StandardWork:=Parameter.fbStandard1.M_WorkRequest();
+	E_MachineType.LH367,E_MachineType.RH367:
+		M_StandardWork:=Parameter.fbStandard1.M_WorkRequest();
+	E_MachineType.LH201,E_MachineType.RH201:
+		M_StandardWork:=TRUE;
+	E_MachineType.LH069,E_MachineType.RH069:
+		M_StandardWork:=TRUE;
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_StandardWork:=TRUE;//Parameter.fbStandard1.M_WorkRequest();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_StationDismantling">
+      <LineId Id="24" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.A_Auto">
+      <LineId Id="130" Count="2" />
+      <LineId Id="257" Count="2" />
+      <LineId Id="134" Count="1" />
+      <LineId Id="241" Count="0" />
+      <LineId Id="255" Count="1" />
+      <LineId Id="247" Count="0" />
+      <LineId Id="142" Count="1" />
+      <LineId Id="240" Count="0" />
+      <LineId Id="242" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="147" Count="1" />
+      <LineId Id="243" Count="0" />
+      <LineId Id="150" Count="19" />
+      <LineId Id="297" Count="0" />
+      <LineId Id="226" Count="1" />
+      <LineId Id="170" Count="3" />
+      <LineId Id="284" Count="2" />
+      <LineId Id="178" Count="1" />
+      <LineId Id="280" Count="0" />
+      <LineId Id="282" Count="1" />
+      <LineId Id="279" Count="0" />
+      <LineId Id="184" Count="1" />
+      <LineId Id="189" Count="1" />
+      <LineId Id="192" Count="2" />
+      <LineId Id="196" Count="4" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="298" Count="0" />
+      <LineId Id="295" Count="1" />
+      <LineId Id="204" Count="1" />
+      <LineId Id="291" Count="2" />
+      <LineId Id="290" Count="0" />
+      <LineId Id="260" Count="1" />
+      <LineId Id="265" Count="0" />
+      <LineId Id="268" Count="0" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="272" Count="0" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="215" Count="5" />
+      <LineId Id="222" Count="3" />
+      <LineId Id="221" Count="0" />
+      <LineId Id="228" Count="0" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="230" Count="2" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="273" Count="0" />
+      <LineId Id="277" Count="0" />
+      <LineId Id="274" Count="2" />
+      <LineId Id="234" Count="0" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="235" Count="2" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.A_Home">
+      <LineId Id="2" Count="2" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="5" Count="2" />
+      <LineId Id="9" Count="4" />
+      <LineId Id="15" Count="2" />
+      <LineId Id="30" Count="4" />
+      <LineId Id="18" Count="9" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.M_LateralHome">
+      <LineId Id="15" Count="3" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="25" Count="2" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.M_LateralWork">
+      <LineId Id="9" Count="20" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.M_OpenLock">
+      <LineId Id="9" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="63" Count="1" />
+      <LineId Id="66" Count="2" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.M_ResetLock">
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="27" Count="3" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.M_StandardHome">
+      <LineId Id="9" Count="1" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="19" Count="1" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="27" Count="2" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationDismantling.M_StandardWork">
+      <LineId Id="9" Count="14" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

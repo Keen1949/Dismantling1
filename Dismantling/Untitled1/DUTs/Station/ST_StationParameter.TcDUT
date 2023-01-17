@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationParameter" Id="{f0ac45e1-e4b4-4a00-bbb8-1dd7510632f6}">
+    <Declaration><![CDATA[TYPE ST_StationParameter :
+STRUCT
+	stLine0Load:			ST_StationLine0Load;// 主流线上料工站
+	stLine0Buffer:			ST_StationLine0Buffer;// 主流线缓存工站
+	stTakeLoad:				ST_StationTakeLoad;// 上料取料工站
+	stLine3Load:			ST_StationLineLoad;// 流线3上料工站
+	stLine1Load:			ST_StationLineLoad;// 流线2上料工站
+	stLine2Dismantling:		ST_StationDismantling;// 流线2拆解工站
+	stLine3Dismantling:		ST_StationDismantling;// 流线3拆解工站
+	stLine2UnloadElevator:	ST_StationUnloadElevator;// 线体2下工装
+	stLine3UnloadElevator:	ST_StationUnloadElevator;// 线体3下工装
+	stLine2UnloadUc:		ST_StationUnloadUc;// 线体2 下UC
+	stLine3UnloadUc:		ST_StationUnloadUc;// 线体2 下UC
+	stUnloadLineUc:			ST_StationUnloadLine;// 下UC 线体
+	stUnloadLineElevator:	ST_StationUnloadLine;// 下工装 线体
+	stUnloadUc_311:			ST_StationUnloadUc_311;// 下UC 模组
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

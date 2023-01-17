@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationLineLoad" Id="{8d539498-4712-4768-a9f0-f357371339b8}">
+    <Declaration><![CDATA[TYPE ST_StationLineLoad :
+STRUCT
+	fbElevator:				REFERENCE TO FB_Cylinder;// 提升气缸
+	fbLift:					REFERENCE TO FB_Cylinder;// 顶升气缸
+	fbPrevent:				REFERENCE TO FB_Cylinder;// 阻挡气缸
+	fbRotate:				REFERENCE TO FB_Cylinder;// 旋转气缸
+	fbAdjust1:				REFERENCE TO FB_Cylinder;// 调宽气缸
+	bPalletCheck1:			BOOL;// 流入光电
+	bPalletCheck2:			BOOL;// 到位光电
+	bPalletCheck3:			BOOL;// 流出光电
+	eState:					E_StationState;
+	bIsClosed:				BOOL;// 线体关闭
+	bIsTaking:				BOOL;// 取料站 取料中
+	bIsPlacing:				BOOL;// 取料站 放料中
+	bManualLoad:			BOOL;// 手动上料 
+	stHandshake:			ST_StationLineLoadHandshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

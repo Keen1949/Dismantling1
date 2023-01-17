@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_MachineType" Id="{a5f21139-e359-4bb8-8166-8e0c5047065f}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_MachineType :
+(
+	None:=0,
+	RH353,
+	RH367,
+	RH311,
+	RH201,
+	RH069,
+	RH373,
+	LH353,
+	LH367,
+	LH311,
+	LH201,
+	LH069,
+	LH373
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

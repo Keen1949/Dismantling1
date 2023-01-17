@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationUnloadElevator" Id="{6e2ce87e-2c85-4378-8d47-f194299d3348}">
+    <Declaration><![CDATA[TYPE ST_StationUnloadElevator :
+STRUCT
+	bFrockElevator1NoneCheck:			BOOL;//工装有无检测
+	fbFrockElevator:					REFERENCE TO FB_Cylinder;// 提升气缸
+	fbFrockRotateDown:					REFERENCE TO FB_Cylinder;// 旋转压紧气缸
+	fbFrockPush:						REFERENCE TO FB_Cylinder;// 拨料气缸
+	bManualUnload:						BOOL;// 手动下料
+	stHandshake:						ST_StationUnloadElevatorHandshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

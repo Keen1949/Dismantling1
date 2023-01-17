@@ -1,0 +1,1046 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <TextList Name="OutputText" Id="{3e72ff28-dbe1-48a8-be85-75c7936f53c1}">
+    <XmlArchive>
+      <Data>
+        <o xml:space="preserve" t="TextListObject">
+          <v n="UniqueIdGenerator">"0"</v>
+          <l n="TextList" t="ArrayList" cet="TextListRow">
+            <o>
+              <v n="TextID">"0"</v>
+              <v n="TextDefault">"OUT00 三色灯红"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT00 三色灯红</v>
+                <v>OUT00 bBeacon_Red</v>
+                <v>OUT00 Đèn đỏ ba màu</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"1"</v>
+              <v n="TextDefault">"OUT01 三色灯黄"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT01 三色灯黄</v>
+                <v>OUT01 bBeacon_Yellow</v>
+                <v>OUT01 Đèn màu vàng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"2"</v>
+              <v n="TextDefault">"OUT02 三色灯绿"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT02 三色灯绿</v>
+                <v>OUT02 bBeacon_Green</v>
+                <v>OUT02 Màu xanh lá cây đèn ba màu</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"3"</v>
+              <v n="TextDefault">"OUT03 蜂鸣器"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT03 蜂鸣器</v>
+                <v>OUT03 bBeacon_Buzzer</v>
+                <v>OUT03 buzzer</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"4"</v>
+              <v n="TextDefault">"OUT04 运行指示灯"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT04 运行指示灯</v>
+                <v>OUT04 bRuning</v>
+                <v>OUT04 Chạy ánh sáng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"5"</v>
+              <v n="TextDefault">"OUT05 停止指示灯"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT05 停止指示灯</v>
+                <v>OUT05 bStop</v>
+                <v>OUT05 Dừng đèn</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"6"</v>
+              <v n="TextDefault">"OUT06 照明灯"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT06 照明灯</v>
+                <v>OUT06 bLED</v>
+                <v>OUT06 Ánh sáng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"7"</v>
+              <v n="TextDefault">"OUT07 主流线分料气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT07 主流线分料气缸缩回</v>
+                <v>OUT07 bLine0Part_Cyl_H</v>
+                <v>OUT07 Xu hướng đường phút đoán QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"8"</v>
+              <v n="TextDefault">"OUT08 主流线分料气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT08 主流线分料气缸伸出</v>
+                <v>OUT08 bLine0Part_Cyl_W</v>
+                <v>OUT08 Đường phút đoán QiGang vươn ra xu hướng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"9"</v>
+              <v n="TextDefault">"OUT09 主流线阻挡气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT09 主流线阻挡气缸缩回</v>
+                <v>OUT09 bLine0Prevent_Cyl_H</v>
+                <v>OUT09 Dòng chính ngăn chặn sự rút lại của xi lanh</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"10"</v>
+              <v n="TextDefault">"OUT0A 主流线阻挡气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT0A 主流线阻挡气缸伸出</v>
+                <v>OUT0A bLine0Prevent_Cyl_W</v>
+                <v>OUT0A Dòng chính ngăn các xi lanh thoát ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"11"</v>
+              <v n="TextDefault">"OUT0B 流水线1提升气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT0B 流水线1提升气缸缩回</v>
+                <v>OUT0B bLine1Elevator_Cyl_H</v>
+                <v>OUT0B 1 dây chuyền cải thiện QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"12"</v>
+              <v n="TextDefault">"OUT0C 流水线1提升气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT0C 流水线1提升气缸伸出</v>
+                <v>OUT0C bLine1Elevator_Cyl_W</v>
+                <v>OUT0C Xi lanh nâng ra khỏi đường ống 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"13"</v>
+              <v n="TextDefault">"OUT0D 流水线1顶升气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT0D 流水线1顶升气缸缩回</v>
+                <v>OUT0D bLine1Lift_Cyl_H</v>
+                <v>OUT0D Dòng 1 lít xi lanh rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"14"</v>
+              <v n="TextDefault">"OUT0E 流水线1顶升气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT0E 流水线1顶升气缸伸出</v>
+                <v>OUT0E bLine1Lift_Cyl_W</v>
+                <v>OUT0E Dây chuyền sản xuất 1 lít xi lanh thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"15"</v>
+              <v n="TextDefault">"OUT0F 流水线1阻挡气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT0F 流水线1阻挡气缸缩回</v>
+                <v>OUT0F bLine1Prevent_Cyl_H</v>
+                <v>OUT0F 1 dây chuyền ngăn cản QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"16"</v>
+              <v n="TextDefault">"OUT10 流水线1阻挡气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT10 流水线1阻挡气缸伸出</v>
+                <v>OUT10 bLine1Prevent_Cyl_W</v>
+                <v>OUT10 1 dây chuyền ngăn cản QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"17"</v>
+              <v n="TextDefault">"OUT11 流水线1旋转气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT11 流水线1旋转气缸缩回</v>
+                <v>OUT11 bLine1Rotate_Cyl_H</v>
+                <v>OUT11 1 dây chuyền xoay QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"18"</v>
+              <v n="TextDefault">"OUT12 流水线1旋转气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT12 流水线1旋转气缸伸出</v>
+                <v>OUT12 bLine1Rotate_Cyl_W</v>
+                <v>OUT12 1 dây chuyền xoay QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"19"</v>
+              <v n="TextDefault">"OUT13 流水线1调宽气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT13 流水线1调宽气缸缩回</v>
+                <v>OUT13 bLine1Adjust1_Cyl_H</v>
+                <v>OUT13 1 dây chuyền chuyển rộng QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"20"</v>
+              <v n="TextDefault">"OUT14 流水线1调宽气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT14 流水线1调宽气缸伸出</v>
+                <v>OUT14 bLine1Adjust1_Cyl_W</v>
+                <v>OUT14 1 dây chuyền chuyển rộng QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"21"</v>
+              <v n="TextDefault">"OUT15 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT15 预留</v>
+                <v>OUT15 None1</v>
+                <v>OUT15 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"22"</v>
+              <v n="TextDefault">"OUT16 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT16 预留</v>
+                <v>OUT16 None2</v>
+                <v>OUT16 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"23"</v>
+              <v n="TextDefault">"OUT17 流水线2顶升气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT17 流水线2顶升气缸缩回</v>
+                <v>OUT17 bLine2Lift_Cyl_H</v>
+                <v>OUT17 2 dây chuyền trên đỉnh lít QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"24"</v>
+              <v n="TextDefault">"OUT18 流水线2顶升气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT18 流水线2顶升气缸伸出</v>
+                <v>OUT18 bLine2Lift_Cyl_W</v>
+                <v>OUT18 Dây chuyền 2 lít QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"25"</v>
+              <v n="TextDefault">"OUT19 流水线2阻挡气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT19 流水线2阻挡气缸缩回</v>
+                <v>OUT19 bLine2Prevent_Cyl_H</v>
+                <v>OUT19 Dây chuyền 2 ngăn cản QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"26"</v>
+              <v n="TextDefault">"OUT1A 流水线2阻挡气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT1A 流水线2阻挡气缸伸出</v>
+                <v>OUT1A bLine2Prevent_Cyl_W</v>
+                <v>OUT1A Dây chuyền 2 ngăn cản QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"27"</v>
+              <v n="TextDefault">"OUT1B 流水线2校平气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT1B 流水线2校平气缸1缩回</v>
+                <v>OUT1B bLine2Standard1_Cyl_H</v>
+                <v>OUT1B 1 dây chuyền 2 trường phẳng QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"28"</v>
+              <v n="TextDefault">"OUT1C 流水线2校平气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT1C 流水线2校平气缸1伸出</v>
+                <v>OUT1C bLine2Standard1_Cyl_W</v>
+                <v>OUT1C 1 dây chuyền 2 trường phẳng QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"29"</v>
+              <v n="TextDefault">"OUT1D 流水线2校平气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT1D 流水线2校平气缸2缩回</v>
+                <v>OUT1D bLine2Standard2_Cyl_H</v>
+                <v>OUT1D Dây chuyền 2 trường QiGang giới phẳng 2 theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"30"</v>
+              <v n="TextDefault">"OUT1E 流水线2校平气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT1E 流水线2校平气缸2伸出</v>
+                <v>OUT1E bLine2Standard2_Cyl_W</v>
+                <v>OUT1E 2 trường QiGang giới phẳng 2 dây chuyền vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"31"</v>
+              <v n="TextDefault">"OUT1F 流水线2解锁侧推气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT1F 流水线2解锁侧推气缸1缩回</v>
+                <v>OUT1F bLine2OpenLateral1_Cyl_H</v>
+                <v>OUT1F Dây chuyền 2 bỏ khóa đẩy QiGang 1 theo lẽ bên hông</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"32"</v>
+              <v n="TextDefault">"OUT20 流水线2解锁侧推气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT20 流水线2解锁侧推气缸1伸出</v>
+                <v>OUT20 bLine2OpenLateral1_Cyl_W</v>
+                <v>OUT20 Dây chuyền 2 bỏ khóa đẩy QiGang 1 bên hông vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"33"</v>
+              <v n="TextDefault">"OUT21 流水线2解锁旋转气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT21 流水线2解锁旋转气缸缩回</v>
+                <v>OUT21 bLine2OpenRotate_Cyl_H</v>
+                <v>OUT21 Dây chuyền 2 mở khóa xoay QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"34"</v>
+              <v n="TextDefault">"OUT22 流水线2解锁旋转气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT22 流水线2解锁旋转气缸伸出</v>
+                <v>OUT22 bLine2OpenRotate_Cyl_W</v>
+                <v>OUT22 Dây chuyền 2 mở khóa xoay QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"35"</v>
+              <v n="TextDefault">"OUT23 流水线2解锁侧推气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT23 流水线2解锁侧推气缸2缩回</v>
+                <v>OUT23 bLine2OpenLateral2_Cyl_H</v>
+                <v>OUT23 Dây chuyền 2 bỏ khóa đẩy QiGang bên hông 2 theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"36"</v>
+              <v n="TextDefault">"OUT24 流水线2解锁侧推气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT24 流水线2解锁侧推气缸2伸出</v>
+                <v>OUT24 bLine2OpenLateral2_Cyl_W</v>
+                <v>OUT24 Dây chuyền 2 bỏ khóa đẩy QiGang 2 bên hông vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"37"</v>
+              <v n="TextDefault">"OUT25 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT25 预留</v>
+                <v>OUT25 None202</v>
+                <v>OUT25 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"38"</v>
+              <v n="TextDefault">"OUT26 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT26 预留</v>
+                <v>OUT26 None203</v>
+                <v>OUT26 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"39"</v>
+              <v n="TextDefault">"OUT27 流水线3上料位顶升缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT27 流水线3上料位顶升缩回</v>
+                <v>OUT27 bLine3LoadLift_Cyl_H</v>
+                <v>OUT27 Dây chuyền đoán người trên 3 lít theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"40"</v>
+              <v n="TextDefault">"OUT28 流水线3上料位顶升伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT28 流水线3上料位顶升伸出</v>
+                <v>OUT28 bLine3LoadLift_Cyl_W</v>
+                <v>OUT28 Dây chuyền đoán người trên 3 lít vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"41"</v>
+              <v n="TextDefault">"OUT29 流水线3上料位阻挡缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT29 流水线3上料位阻挡缩回</v>
+                <v>OUT29 bLine3LoadPrevent_Cyl_H</v>
+                <v>OUT29 Dây chuyền trên 3 đoán ngăn cản theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"42"</v>
+              <v n="TextDefault">"OUT2A 流水线3上料位阻挡伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT2A 流水线3上料位阻挡伸出</v>
+                <v>OUT2A bLine3LoadPrevent_Cyl_W</v>
+                <v>OUT2A Dây chuyền trên 3 đoán ai ngăn cản</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"43"</v>
+              <v n="TextDefault">"OUT2B 流水线3上料位旋转缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT2B 流水线3上料位旋转缩回</v>
+                <v>OUT2B bLine3LoadRotate_Cyl_H</v>
+                <v>OUT2B Dây chuyền trên 3 đoán xoay theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"44"</v>
+              <v n="TextDefault">"OUT2C 流水线3上料位旋转伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT2C 流水线3上料位旋转伸出</v>
+                <v>OUT2C bLine3LoadRotate_Cyl_W</v>
+                <v>OUT2C Dây chuyền trên 3 đoán xoay vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"45"</v>
+              <v n="TextDefault">"OUT2D 流水线3解锁位顶升缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT2D 流水线3解锁位顶升缩回</v>
+                <v>OUT2D bLine3OpenLift_Cyl_H</v>
+                <v>OUT2D 3 đội bỏ khóa một cái dây chuyền lít theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"46"</v>
+              <v n="TextDefault">"OUT2E 流水线3解锁位顶升伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT2E 流水线3解锁位顶升伸出</v>
+                <v>OUT2E bLine3OpenLift_Cyl_W</v>
+                <v>OUT2E Dây chuyền, mở khóa 3 đội một cái lít vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"47"</v>
+              <v n="TextDefault">"OUT2F 流水线3解锁位阻挡缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT2F 流水线3解锁位阻挡缩回</v>
+                <v>OUT2F bLine3OpenPrevent_Cyl_H</v>
+                <v>OUT2F Dây chuyền, mở khóa 3 người ngăn cản theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"48"</v>
+              <v n="TextDefault">"OUT30 流水线3解锁位阻挡伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT30 流水线3解锁位阻挡伸出</v>
+                <v>OUT30 bLine3OpenPrevent_Cyl_W</v>
+                <v>OUT30 Dây chuyền, mở khóa 3 người ngăn cản ngươi ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"49"</v>
+              <v n="TextDefault">"OUT31 流水线3校平气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT31 流水线3校平气缸1缩回</v>
+                <v>OUT31 bLine3Standard1_Cyl_H</v>
+                <v>OUT31 3 trường QiGang giới phẳng dây chuyền 1 theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"50"</v>
+              <v n="TextDefault">"OUT32 流水线3校平气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT32 流水线3校平气缸1伸出</v>
+                <v>OUT32 bLine3Standard1_Cyl_W</v>
+                <v>OUT32 1 dây chuyền 3 trường phẳng QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"51"</v>
+              <v n="TextDefault">"OUT33 流水线3校平气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT33 流水线3校平气缸2缩回</v>
+                <v>OUT33 bLine3Standard2_Cyl_H</v>
+                <v>OUT33 3 trường QiGang giới phẳng dây chuyền 2 theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"52"</v>
+              <v n="TextDefault">"OUT34 流水线3校平气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT34 流水线3校平气缸2伸出</v>
+                <v>OUT34 bLine3Standard2_Cyl_W</v>
+                <v>OUT34 3 trường QiGang giới phẳng dây chuyền 2 vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"53"</v>
+              <v n="TextDefault">"OUT35 流水线3解锁侧推气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT35 流水线3解锁侧推气缸1缩回</v>
+                <v>OUT35 bLine3OpenLateral1_Cyl_H</v>
+                <v>OUT35 Dây chuyền, mở khóa 3 đẩy QiGang 1 theo lẽ bên hông</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"54"</v>
+              <v n="TextDefault">"OUT36 流水线3解锁侧推气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT36 流水线3解锁侧推气缸1伸出</v>
+                <v>OUT36 bLine3OpenLateral1_Cyl_W</v>
+                <v>OUT36 Dây chuyền, mở khóa 3 đẩy QiGang 1 bên hông vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"55"</v>
+              <v n="TextDefault">"OUT37 流水线3解锁旋转气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT37 流水线3解锁旋转气缸缩回</v>
+                <v>OUT37 bLine3OpenRotate_Cyl_H</v>
+                <v>OUT37 Dây chuyền, mở khóa 3 xoay QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"56"</v>
+              <v n="TextDefault">"OUT38 流水线3解锁旋转气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT38 流水线3解锁旋转气缸伸出</v>
+                <v>OUT38 bLine3OpenRotate_Cyl_W</v>
+                <v>OUT38 Dây chuyền, mở khóa 3 xoay QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"57"</v>
+              <v n="TextDefault">"OUT39 流水线3解锁侧推气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT39 流水线3解锁侧推气缸2缩回</v>
+                <v>OUT39 bLine3OpenLateral2_Cyl_H</v>
+                <v>OUT39 3 dây chuyền 2 theo lẽ bỏ khóa đẩy QiGang bên hông</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"58"</v>
+              <v n="TextDefault">"OUT3A 流水线3解锁侧推气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT3A 流水线3解锁侧推气缸2伸出</v>
+                <v>OUT3A bLine3OpenLateral2_Cyl_W</v>
+                <v>OUT3A Dây chuyền, mở khóa 3 đẩy QiGang 2 bên hông vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"59"</v>
+              <v n="TextDefault">"OUT3B 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT3B 预留</v>
+                <v>OUT3B None200</v>
+                <v>OUT3B Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"60"</v>
+              <v n="TextDefault">"OUT3C 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT3C 预留</v>
+                <v>OUT3C None201</v>
+                <v>OUT3C Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"61"</v>
+              <v n="TextDefault">"OUT3D 取料模组升降气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT3D 取料模组升降气缸1缩回</v>
+                <v>OUT3D bTakeLift1_Cyl_H</v>
+                <v>OUT3D Lấy đoán trông QiGang phản lực lên nhóm 1 theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"62"</v>
+              <v n="TextDefault">"OUT3E 取料模组升降气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT3E 取料模组升降气缸1伸出</v>
+                <v>OUT3E bTakeLift1_Cyl_W</v>
+                <v>OUT3E Lấy khối nâng xi lanh 1 thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"63"</v>
+              <v n="TextDefault">"OUT3F 取料模组升降气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT3F 取料模组升降气缸2缩回</v>
+                <v>OUT3F bTakeLift2_Cyl_H</v>
+                <v>OUT3F Lấy đoán trông QiGang phản lực lên nhóm 2 theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"64"</v>
+              <v n="TextDefault">"OUT40 取料模组升降气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT40 取料模组升降气缸2伸出</v>
+                <v>OUT40 bTakeLift2_Cyl_W</v>
+                <v>OUT40 Lấy đoán trông QiGang phản lực lên nhóm 2</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"65"</v>
+              <v n="TextDefault">"OUT41 取料模组夹紧气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT41 取料模组夹紧气缸缩回</v>
+                <v>OUT41 bTakeClamp_Cyl_H</v>
+                <v>OUT41 Lấy mô-đun kẹp xi lanh rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"66"</v>
+              <v n="TextDefault">"OUT42 取料模组夹紧气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT42 取料模组夹紧气缸伸出</v>
+                <v>OUT42 bTakeClamp_Cyl_W</v>
+                <v>OUT42 Lấy đoán trông kẹp chặt QiGang vươn ra nhóm</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"67"</v>
+              <v n="TextDefault">"OUT43 下UC模组升降气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT43 下UC模组升降气缸缩回</v>
+                <v>OUT43 bUcLift_Cyl_H</v>
+                <v>OUT43 Tiếp theo và trông QiGang phản lực lên nhóm theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"68"</v>
+              <v n="TextDefault">"OUT44 下UC模组升降气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT44 下UC模组升降气缸伸出</v>
+                <v>OUT44 bUcLift_Cyl_W</v>
+                <v>OUT44 Xi lanh nâng theo mô-đun UC thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"69"</v>
+              <v n="TextDefault">"OUT45 下UC模组夹紧气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT45 下UC模组夹紧气缸缩回</v>
+                <v>OUT45 bUcClamp_Cyl_H</v>
+                <v>OUT45 Nhóm tiếp theo và trông kẹp chặt QiGang theo lẽ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"70"</v>
+              <v n="TextDefault">"OUT46 下UC模组夹紧气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT46 下UC模组夹紧气缸伸出</v>
+                <v>OUT46 bUcClamp_Cyl_W</v>
+                <v>OUT46 Các xi lanh bị kẹp dưới mô-đun UC thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"71"</v>
+              <v n="TextDefault">"OUT47 下UC模组摆动气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT47 下UC模组摆动气缸缩回</v>
+                <v>OUT47 bUcSwing_Cyl_H</v>
+                <v>OUT47 Mô-đun UC dưới đang quay xi lanh</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"72"</v>
+              <v n="TextDefault">"OUT48 下UC模组摆动气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT48 下UC模组摆动气缸伸出</v>
+                <v>OUT48 bUcSwing_Cyl_W</v>
+                <v>OUT48 Các xi lanh xoay trong mô-đun UC phía dưới thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"73"</v>
+              <v n="TextDefault">"OUT49 下UC升降气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT49 下UC升降气缸1缩回</v>
+                <v>OUT49 bUcLift1_Cyl_H</v>
+                <v>OUT49 Xi lanh nâng dưới UC 1 rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"74"</v>
+              <v n="TextDefault">"OUT4A 下UC升降气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT4A 下UC升降气缸1伸出</v>
+                <v>OUT4A bUcLift1_Cyl_W</v>
+                <v>OUT4A Xi lanh nâng dưới UC 1 thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"75"</v>
+              <v n="TextDefault">"OUT4B 下UC夹紧气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT4B 下UC夹紧气缸1缩回</v>
+                <v>OUT4B bUcClamp1_Cyl_H</v>
+                <v>OUT4B Khóa xi lanh 1 lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"76"</v>
+              <v n="TextDefault">"OUT4C 下UC夹紧气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT4C 下UC夹紧气缸1伸出</v>
+                <v>OUT4C bUcClamp1_Cyl_W</v>
+                <v>OUT4C Bên dưới ống 1 được mở ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"77"</v>
+              <v n="TextDefault">"OUT4D 下UC旋转气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT4D 下UC旋转气缸1缩回</v>
+                <v>OUT4D bUcRotate1_Cyl_H</v>
+                <v>OUT4D Xi lanh quay dưới UC 1 rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"78"</v>
+              <v n="TextDefault">"OUT4E 下UC旋转气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT4E 下UC旋转气缸1伸出</v>
+                <v>OUT4E bUcRotate1_Cyl_W</v>
+                <v>OUT4E Xi lanh quay dưới UC 1 thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"79"</v>
+              <v n="TextDefault">"OUT4F 下UC升降气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT4F 下UC升降气缸2缩回</v>
+                <v>OUT4F bUcLift2_Cyl_H</v>
+                <v>OUT4F Xi lanh nâng 2 co lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"80"</v>
+              <v n="TextDefault">"OUT50 下UC升降气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT50 下UC升降气缸2伸出</v>
+                <v>OUT50 bUcLift2_Cyl_W</v>
+                <v>OUT50 QiGang phản lực lên xuống và giơ 2</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"81"</v>
+              <v n="TextDefault">"OUT51 下UC夹紧气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT51 下UC夹紧气缸2缩回</v>
+                <v>OUT51 bUcClamp2_Cyl_H</v>
+                <v>OUT51 Quay lại xi lanh 2</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"82"</v>
+              <v n="TextDefault">"OUT52 下UC夹紧气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT52 下UC夹紧气缸2伸出</v>
+                <v>OUT52 bUcClamp2_Cyl_W</v>
+                <v>OUT52 Bên dưới ống 2 được mở ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"83"</v>
+              <v n="TextDefault">"OUT53 下UC旋转气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT53 下UC旋转气缸2缩回</v>
+                <v>OUT53 bUcRotate2_Cyl_H</v>
+                <v>OUT53 Xi lanh quay dưới UC 2 rút lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"84"</v>
+              <v n="TextDefault">"OUT54 下UC旋转气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT54 下UC旋转气缸2伸出</v>
+                <v>OUT54 bUcRotate2_Cyl_W</v>
+                <v>OUT54 Xi lanh 2 quay dưới UC thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"85"</v>
+              <v n="TextDefault">"OUT55 下UC皮带推料气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT55 下UC皮带推料气缸缩回</v>
+                <v>OUT55 bUcDrive_Cyl_H</v>
+                <v>OUT55 Co lại xi lanh đẩy dưới vành đai UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"86"</v>
+              <v n="TextDefault">"OUT56 下UC皮带推料气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT56 下UC皮带推料气缸伸出</v>
+                <v>OUT56 bUcDrive_Cyl_W</v>
+                <v>OUT56 Các xi lanh đẩy ra ngoài</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"87"</v>
+              <v n="TextDefault">"OUT57 下工装提升气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT57 下工装提升气缸1缩回</v>
+                <v>OUT57 bFrockElevator1_Cyl_H</v>
+                <v>OUT57 Máy nâng xi lanh 1 rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"88"</v>
+              <v n="TextDefault">"OUT58 下工装提升气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT58 下工装提升气缸1伸出</v>
+                <v>OUT58 bFrockElevator1_Cyl_W</v>
+                <v>OUT58 Nâng cao GongZhuang tiếp theo là 1 QiGang vươn ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"89"</v>
+              <v n="TextDefault">"OUT59 下工装旋转压紧气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT59 下工装旋转压紧气缸1缩回</v>
+                <v>OUT59 bFrockRotateDown1_Cyl_H</v>
+                <v>OUT59 Tải trọng xoay xi lanh 1 co lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"90"</v>
+              <v n="TextDefault">"OUT5A 下工装旋转压紧气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT5A 下工装旋转压紧气缸1伸出</v>
+                <v>OUT5A bFrockRotateDown1_Cyl_W</v>
+                <v>OUT5A Công cụ xoay xi lanh 1 căng ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"91"</v>
+              <v n="TextDefault">"OUT5B 下工装拨料气缸1缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT5B 下工装拨料气缸1缩回</v>
+                <v>OUT5B bFrockPush1_Cyl_H</v>
+                <v>OUT5B Xi lanh số 1 thu hồi</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"92"</v>
+              <v n="TextDefault">"OUT5C 下工装拨料气缸1伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT5C 下工装拨料气缸1伸出</v>
+                <v>OUT5C bFrockPush1_Cyl_W</v>
+                <v>OUT5C Xi lanh máy đo 1 thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"93"</v>
+              <v n="TextDefault">"OUT5D 下工装提升气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT5D 下工装提升气缸2缩回</v>
+                <v>OUT5D bFrockElevator2_Cyl_H</v>
+                <v>OUT5D Máy nâng xi lanh 2 rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"94"</v>
+              <v n="TextDefault">"OUT5E 下工装提升气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT5E 下工装提升气缸2伸出</v>
+                <v>OUT5E bFrockElevator2_Cyl_W</v>
+                <v>OUT5E Máy nâng xi lanh 2 thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"95"</v>
+              <v n="TextDefault">"OUT5F 下工装旋转压紧气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT5F 下工装旋转压紧气缸2缩回</v>
+                <v>OUT5F bFrockRotateDown2_Cyl_H</v>
+                <v>OUT5F Công cụ xoay xi lanh 2 nén lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"96"</v>
+              <v n="TextDefault">"OUT60 下工装旋转压紧气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT60 下工装旋转压紧气缸2伸出</v>
+                <v>OUT60 bFrockRotateDown2_Cyl_W</v>
+                <v>OUT60 Công cụ xoay xi lanh 2 căng ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"97"</v>
+              <v n="TextDefault">"OUT61 下工装拨料气缸2缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT61 下工装拨料气缸2缩回</v>
+                <v>OUT61 bFrockPush2_Cyl_H</v>
+                <v>OUT61 Xi lanh theo tải trọng 2 rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"98"</v>
+              <v n="TextDefault">"OUT62 下工装拨料气缸2伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT62 下工装拨料气缸2伸出</v>
+                <v>OUT62 bFrockPush2_Cyl_W</v>
+                <v>OUT62 Xi lanh máy đo 2 thò ra</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"99"</v>
+              <v n="TextDefault">"OUT63 下工装皮带推料气缸缩回"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT63 下工装皮带推料气缸缩回</v>
+                <v>OUT63 bFrockBelt_Cyl_H</v>
+                <v>OUT63 Tải trọng vành đai đẩy xi lanh rút lui</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"100"</v>
+              <v n="TextDefault">"OUT64 下工装皮带推料气缸伸出"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT64 下工装皮带推料气缸伸出</v>
+                <v>OUT64 bFrockBelt_Cyl_W</v>
+                <v>OUT64 Tải vành đai đẩy ra khỏi xi lanh</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"101"</v>
+              <v n="TextDefault">"OUT65 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT65 预留</v>
+                <v>OUT65 None3</v>
+                <v>OUT65 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"102"</v>
+              <v n="TextDefault">"OUT66 流水线1皮带运行"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT66 流水线1皮带运行</v>
+                <v>OUT66 bLine1Axis</v>
+                <v>OUT66 Dây chuyền sản xuất 1 chạy</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"103"</v>
+              <v n="TextDefault">"OUT67 流水线2皮带运行"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT67 流水线2皮带运行</v>
+                <v>OUT67 bLine2Axis</v>
+                <v>OUT67 Dây chuyền sản xuất 2 chạy</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"104"</v>
+              <v n="TextDefault">"OUT68 流水线3皮带运行"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT68 流水线3皮带运行</v>
+                <v>OUT68 bLine3Axis</v>
+                <v>OUT68 Dây chuyền sản xuất 3 vành đai chạy</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"105"</v>
+              <v n="TextDefault">"OUT69 下UC皮带运行"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT69 下UC皮带运行</v>
+                <v>OUT69 bUnloadUCLine</v>
+                <v>OUT69 Cảnh sát chìm đang chạy</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"106"</v>
+              <v n="TextDefault">"OUT6A 下工装皮带运行"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT6A 下工装皮带运行</v>
+                <v>OUT6A bUnloadElevatorLine</v>
+                <v>OUT6A Vành đai công cụ chạy</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"107"</v>
+              <v n="TextDefault">"OUT6B 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT6B 预留</v>
+                <v>OUT6B None9</v>
+                <v>OUT6B Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"108"</v>
+              <v n="TextDefault">"OUT6C 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT6C 预留</v>
+                <v>OUT6C None10</v>
+                <v>OUT6C Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"109"</v>
+              <v n="TextDefault">"OUT6D 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT6D 预留</v>
+                <v>OUT6D None11</v>
+                <v>OUT6D Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"110"</v>
+              <v n="TextDefault">"OUT6E 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT6E 预留</v>
+                <v>OUT6E None12</v>
+                <v>OUT6E Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"111"</v>
+              <v n="TextDefault">"OUT6F 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>OUT6F 预留</v>
+                <v>OUT6F None13</v>
+                <v>OUT6F Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">""</v>
+              <v n="TextDefault">""</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v></v>
+                <v></v>
+                <v></v>
+              </l>
+            </o>
+          </l>
+          <l n="Languages" t="ArrayList" cet="String">
+            <v>Chinese</v>
+            <v>English</v>
+            <v>Vietnamese</v>
+          </l>
+          <v n="GuidInit">{e33d05a4-00e1-4a43-803e-9cdb169d4308}</v>
+          <v n="GuidReInit">{dd9c3ed5-c8e5-47e4-bfce-11deeb1a51a4}</v>
+          <v n="GuidExitX">{b3113482-77be-43bc-bd73-c34abe89e44c}</v>
+        </o>
+      </Data>
+      <TypeList>
+        <Type n="ArrayList">System.Collections.ArrayList</Type>
+        <Type n="Guid">System.Guid</Type>
+        <Type n="String">System.String</Type>
+        <Type n="TextListObject">{2bef0454-1bd3-412a-ac2c-af0f31dbc40f}</Type>
+        <Type n="TextListRow">{53da1be7-ad25-47c3-b0e8-e26286dad2e0}</Type>
+      </TypeList>
+    </XmlArchive>
+  </TextList>
+</TcPlcObject>

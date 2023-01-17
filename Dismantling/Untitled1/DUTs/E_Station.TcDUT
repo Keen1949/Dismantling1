@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_Station" Id="{0b6cc337-f619-47d7-a5b2-aa4777875953}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_Station :
+(
+	Line0Load:=0,// 主流线上料工站
+	Line0Buffer,// 主流线缓存工站
+	TakeLoad,// 上料取料工站
+	Line3Load,// 流线3上料工站
+	Line1Load,// 流线2上料工站
+	Line2Dismantling,// 流线2拆解工站
+	Line3Dismantling,// 流线3拆解工站
+	Line2UnloadElevator,// 线体2下工装
+	Line3UnloadElevator,// 线体3下工装
+	Line2UnloadUc,// 线体2 下UC
+	Line3UnloadUc,// 线体2 下UC
+	UnloadLineUc,// 下UC 线体
+	UnloadLineElevator,// 下工装 线体
+	UnloadUc_311,// 下UC模组
+	Length
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

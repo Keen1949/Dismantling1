@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationDismantling" Id="{8b69f3e2-972b-4eeb-8d9d-4895d6dd319c}">
+    <Declaration><![CDATA[TYPE ST_StationDismantling :
+STRUCT
+	fbLift:				 	REFERENCE TO FB_Cylinder;// 顶升气缸
+	fbPrevent:				REFERENCE TO FB_Cylinder;// 阻挡气缸
+	fbStandard1:			REFERENCE TO FB_Cylinder;// 校平气缸1
+	fbStandard2:			REFERENCE TO FB_Cylinder;// 校平气缸2
+	fbLateral1:				REFERENCE TO FB_Cylinder;// 侧推气缸1
+	fbLateral2:				REFERENCE TO FB_Cylinder;// 侧推气缸2
+	fbRotate:				REFERENCE TO FB_Cylinder;// 旋转气缸
+	bPalletCheck1:			BOOL;// 流入光电
+	bPalletCheck2:			BOOL;// 到位光电
+	bPalletCheck3:			BOOL;// 流出光电
+	eState:					E_StationState;
+	bClose:					BOOL;// 关闭线体
+	bCloseUnloadElevator:	BOOL;// 关闭下工装
+	stHandshake:			ST_StationDismantlingHandshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_LineAxis" Id="{b1eab20f-524e-4969-82ec-b988eb20465a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_LineAxis
+VAR_INPUT
+	System:					REFERENCE TO ST_System;
+END_VAR
+VAR_OUTPUT
+	Moving:					BOOL;
+END_VAR
+VAR
+	_moving:				BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Moving:=FALSE;
+
+IF System.stInput.bReset THEN
+	Moving:=_moving:=FALSE;
+END_IF
+
+
+IF System.stMode.stDeviceEnable.bAuto OR System.stMode.stDeviceEnable.bManual THEN
+	Moving:=_moving;
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="M_Jog" Id="{5bca00aa-b573-4724-a945-d56bf73ef527}">
+      <Declaration><![CDATA[METHOD M_Jog : BOOL
+VAR_INPUT
+	Command:				INT;// -1:反转 0:停止 1:正转
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[M_Jog:=FALSE;
+IF Command=1 THEN
+	_moving:=TRUE;
+	M_Jog:=TRUE;
+END_IF
+
+IF Command=0 THEN
+	_moving:=FALSE;
+	M_Jog:=TRUE;
+END_IF
+
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_LineAxis">
+      <LineId Id="27" Count="1" />
+      <LineId Id="20" Count="6" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_LineAxis.M_Jog">
+      <LineId Id="20" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

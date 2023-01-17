@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <TextList Name="ManualText" Id="{3ad67886-0b61-436a-ac96-59136b45e612}">
+    <XmlArchive>
+      <Data>
+        <o xml:space="preserve" t="TextListObject">
+          <v n="UniqueIdGenerator">"0"</v>
+          <l n="TextList" t="ArrayList" cet="TextListRow">
+            <o>
+              <v n="TextID">"0"</v>
+              <v n="TextDefault">" 
+  取料Y轴
+1:初始位 2:Line0取料位 3:Line1取料位 4:Line3取料位
+
+   取料Z轴
+1:上升位 2:下降位_Line0 3:下降位_Line1
+
+   下UC_Y轴
+1:初始位 2:Line2取料位 3:Line3取料位 4:下UC位
+"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v> 
+  取料Y轴
+1:初始位 2:Line0取料位 3:Line1取料位 4:Line3取料位
+
+   取料Z轴
+1:上升位 2:下降位_Line0 3:下降位_Line1
+
+   下UC_Y轴
+1:初始位 2:Line2取料位 3:Line3取料位 4:下UC位
+</v>
+                <v> 
+Pick the y axis
+The initial bit is the initial bit 2:line0
+
+Pick the z axis
+Drop _line0 3: drop _line1
+
+The lower uc_y axis
+1: the initial bit 2:line2 takes the material bit 
+3:line3 takes the material bit 4: the lower uc bit</v>
+                <v> 
+Lấy vật liệu trên trục Y
+1: ban đầu bit 2: dòng 0 cấp 3: dòng 1 cấp 4: dòng 3 cấp
+
+Lấy trục Z
+1: nâng lên 2: hạ xuống bit _dòng 0 3: hạ xuống bit _dòng 1
+
+Trục dưới UC_Y
+1: bắt đầu bit 2: dòng 2 cấp 3: dòng 3 cấp 4: UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"1"</v>
+              <v n="TextDefault">"   
+ 流线1和流线3上料站:
+     顶升气缸缩回时,旋转气缸不动作.
+ 流线2和流线3解锁站:
+     解锁侧推气缸2伸出时,解锁旋转气缸不缩回.
+     解锁侧推气缸2伸出时,下UC升降气缸不动作.
+     下UC旋转气缸伸出时,下UC升降气缸不动作.
+     下UC升降气缸缩回时,下UC旋转气缸不动作.
+ RH311和LH311:
+     取料模组升降气缸1伸出时,取料Y轴不动作.
+     下UC模组升降气缸伸出时,下UC_Y轴不动作.
+     下UC模组摆动气缸伸出时,下UC_Y轴不动作.
+ RH367和LH367:
+     取料模组升降气缸1伸出且升降气缸2伸出,
+ 取料Y轴不动作."</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v></v>
+                <v></v>
+                <v></v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">""</v>
+              <v n="TextDefault">""</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v></v>
+                <v></v>
+                <v></v>
+              </l>
+            </o>
+          </l>
+          <l n="Languages" t="ArrayList" cet="String">
+            <v>Chinese</v>
+            <v>English</v>
+            <v>Vietnamese</v>
+          </l>
+          <v n="GuidInit">{43473b11-febf-4721-a213-71e33967d0e2}</v>
+          <v n="GuidReInit">{f97d300e-3d9d-43bc-bcbf-c1bb610cb604}</v>
+          <v n="GuidExitX">{e8140caf-916d-4ac5-bcda-80519e9c1fac}</v>
+        </o>
+      </Data>
+      <TypeList>
+        <Type n="ArrayList">System.Collections.ArrayList</Type>
+        <Type n="Guid">System.Guid</Type>
+        <Type n="String">System.String</Type>
+        <Type n="TextListObject">{2bef0454-1bd3-412a-ac2c-af0f31dbc40f}</Type>
+        <Type n="TextListRow">{53da1be7-ad25-47c3-b0e8-e26286dad2e0}</Type>
+      </TypeList>
+    </XmlArchive>
+  </TextList>
+</TcPlcObject>

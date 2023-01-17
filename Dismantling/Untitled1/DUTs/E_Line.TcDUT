@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_Line" Id="{0426f839-584b-43aa-a08f-2e8733f96801}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_Line :
+(
+	UnloadElevator := 1,
+	UnloadUC,
+	Line1,
+	Line2,
+	Line3
+	
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

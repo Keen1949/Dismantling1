@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="P_Alarm" Id="{ba2b5592-2d71-4257-a1e3-13dd845129c8}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_Alarm
+VAR
+	_arrFbErrorTag1:				ARRAY[0..20] OF  FB_ErrorTag;
+	_arrFbErrorTag2:				ARRAY[0..20] OF  FB_ErrorTag;
+	_arrFbErrorTag3:				ARRAY[0..20] OF  FB_ErrorTag;
+	_arrFbErrorTag4:				ARRAY[0..20] OF  FB_ErrorTag;
+	_arrFbErrorTag5:				ARRAY[0..20] OF  FB_ErrorTag;
+	
+	_i:								INT;
+	
+	_bFirstRun:						BOOL:=true;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[G_stError.bSaveLog:=TRUE;
+G_stError.sFileLogPath:='D:\PLC\Log\Error';
+
+IF _bFirstRun THEN
+	A_Info();
+	_bFirstRun:=FALSE;
+END_IF
+
+A_Alarm1();
+A_Alarm2();
+A_Alarm3();
+A_Alarm4();
+A_Alarm5();]]></ST>
+    </Implementation>
+    <Action Name="A_Alarm1" Id="{44ef8c86-2a6e-4e12-9241-425b76890171}">
+      <Implementation>
+        <ST><![CDATA[_i:=0;
+_arrFbErrorTag1[_i].Enable:=GVL_Data.stRecipe.eMachineType=E_MachineType.None;
+
+_i:=1;
+_arrFbErrorTag1[_i].Enable:=FALSE;//NOT GVL.I.bDoor;
+
+_i:=2;
+_arrFbErrorTag1[_i].Enable:=NOT GVL.I.bEStop;
+
+
+FOR _i:=0 TO 20 BY 1 DO
+_arrFbErrorTag1[_i](
+	System:=G_stSystem , 
+	Error:=G_stError , 
+	ID:=TO_BYTE(_i+50) , 
+	Category:=E_ErrorCategory.Safety , 
+	InfoIndex:= , 
+	Enable:= , 
+	Message:= , 
+	Level:=1 , 
+	Position:="P_Alarm:A_Alarm1" , 
+	ErrorTime:= , 
+	Language:= , 
+	Erroring=> , 
+	ErrorCode=> );
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Alarm2" Id="{d368f3d1-2707-4300-ac87-3fdde3096134}">
+      <Implementation>
+        <ST><![CDATA[
+
+
+
+
+
+
+
+FOR _i:=0 TO 20 BY 1 DO
+_arrFbErrorTag2[_i](
+	System:=G_stSystem , 
+	Error:=G_stError , 
+	ID:=TO_BYTE(52) , 
+	Category:=E_ErrorCategory.Other , 
+	InfoIndex:=TO_BYTE(_i) , 
+	Enable:= , 
+	Message:= , 
+	Level:=2 , 
+	Position:="P_Alarm:A_Alarm2" , 
+	ErrorTime:= , 
+	Language:= , 
+	Erroring=> , 
+	ErrorCode=> );
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Alarm3" Id="{fcf3d148-27e0-4bbe-b801-e4ea1fa57f0c}">
+      <Implementation>
+        <ST><![CDATA[_i:=0;
+_arrFbErrorTag3[_i].Enable:=G_stSystem.stMode.bAuto AND NOT G_stSystem.stMode.bHomeDone AND G_arrCylinder[E_Cylinder.TakeClamp].stOutput.bWork;
+
+
+
+FOR _i:=0 TO 20 BY 1 DO
+_arrFbErrorTag3[_i](
+	System:=G_stSystem , 
+	Error:=G_stError , 
+	ID:=TO_BYTE(53) , 
+	Category:=E_ErrorCategory.Other , 
+	InfoIndex:=TO_BYTE(_i) , 
+	Enable:= , 
+	Message:= , 
+	Level:=3 , 
+	Position:="P_Alarm:A_Alarm3" , 
+	ErrorTime:= , 
+	Language:= , 
+	Erroring=> , 
+	ErrorCode=> );
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Alarm4" Id="{693d08a1-8e1e-4159-a3b4-aa31b66c36ec}">
+      <Implementation>
+        <ST><![CDATA[
+
+
+
+
+
+
+
+FOR _i:=0 TO 20 BY 1 DO
+_arrFbErrorTag4[_i](
+	System:=G_stSystem , 
+	Error:=G_stError , 
+	ID:=TO_BYTE(54) , 
+	Category:=E_ErrorCategory.Other , 
+	InfoIndex:=TO_BYTE(_i) , 
+	Enable:= , 
+	Message:= , 
+	Level:=4 , 
+	Position:="P_Alarm:A_Alarm4" , 
+	ErrorTime:= , 
+	Language:= , 
+	Erroring=> , 
+	ErrorCode=> );
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Alarm5" Id="{9dda870a-23b5-4393-a11d-d7a023d96eef}">
+      <Implementation>
+        <ST><![CDATA[
+
+
+
+
+
+
+
+
+FOR _i:=0 TO 20 BY 1 DO
+_arrFbErrorTag5[_i](
+	System:=G_stSystem , 
+	Error:=G_stError , 
+	ID:=TO_BYTE(55) , 
+	Category:=E_ErrorCategory.Other , 
+	InfoIndex:=TO_BYTE(_i) , 
+	Enable:= , 
+	Message:= , 
+	Level:=5 , 
+	Position:="P_Alarm:A_Alarm5" , 
+	ErrorTime:= , 
+	Language:= , 
+	Erroring=> , 
+	ErrorCode=> );
+END_FOR]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Info" Id="{87b97d36-d9d8-4fbc-b5b9-a9614f562418}">
+      <Implementation>
+        <ST><![CDATA[_arrFbErrorTag1[0].Language[E_Language.Chinese]:="设备类型为空 请选择设备类型";
+_arrFbErrorTag1[0].Language[E_Language.English]:="Device type is empty please select device type";
+_arrFbErrorTag1[0].Language[E_Language.Vietnamese]:="Thiết bị kiểu rỗng hãy chọn thiết bị kiểu";
+
+_arrFbErrorTag1[1].Language[E_Language.Chinese]:="安全门未关闭";
+_arrFbErrorTag1[1].Language[E_Language.English]:="The security door is open";
+_arrFbErrorTag1[1].Language[E_Language.Vietnamese]:="Cửa an toàn chưa đóng";
+
+_arrFbErrorTag1[2].Language[E_Language.Chinese]:="急停被按下";
+_arrFbErrorTag1[2].Language[E_Language.English]:="Emergency stop is pressed";
+_arrFbErrorTag1[2].Language[E_Language.Vietnamese]:="Dừng khẩn cấp bị nhấn";
+
+_arrFbErrorTag3[0].Language[E_Language.Chinese]:="请确认取料夹爪是否有料 松开夹爪";
+
+
+]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="P_Alarm">
+      <LineId Id="62" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="47" Count="2" />
+    </LineIds>
+    <LineIds Name="P_Alarm.A_Alarm1">
+      <LineId Id="40" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="24" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="1" Count="0" />
+      <LineId Id="4" Count="12" />
+      <LineId Id="2" Count="1" />
+    </LineIds>
+    <LineIds Name="P_Alarm.A_Alarm2">
+      <LineId Id="2" Count="22" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Alarm.A_Alarm3">
+      <LineId Id="25" Count="0" />
+      <LineId Id="2" Count="2" />
+      <LineId Id="9" Count="15" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Alarm.A_Alarm4">
+      <LineId Id="2" Count="22" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Alarm.A_Alarm5">
+      <LineId Id="2" Count="23" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_Alarm.A_Info">
+      <LineId Id="5" Count="10" />
+      <LineId Id="17" Count="2" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

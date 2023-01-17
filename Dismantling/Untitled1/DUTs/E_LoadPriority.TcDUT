@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="E_LoadPriority" Id="{4c3b15bf-9552-4df7-aa75-0dc987267f66}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_LoadPriority :
+(
+	None := 0,// 无等级
+	Line0,// 优先0
+	Line1// 优先1
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

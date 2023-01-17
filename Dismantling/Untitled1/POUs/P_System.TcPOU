@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="P_System" Id="{707a1596-f082-485d-a9a7-dab54eac9110}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_System
+VAR
+	_arrFbButton:			ARRAY[0..10] OF FB_Button;
+	
+	_tonInit:				TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_System();
+A_Machine();
+
+]]></ST>
+    </Implementation>
+    <Action Name="A_Machine" Id="{bad766d9-b53e-4b69-8971-767e1991fe7c}">
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_System" Id="{ac834835-5c48-436c-baed-30b007fe8f96}">
+      <Implementation>
+        <ST><![CDATA[G_stSystem.stInput.bEStop:=NOT GVL.I.bEStop;
+G_stSystem.stInput.bInit:=GVL.I.bStart AND GVL.I.bStop;
+
+//GVL.Q.bBeacon_Buzzer:=G_stSystem.stOutput.bBuzzer;
+GVL.Q.bRuning:=GVL.Q.bBeacon_Green:=G_stSystem.stOutput.bLightGreen;
+GVL.Q.bStop:=GVL.Q.bBeacon_Red:=G_stSystem.stOutput.bLightRed;
+GVL.Q.bBeacon_Yellow:=G_stSystem.stOutput.bLightYellow;
+
+
+
+
+_tonInit(IN:=GVL.I.bResetAlarm , PT:=T#5S , Q=> G_stSystem.stInput.bInit , ET=> );
+_arrFbButton[0](In:=G_stSystem.stInput.bStart  , CLK:=GVL.I.bStart );
+_arrFbButton[1](In:=G_stSystem.stInput.bStop  , CLK:=GVL.I.bStop );
+_arrFbButton[2](In:=G_stSystem.stInput.bResetAlarm  , CLK:=GVL.I.bResetAlarm );
+
+
+G_stSystem.stLogConfig.bExecute:=TRUE;
+G_stSystem.stLogConfig.sFilePath:='D:\PLC\Log\System';
+
+P_Machine(StationCount:=E_Station.Length);]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="P_System">
+      <LineId Id="5" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="0" />
+    </LineIds>
+    <LineIds Name="P_System.A_Machine">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="P_System.A_System">
+      <LineId Id="2" Count="6" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="9" Count="3" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="13" Count="3" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

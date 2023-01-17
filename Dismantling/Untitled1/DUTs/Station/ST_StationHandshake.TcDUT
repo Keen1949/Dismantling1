@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationHandshake" Id="{5dcf6083-7109-47d1-bb38-062d481cc0dc}">
+    <Declaration><![CDATA[TYPE ST_StationHandshake :
+STRUCT
+	(*bLine0BufferRequestLine0Load:			BOOL;// Line0缓存站 请求上料站放料
+	bLine0LoadResponseLine0Buffer:			BOOL;// line0上料站 收到缓存站请求
+	
+
+	arrRequestTaskLine:						ARRAY[0..2] OF	BOOL;// 请求取线体上料站 产品 0:Lin0 1:Line1 2:Lin3Load
+	arrRequestPlaceLine:					ARRAY[1..2] OF	BOOL;// 请求往线体上料站 放料 1:Line1 2:Lin3Load
+	
+	arrResponseTaskLine:					ARRAY[0..2] OF	BOOL;// 线体上料站收到取料请求 0:Lin0 1:Line1 2:Lin3Load
+	arrResponsePlaceLine:					ARRAY[1..2] OF 	BOOL;// 线体上料站收到放料请求 1:Line1 2:Lin3Load
+	
+	
+	bLoadMachineReady:					    BOOL;// Line1对接设备准备就绪
+	bLoadMachineReadyOk:					BOOL;// 收到Line1对接设备请求信号
+	
+	arrDismantlingRequest:					ARRAY[1..2] OF BOOL;// 拆解站请求放料 1:Line2 2:Lin3
+	arrDismantlingResponse:					ARRAY[1..2] OF BOOL;// 上料站收到拆解站请求信号 1:Line1 2:Lin3
+	
+	arrDismantlingRequestUc:				ARRAY[1..2] OF BOOL;// 拆解站请求取Uc 1:Line2 2:Lin3
+	arrDismantlingResponseUc:				ARRAY[1..2] OF BOOL;// 收到拆解站请求取Uc 1:Line2 2:Lin3
+	
+	arrUnloadUcRequest:						ARRAY[1..2] OF BOOL;// 下UC工站 请求放料
+	arrUnloadUcResponse:					ARRAY[1..2] OF BOOL;// 下UC线体 收到放料请求
+	
+	arrUnloadElevatorRequest:				ARRAY[1..2] OF BOOL;// 下UC工站 请求放料
+	arrUnloadElevatorResponse:				ARRAY[1..2] OF BOOL;// 下UC线体 收到放料请求*)
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationDismantlingHandshake" Id="{043855d5-9553-4a4e-bc01-a7d2719f0f2e}">
+    <Declaration><![CDATA[TYPE ST_StationDismantlingHandshake :
+STRUCT
+	bRequestLineLoad_D:			BOOL;// 拆解工站 请求上料 只写
+	bResponseDismantling_D:		BOOL;// 收到 拆解工站 请求上料 只读
+	
+	bRequestUc:					BOOL;// 拆解站 向下UC站 请求放料 只写
+	bResponseDismantling_Uc:	BOOL;// 收到 拆解站 向下UC站 请求放料 只读
+	
+	bRequestElevator:			BOOL;// 拆解站 向下工装 请求放料 只写
+	bResponseDismantling_E:		BOOL;// 收到 拆解站 向下工装站 请求放料 只读
+	
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

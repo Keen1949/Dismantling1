@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationUnloadUc_311" Id="{ebffefd1-8be6-4d53-a3f7-1e0b3dac426c}">
+    <Declaration><![CDATA[TYPE ST_StationUnloadUc_311 :
+STRUCT
+	bUcCheck1:					BOOL;// 下UC模组UC有无检测
+	fbLift:						REFERENCE TO FB_Cylinder;// 下UC模组升降气缸
+	fbClamp:					REFERENCE TO FB_Cylinder;// 下UC模组夹紧气缸
+	fbSwing:					REFERENCE TO FB_Cylinder;// 下UC模组摆动气缸
+	fbAxisY:					REFERENCE TO FB_Axis;// 取料Y轴
+	stHandshake:				ST_StationUnloadUc_311Handshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

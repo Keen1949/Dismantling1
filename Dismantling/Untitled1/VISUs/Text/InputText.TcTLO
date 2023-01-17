@@ -1,0 +1,1190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <TextList Name="InputText" Id="{a47183f6-45cc-4246-831a-883b90f1de4c}">
+    <XmlArchive>
+      <Data>
+        <o xml:space="preserve" t="TextListObject">
+          <v n="UniqueIdGenerator">"0"</v>
+          <l n="TextList" t="ArrayList" cet="TextListRow">
+            <o>
+              <v n="TextID">"0"</v>
+              <v n="TextDefault">"IN00 启动"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN00 启动</v>
+                <v>IN00 bStart</v>
+                <v>IN00 Khởi động</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"1"</v>
+              <v n="TextDefault">"IN01 停止"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN01 停止</v>
+                <v>IN01 bStop</v>
+                <v>IN01 Dừng lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"2"</v>
+              <v n="TextDefault">"IN02 报警复位"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN02 报警复位</v>
+                <v>IN02 bResetAlarm</v>
+                <v>IN02 Báo động thiết lập lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"3"</v>
+              <v n="TextDefault">"IN03 急停"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN03 急停</v>
+                <v>IN03 bEStop</v>
+                <v>IN03 Vội dừng lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"4"</v>
+              <v n="TextDefault">"IN04 安全门开关"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN04 安全门开关</v>
+                <v>IN04 bDoor</v>
+                <v>IN04 Chuyển đổi cửa an toàn</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"5"</v>
+              <v n="TextDefault">"IN05 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN05 预留</v>
+                <v>IN05 bNone1</v>
+                <v>IN05 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"6"</v>
+              <v n="TextDefault">"IN06 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN06 预留</v>
+                <v>IN06 bNone2</v>
+                <v>IN06 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"7"</v>
+              <v n="TextDefault">"IN07 主流线分料气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN07 主流线分料气缸原位(缩回)</v>
+                <v>IN07 bLine0Part_Cyl_H</v>
+                <v>IN07 Xi lanh phân phối dòng chính</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"8"</v>
+              <v n="TextDefault">"IN08 主流线分料气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN08 主流线分料气缸工作位(伸出)</v>
+                <v>IN08 bLine0Part_Cyl_W</v>
+                <v>IN08 Xi lanh làm việc dòng chính</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"9"</v>
+              <v n="TextDefault">"IN09 主流线阻挡气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN09 主流线阻挡气缸原位(缩回)</v>
+                <v>IN09 bLine0Prevent_Cyl_H</v>
+                <v>IN09 Dòng chính chặn xi lanh</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"10"</v>
+              <v n="TextDefault">"IN0A 主流线阻挡气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN0A 主流线阻挡气缸工作位(伸出)</v>
+                <v>IN0A bLine0Prevent_Cyl_W</v>
+                <v>IN0A Dòng chính chặn vị trí làm việc của xi lanh</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"11"</v>
+              <v n="TextDefault">"IN0B 流水线1提升气缸原位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN0B 流水线1提升气缸原位(下降)</v>
+                <v>IN0B bLine1Elevator_Cyl_H</v>
+                <v>IN0B Xi lanh nâng cấp trong dòng 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"12"</v>
+              <v n="TextDefault">"IN0C 流水线1提升气缸工作位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN0C 流水线1提升气缸工作位(上升)</v>
+                <v>IN0C bLine1Elevator_Cyl_W</v>
+                <v>IN0C Xi lanh làm việc 1 nâng cấp đường ống</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"13"</v>
+              <v n="TextDefault">"IN0D 流水线1顶升气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN0D 流水线1顶升气缸原位(缩回)</v>
+                <v>IN0D bLine1Lift_Cyl_H</v>
+                <v>IN0D Xi lanh 1 lít trong đường ống</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"14"</v>
+              <v n="TextDefault">"IN0E 流水线1顶升气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN0E 流水线1顶升气缸工作位(伸出)</v>
+                <v>IN0E bLine1Lift_Cyl_W</v>
+                <v>IN0E Xi lanh làm việc 1 lít dây chuyền sản xuất</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"15"</v>
+              <v n="TextDefault">"IN0F 流水线1阻挡气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN0F 流水线1阻挡气缸原位(缩回)</v>
+                <v>IN0F bLine1Prevent_Cyl_H</v>
+                <v>IN0F Dòng 1 ngăn xi lanh vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"16"</v>
+              <v n="TextDefault">"IN10 流水线1阻挡气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN10 流水线1阻挡气缸工作位(伸出)</v>
+                <v>IN10 bLine1Prevent_Cyl_W</v>
+                <v>IN10 Dây chuyền sản xuất 1 ngăn xi lanh vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"17"</v>
+              <v n="TextDefault">"IN11 流水线1旋转气缸原位"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN11 流水线1旋转气缸原位</v>
+                <v>IN11 bLine1Rotate_Cyl_H</v>
+                <v>IN11 Xi lanh xoay dòng 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"18"</v>
+              <v n="TextDefault">"IN12 流水线1旋转气缸工作位"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN12 流水线1旋转气缸工作位</v>
+                <v>IN12 bLine1Rotate_Cyl_W</v>
+                <v>IN12 Xi lanh quay dòng 1 vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"19"</v>
+              <v n="TextDefault">"IN13 流水线1调宽气缸原位1(张开)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN13 流水线1调宽气缸原位1(张开)</v>
+                <v>IN13 bLine1Adjust1_Cyl_H</v>
+                <v>IN13 Dây chuyền sản xuất 1 mở rộng xi lanh ở vị trí 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"20"</v>
+              <v n="TextDefault">"IN14 流水线1调宽气缸工作位1(夹紧)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN14 流水线1调宽气缸工作位1(夹紧)</v>
+                <v>IN14 bLine1Adjust1_Cyl_W</v>
+                <v>IN14 Xi lanh làm việc 1 mở rộng dòng 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"21"</v>
+              <v n="TextDefault">"IN15 流水线1调宽气缸原位2(张开)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN15 流水线1调宽气缸原位2(张开)</v>
+                <v>IN15 bLine1Adjust2_Cyl_H</v>
+                <v>IN15 Xi lanh ở vị trí 2 mở rộng dòng 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"22"</v>
+              <v n="TextDefault">"IN16 流水线1调宽气缸工作位2(夹紧)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN16 流水线1调宽气缸工作位2(夹紧)</v>
+                <v>IN16 bLine1Adjust2_Cyl_W</v>
+                <v>IN16 Dây chuyền sản xuất 1 mở xi lanh làm việc 2</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"23"</v>
+              <v n="TextDefault">"IN17 流水线2顶升气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN17 流水线2顶升气缸原位(缩回)</v>
+                <v>IN17 bLine2Lift_Cyl_H</v>
+                <v>IN17 Dây chuyền sản xuất 2 lít xi lanh vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"24"</v>
+              <v n="TextDefault">"IN18 流水线2顶升气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN18 流水线2顶升气缸工作位(伸出)</v>
+                <v>IN18 bLine2Lift_Cyl_W</v>
+                <v>IN18 Dây chuyền sản xuất 2 lít xi lanh vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"25"</v>
+              <v n="TextDefault">"IN19 流水线2阻挡气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN19 流水线2阻挡气缸原位(缩回)</v>
+                <v>IN19 bLine2Prevent_Cyl_H</v>
+                <v>IN19 Dây chuyền sản xuất 2 chặn xi lanh vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"26"</v>
+              <v n="TextDefault">"IN1A 流水线2阻挡气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN1A 流水线2阻挡气缸工作位(伸出)</v>
+                <v>IN1A bLine2Prevent_Cyl_W</v>
+                <v>IN1A Dây chuyền sản xuất 2 ngăn xi lanh vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"27"</v>
+              <v n="TextDefault">"IN1B 流水线2校平气缸1原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN1B 流水线2校平气缸1原位(缩回)</v>
+                <v>IN1B bLine2Standard1_Cyl_H</v>
+                <v>IN1B Dòng 2 cân bằng xi lanh 1 tại chỗ</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"28"</v>
+              <v n="TextDefault">"IN1C 流水线2校平气缸1工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN1C 流水线2校平气缸1工作位(伸出)</v>
+                <v>IN1C bLine2Standard1_Cyl_W</v>
+                <v>IN1C Dòng 2 cân bằng xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"29"</v>
+              <v n="TextDefault">"IN1D 流水线2校平气缸2原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN1D 流水线2校平气缸2原位(缩回)</v>
+                <v>IN1D bLine2Standard2_Cyl_H</v>
+                <v>IN1D Dòng 2 cân bằng xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"30"</v>
+              <v n="TextDefault">"IN1E 流水线2校平气缸2工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN1E 流水线2校平气缸2工作位(伸出)</v>
+                <v>IN1E bLine2Standard2_Cyl_W</v>
+                <v>IN1E Dòng 2 cân bằng xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"31"</v>
+              <v n="TextDefault">"IN1F 流水线2解锁侧推气缸1原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN1F 流水线2解锁侧推气缸1原位(缩回)</v>
+                <v>IN1F bLine2OpenLateral1_Cyl_H</v>
+                <v>IN1F Dây chuyền sản xuất 2 mở khóa xi lanh bên đẩy 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"32"</v>
+              <v n="TextDefault">"IN20 流水线2解锁侧推气缸1工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN20 流水线2解锁侧推气缸1工作位(伸出)</v>
+                <v>IN20 bLine2OpenLateral1_Cyl_W</v>
+                <v>IN20 Dây chuyền sản xuất 2 mở khóa bên đẩy xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"33"</v>
+              <v n="TextDefault">"IN21 流水线2解锁旋转气缸原位(左位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN21 流水线2解锁旋转气缸原位(左位)</v>
+                <v>IN21 bLine2OpenRotate_Cyl_H</v>
+                <v>IN21 Dòng 2 mở khóa xi lanh quay vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"34"</v>
+              <v n="TextDefault">"IN22 流水线2解锁旋转气缸工作位(右位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN22 流水线2解锁旋转气缸工作位(右位)</v>
+                <v>IN22 bLine2OpenRotate_Cyl_W</v>
+                <v>IN22 Dây chuyền sản xuất 2 mở khóa xi lanh quay vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"35"</v>
+              <v n="TextDefault">"IN23 流水线2解锁侧推气缸2原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN23 流水线2解锁侧推气缸2原位(缩回)</v>
+                <v>IN23 bLine2OpenLateral2_Cyl_H</v>
+                <v>IN23 Dòng 2 mở khóa bên đẩy xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"36"</v>
+              <v n="TextDefault">"IN24 流水线2解锁侧推气缸2工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN24 流水线2解锁侧推气缸2工作位(伸出)</v>
+                <v>IN24 bLine2OpenLateral2_Cyl_W</v>
+                <v>IN24 Dây chuyền sản xuất 2 mở khóa bên đẩy xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"37"</v>
+              <v n="TextDefault">"IN25 空"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN25 空</v>
+                <v>IN25 None</v>
+                <v>IN25 trống</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"38"</v>
+              <v n="TextDefault">"IN26 空"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN26 空</v>
+                <v>IN26 None1</v>
+                <v>IN26 trống</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"39"</v>
+              <v n="TextDefault">"IN27 流水线3上料位顶升原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN27 流水线3上料位顶升原位(缩回)</v>
+                <v>IN27 bLine3LoadLift_Cyl_H</v>
+                <v>IN27 Dòng 3 lên vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"40"</v>
+              <v n="TextDefault">"IN28 流水线3上料位顶升工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN28 流水线3上料位顶升工作位(伸出)</v>
+                <v>IN28 bLine3LoadLift_Cyl_W</v>
+                <v>IN28 Dây chuyền sản xuất 3 lên vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"41"</v>
+              <v n="TextDefault">"IN29 流水线3上料位阻挡原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN29 流水线3上料位阻挡原位(缩回)</v>
+                <v>IN29 bLine3LoadPrevent_Cyl_H</v>
+                <v>IN29 Dòng 3 lên cấp độ để ngăn chặn vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"42"</v>
+              <v n="TextDefault">"IN2A 流水线3上料位阻挡工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN2A 流水线3上料位阻挡工作位(伸出)</v>
+                <v>IN2A bLine3LoadPrevent_Cyl_W</v>
+                <v>IN2A Dòng 3 lên vị trí công việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"43"</v>
+              <v n="TextDefault">"IN2B 流水线3上料位旋转原位"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN2B 流水线3上料位旋转原位</v>
+                <v>IN2B bLine3LoadRotate_Cyl_H</v>
+                <v>IN2B Dòng 3 cấp độ quay vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"44"</v>
+              <v n="TextDefault">"IN2C 流水线3上料位旋转工作位"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN2C 流水线3上料位旋转工作位</v>
+                <v>IN2C bLine3LoadRotate_Cyl_W</v>
+                <v>IN2C Dây chuyền sản xuất 3 vị trí quay</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"45"</v>
+              <v n="TextDefault">"IN2D 流水线3解锁位顶升原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN2D 流水线3解锁位顶升原位(缩回)</v>
+                <v>IN2D bLine3OpenLift_Cyl_H</v>
+                <v>IN2D Dòng 3 mở khóa vị trí nâng cao vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"46"</v>
+              <v n="TextDefault">"IN2E 流水线3解锁位顶升工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN2E 流水线3解锁位顶升工作位(伸出)</v>
+                <v>IN2E bLine3OpenLift_Cyl_W</v>
+                <v>IN2E Dòng 3 mở khóa lên vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"47"</v>
+              <v n="TextDefault">"IN2F 流水线3解锁位阻挡原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN2F 流水线3解锁位阻挡原位(缩回)</v>
+                <v>IN2F bLine3OpenPrevent_Cyl_H</v>
+                <v>IN2F Dòng 3 mở khóa vị trí để ngăn vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"48"</v>
+              <v n="TextDefault">"IN30 流水线3解锁位阻挡工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN30 流水线3解锁位阻挡工作位(伸出)</v>
+                <v>IN30 bLine3OpenPrevent_Cyl_W</v>
+                <v>IN30 Dòng 3 mở khóa vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"49"</v>
+              <v n="TextDefault">"IN31 流水线3校平气缸1原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN31 流水线3校平气缸1原位(缩回)</v>
+                <v>IN31 bLine3Standard1_Cyl_H</v>
+                <v>IN31 Dòng 3 phẳng xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"50"</v>
+              <v n="TextDefault">"IN32 流水线3校平气缸1工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN32 流水线3校平气缸1工作位(伸出)</v>
+                <v>IN32 bLine3Standard1_Cyl_W</v>
+                <v>IN32 Dòng 3 cân bằng xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"51"</v>
+              <v n="TextDefault">"IN33 流水线3校平气缸2原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN33 流水线3校平气缸2原位(缩回)</v>
+                <v>IN33 bLine3Standard2_Cyl_H</v>
+                <v>IN33 Dòng 3 cân bằng xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"52"</v>
+              <v n="TextDefault">"IN34 流水线3校平气缸2工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN34 流水线3校平气缸2工作位(伸出)</v>
+                <v>IN34 bLine3Standard2_Cyl_W</v>
+                <v>IN34 Dòng 3 cân bằng xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"53"</v>
+              <v n="TextDefault">"IN35 流水线3解锁侧推气缸1原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN35 流水线3解锁侧推气缸1原位(缩回)</v>
+                <v>IN35 bLine3OpenLateral1_Cyl_H</v>
+                <v>IN35 Dòng 3 mở khóa bên đẩy xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"54"</v>
+              <v n="TextDefault">"IN36 流水线3解锁侧推气缸1工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN36 流水线3解锁侧推气缸1工作位(伸出)</v>
+                <v>IN36 bLine3OpenLateral1_Cyl_W</v>
+                <v>IN36 Dây chuyền sản xuất 3 mở khóa xi lanh bên đẩy 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"55"</v>
+              <v n="TextDefault">"IN37 流水线3解锁旋转气缸原位(左位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN37 流水线3解锁旋转气缸原位(左位)</v>
+                <v>IN37 bLine3OpenRotate_Cyl_H</v>
+                <v>IN37 Dòng 3 mở khóa xi lanh quay vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"56"</v>
+              <v n="TextDefault">"IN38 流水线3解锁旋转气缸工作位(右位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN38 流水线3解锁旋转气缸工作位(右位)</v>
+                <v>IN38 bLine3OpenRotate_Cyl_W</v>
+                <v>IN38 Dây chuyền sản xuất 3 mở khóa xi lanh quay vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"57"</v>
+              <v n="TextDefault">"IN39 流水线3解锁侧推气缸2原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN39 流水线3解锁侧推气缸2原位(缩回)</v>
+                <v>IN39 bLine3OpenLateral2_Cyl_H</v>
+                <v>IN39 Dòng 3 mở khóa bên đẩy xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"58"</v>
+              <v n="TextDefault">"IN3A 流水线3解锁侧推气缸2工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN3A 流水线3解锁侧推气缸2工作位(伸出)</v>
+                <v>IN3A bLine3OpenLateral2_Cyl_W</v>
+                <v>IN3A Dòng 3 mở khóa bên đẩy xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"59"</v>
+              <v n="TextDefault">"IN3B 空"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN3B 空</v>
+                <v>IN3B None3</v>
+                <v>IN3B trống</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"60"</v>
+              <v n="TextDefault">"IN3C 空"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN3C 空</v>
+                <v>IN3C None4</v>
+                <v>IN3C trống</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"61"</v>
+              <v n="TextDefault">"IN3D 取料模组升降气缸1原位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN3D 取料模组升降气缸1原位(上升)</v>
+                <v>IN3D bTakeLift1_Cyl_H</v>
+                <v>IN3D Lấy khối nâng xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"62"</v>
+              <v n="TextDefault">"IN3E 取料模组升降气缸1工作位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN3E 取料模组升降气缸1工作位(下降)</v>
+                <v>IN3E bTakeLift1_Cyl_W</v>
+                <v>IN3E Lấy khối nâng xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"63"</v>
+              <v n="TextDefault">"IN3F 取料模组升降气缸2原位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN3F 取料模组升降气缸2原位(上升)</v>
+                <v>IN3F bTakeLift2_Cyl_H</v>
+                <v>IN3F Lấy khối nâng xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"64"</v>
+              <v n="TextDefault">"IN40 取料模组升降气缸2工作位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN40 取料模组升降气缸2工作位(下降)</v>
+                <v>IN40 bTakeLift2_Cyl_W</v>
+                <v>IN40 Chế độ nâng xi lanh 2 làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"65"</v>
+              <v n="TextDefault">"IN41 取料模组夹紧气缸原位(张开)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN41 取料模组夹紧气缸原位(张开)</v>
+                <v>IN41 bTakeClamp_Cyl_H</v>
+                <v>IN41 Lấy mô-đun kẹp xi lanh vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"66"</v>
+              <v n="TextDefault">"IN42 取料模组夹紧气缸工作位(夹紧)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN42 取料模组夹紧气缸工作位(夹紧)</v>
+                <v>IN42 bTakeClamp_Cyl_W</v>
+                <v>IN42 Lấy mô-đun kẹp xi lanh vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"67"</v>
+              <v n="TextDefault">"IN43 下UC模组升降气缸原位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN43 下UC模组升降气缸原位(上升)</v>
+                <v>IN43 bUcLift_Cyl_H</v>
+                <v>IN43 Xi lanh nâng theo mô-đun UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"68"</v>
+              <v n="TextDefault">"IN44 下UC模组升降气缸工作位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN44 下UC模组升降气缸工作位(下降)</v>
+                <v>IN44 bUcLift_Cyl_W</v>
+                <v>IN44 Xi lanh nâng theo mô-đun UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"69"</v>
+              <v n="TextDefault">"IN45 下UC模组夹紧气缸原位(张开)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN45 下UC模组夹紧气缸原位(张开)</v>
+                <v>IN45 bUcClamp_Cyl_H</v>
+                <v>IN45 Mô-đun dưới UC kẹp xi lanh vào vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"70"</v>
+              <v n="TextDefault">"IN46 下UC模组夹紧气缸工作位(夹紧)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN46 下UC模组夹紧气缸工作位(夹紧)</v>
+                <v>IN46 bUcClamp_Cyl_W</v>
+                <v>IN46 Mô-đun dưới UC kẹp xi lanh vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"71"</v>
+              <v n="TextDefault">"IN47 下UC模组摆动气缸原位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN47 下UC模组摆动气缸原位(上升)</v>
+                <v>IN47 bUcSwing_Cyl_H</v>
+                <v>IN47 Mô-đun dưới UC đang chuyển động xi lanh</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"72"</v>
+              <v n="TextDefault">"IN48 下UC模组摆动气缸工作位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN48 下UC模组摆动气缸工作位(下降)</v>
+                <v>IN48 bUcSwing_Cyl_W</v>
+                <v>IN48 Mô-đun dưới UC đu vị trí xi lanh</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"73"</v>
+              <v n="TextDefault">"IN49 下UC升降气缸1原位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN49 下UC升降气缸1原位(下降)</v>
+                <v>IN49 bUcLift1_Cyl_H</v>
+                <v>IN49 Xi lanh nâng UC 1 đang ở vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"74"</v>
+              <v n="TextDefault">"IN4A 下UC升降气缸1工作位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN4A 下UC升降气缸1工作位(上升)</v>
+                <v>IN4A bUcLift1_Cyl_W</v>
+                <v>IN4A Xi lanh nâng dưới UC 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"75"</v>
+              <v n="TextDefault">"IN4B 下UC夹紧气缸1原位(张开)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN4B 下UC夹紧气缸1原位(张开)</v>
+                <v>IN4B bUcClamp1_Cyl_H</v>
+                <v>IN4B Khóa xi lanh 1 lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"76"</v>
+              <v n="TextDefault">"IN4C 下UC夹紧气缸1工作位(夹紧)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN4C 下UC夹紧气缸1工作位(夹紧)</v>
+                <v>IN4C bUcClamp1_Cyl_W</v>
+                <v>IN4C Khóa xi lanh 1 lại</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"77"</v>
+              <v n="TextDefault">"IN4D 下UC旋转气缸1原位(右位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN4D 下UC旋转气缸1原位(右位)</v>
+                <v>IN4D bUcRotate1_Cyl_H</v>
+                <v>IN4D Xi lanh quay dưới UC đang ở vị trí 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"78"</v>
+              <v n="TextDefault">"IN4E 下UC旋转气缸1工作位(左位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN4E 下UC旋转气缸1工作位(左位)</v>
+                <v>IN4E bUcRotate1_Cyl_W</v>
+                <v>IN4E Xi lanh quay dưới UC đang hoạt động</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"79"</v>
+              <v n="TextDefault">"IN4F 下UC升降气缸2原位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN4F 下UC升降气缸2原位(下降)</v>
+                <v>IN4F bUcLift2_Cyl_H</v>
+                <v>IN4F Xi lanh nâng UC 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"80"</v>
+              <v n="TextDefault">"IN50 下UC升降气缸2工作位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN50 下UC升降气缸2工作位(上升)</v>
+                <v>IN50 bUcLift2_Cyl_W</v>
+                <v>IN50 Xi lanh nâng dưới UC 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"81"</v>
+              <v n="TextDefault">"IN51 下UC夹紧气缸2原位(张开)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN51 下UC夹紧气缸2原位(张开)</v>
+                <v>IN51 bUcClamp2_Cyl_H</v>
+                <v>IN51 Ống 2 đang ở vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"82"</v>
+              <v n="TextDefault">"IN52 下UC夹紧气缸2工作位(夹紧)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN52 下UC夹紧气缸2工作位(夹紧)</v>
+                <v>IN52 bUcClamp2_Cyl_W</v>
+                <v>IN52 Ống 2 đang hoạt động</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"83"</v>
+              <v n="TextDefault">"IN53 下UC旋转气缸2原位(右位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN53 下UC旋转气缸2原位(右位)</v>
+                <v>IN53 bUcRotate2_Cyl_H</v>
+                <v>IN53 Xi lanh 2 quay dưới UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"84"</v>
+              <v n="TextDefault">"IN54 下UC旋转气缸2工作位(左位)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN54 下UC旋转气缸2工作位(左位)</v>
+                <v>IN54 bUcRotate2_Cyl_W</v>
+                <v>IN54 Xi lanh quay dưới UC đang hoạt động</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"85"</v>
+              <v n="TextDefault">"IN55 下UC皮带推料气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN55 下UC皮带推料气缸原位(缩回)</v>
+                <v>IN55 bUcDrive_Cyl_H</v>
+                <v>IN55 Xi lanh đẩy dưới vành đai UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"86"</v>
+              <v n="TextDefault">"IN56 下UC皮带推料气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN56 下UC皮带推料气缸工作位(伸出)</v>
+                <v>IN56 bUcDrive_Cyl_W</v>
+                <v>IN56 Vị trí của xi lanh đẩy dưới vành đai UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"87"</v>
+              <v n="TextDefault">"IN57 下工装提升气缸1原位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN57 下工装提升气缸1原位(下降)</v>
+                <v>IN57 bFrockElevator1_Cyl_H</v>
+                <v>IN57 Máy nâng xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"88"</v>
+              <v n="TextDefault">"IN58 下工装提升气缸1工作位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN58 下工装提升气缸1工作位(上升)</v>
+                <v>IN58 bFrockElevator1_Cyl_W</v>
+                <v>IN58 Máy nâng xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"89"</v>
+              <v n="TextDefault">"IN59 下工装旋转压紧气缸1原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN59 下工装旋转压紧气缸1原位(缩回)</v>
+                <v>IN59 bFrockRotateDown1_Cyl_H</v>
+                <v>IN59 Tải trọng xoay xi lanh 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"90"</v>
+              <v n="TextDefault">"IN5A 下工装旋转压紧气缸1工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN5A 下工装旋转压紧气缸1工作位(伸出)</v>
+                <v>IN5A bFrockRotateDown1_Cyl_W</v>
+                <v>IN5A Xi lanh xoay ép xi lanh 1 vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"91"</v>
+              <v n="TextDefault">"IN5B 下工装拨料气缸1原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN5B 下工装拨料气缸1原位(缩回)</v>
+                <v>IN5B bFrockPush1_Cyl_H</v>
+                <v>IN5B Xi lanh 1 tải trọng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"92"</v>
+              <v n="TextDefault">"IN5C 下工装拨料气缸1工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN5C 下工装拨料气缸1工作位(伸出)</v>
+                <v>IN5C bFrockPush1_Cyl_W</v>
+                <v>IN5C Xi lanh công cụ đo 1 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"93"</v>
+              <v n="TextDefault">"IN5D 下工装提升气缸2原位(下降)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN5D 下工装提升气缸2原位(下降)</v>
+                <v>IN5D bFrockElevator2_Cyl_H</v>
+                <v>IN5D Máy nâng xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"94"</v>
+              <v n="TextDefault">"IN5E 下工装提升气缸2工作位(上升)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN5E 下工装提升气缸2工作位(上升)</v>
+                <v>IN5E bFrockElevator2_Cyl_W</v>
+                <v>IN5E Máy nâng xi lanh 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"95"</v>
+              <v n="TextDefault">"IN5F 下工装旋转压紧气缸2原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN5F 下工装旋转压紧气缸2原位(缩回)</v>
+                <v>IN5F bFrockRotateDown2_Cyl_H</v>
+                <v>IN5F Tải trọng xoay xi lanh 2 trong vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"96"</v>
+              <v n="TextDefault">"IN60 下工装旋转压紧气缸2工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN60 下工装旋转压紧气缸2工作位(伸出)</v>
+                <v>IN60 bFrockRotateDown2_Cyl_W</v>
+                <v>IN60 Xi lanh xoay ép xi lanh 2 vị trí làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"97"</v>
+              <v n="TextDefault">"IN61 下工装拨料气缸2原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN61 下工装拨料气缸2原位(缩回)</v>
+                <v>IN61 bFrockPush2_Cyl_H</v>
+                <v>IN61 Xi lanh theo tải trọng 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"98"</v>
+              <v n="TextDefault">"IN62 下工装拨料气缸2工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN62 下工装拨料气缸2工作位(伸出)</v>
+                <v>IN62 bFrockPush2_Cyl_W</v>
+                <v>IN62 Xi lanh xi lanh công cụ 2 vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"99"</v>
+              <v n="TextDefault">"IN63 下工装皮带推料气缸原位(缩回)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN63 下工装皮带推料气缸原位(缩回)</v>
+                <v>IN63 bFrockBelt_Cyl_H</v>
+                <v>IN63 Tải trọng vành đai đẩy xi lanh trong vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"100"</v>
+              <v n="TextDefault">"IN64 下工装皮带推料气缸工作位(伸出)"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN64 下工装皮带推料气缸工作位(伸出)</v>
+                <v>IN64 bFrockBelt_Cyl_W</v>
+                <v>IN64 Dây chuyền đẩy xi lanh làm việc</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"101"</v>
+              <v n="TextDefault">"IN65 预留"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN65 预留</v>
+                <v>IN65 bNone3</v>
+                <v>IN65 Dành riêng</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"102"</v>
+              <v n="TextDefault">"IN66 主流线分料光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN66 主流线分料光电</v>
+                <v>IN66 bLine0Part</v>
+                <v>IN66 Dòng chính phân phối quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"103"</v>
+              <v n="TextDefault">"IN67 主流线阻挡光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN67 主流线阻挡光电</v>
+                <v>IN67 bLine0Prevent</v>
+                <v>IN67 Dòng chính ngăn chặn quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"104"</v>
+              <v n="TextDefault">"IN68 主流线到位光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN68 主流线到位光电</v>
+                <v>IN68 bLine0Place</v>
+                <v>IN68 Dòng chính vào vị trí quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"105"</v>
+              <v n="TextDefault">"IN69 流水线1流入光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN69 流水线1流入光电</v>
+                <v>IN69 bLine1PalletCheck1</v>
+                <v>IN69 Dòng 1 chảy vào quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"106"</v>
+              <v n="TextDefault">"IN6A 流水线1到位光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN6A 流水线1到位光电</v>
+                <v>IN6A bLine1PalletCheck2</v>
+                <v>IN6A Lắp ráp 1 vị trí quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"107"</v>
+              <v n="TextDefault">"IN6B 流水线1流出光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN6B 流水线1流出光电</v>
+                <v>IN6B bLine1PalletCheck3</v>
+                <v>IN6B Dòng 1 ra khỏi quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"108"</v>
+              <v n="TextDefault">"IN6C 流水线2流入光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN6C 流水线2流入光电</v>
+                <v>IN6C bLine2PalletCheck1</v>
+                <v>IN6C Dòng 2 chảy vào quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"109"</v>
+              <v n="TextDefault">"IN6D 流水线2到位光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN6D 流水线2到位光电</v>
+                <v>IN6D bLine2PalletCheck2</v>
+                <v>IN6D Lắp ráp 2 vị trí quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"110"</v>
+              <v n="TextDefault">"IN6E 流水线2流出光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN6E 流水线2流出光电</v>
+                <v>IN6E bLine2PalletCheck3</v>
+                <v>IN6E Dòng 2 ra khỏi quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"111"</v>
+              <v n="TextDefault">"IN6F 流水线3上料位流入光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN6F 流水线3上料位流入光电</v>
+                <v>IN6F bLine3PalletCheck1</v>
+                <v>IN6F Dòng 3 cấp nạp vào optoelectronics</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"112"</v>
+              <v n="TextDefault">"IN70 流水线3上料位到位光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN70 流水线3上料位到位光电</v>
+                <v>IN70 bLine3PalletCheck2</v>
+                <v>IN70 Dòng 3 lên vị trí quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"113"</v>
+              <v n="TextDefault">"IN71 流水线3上料位流出光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN71 流水线3上料位流出光电</v>
+                <v>IN71 bLine3PalletCheck3</v>
+                <v>IN71 Dòng 3 lên máy phát điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"114"</v>
+              <v n="TextDefault">"IN72 流水线3解锁位流入光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN72 流水线3解锁位流入光电</v>
+                <v>IN72 bLine3OpenCheck1</v>
+                <v>IN72 Dây chuyền sản xuất 3 ổ khóa vào optoelectronics</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"115"</v>
+              <v n="TextDefault">"IN73 流水线3解锁位到位光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN73 流水线3解锁位到位光电</v>
+                <v>IN73 bLine3OpenCheck2</v>
+                <v>IN73 Dòng 3 mở khóa vị trí quang điện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"116"</v>
+              <v n="TextDefault">"IN74 流水线3解锁位流出光电"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN74 流水线3解锁位流出光电</v>
+                <v>IN74 bLine3OpenCheck3</v>
+                <v>IN74 Dòng 3 mở khóa vị trí ra khỏi optoelectronics</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"117"</v>
+              <v n="TextDefault">"IN75 下UC模组UC有无检测1"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN75 下UC模组UC有无检测1</v>
+                <v>IN75 bUcCheck1</v>
+                <v>IN75 Mô-đun UC dưới UC không có phát hiện 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"118"</v>
+              <v n="TextDefault">"IN76 下UC皮带UC有无检测2"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN76 下UC皮带UC有无检测2</v>
+                <v>IN76 bUcCheck2</v>
+                <v>IN76 Dưới vành đai UC không có phát hiện 2</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"119"</v>
+              <v n="TextDefault">"IN77 下UC皮带UC有无检测3"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN77 下UC皮带UC有无检测3</v>
+                <v>IN77 bUcCheck3</v>
+                <v>IN77 Dưới vành đai UC UC không có phát hiện 3</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"120"</v>
+              <v n="TextDefault">"IN78 下UC皮带到位检测"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN78 下UC皮带到位检测</v>
+                <v>IN78 bUcBeltDone</v>
+                <v>IN78 Xác định vị trí của cảnh sát chìm</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"121"</v>
+              <v n="TextDefault">"IN79 下UC皮带斜坡有无检测"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN79 下UC皮带斜坡有无检测</v>
+                <v>IN79 bUcBeltNoneCheck</v>
+                <v>IN79 Không có phát hiện độ dốc dưới vành đai UC</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"122"</v>
+              <v n="TextDefault">"IN7A 下工装提升1工装有无检测"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN7A 下工装提升1工装有无检测</v>
+                <v>IN7A bFrockElevator1NoneCheck</v>
+                <v>IN7A Công cụ nâng cấp 1 công cụ có là không có phát hiện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"123"</v>
+              <v n="TextDefault">"IN7B 下工装提升2工装有无检测"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN7B 下工装提升2工装有无检测</v>
+                <v>IN7B bFrockElevator2NoneCheck</v>
+                <v>IN7B Công cụ nâng cao 2 công cụ có là không có phát hiện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"124"</v>
+              <v n="TextDefault">"IN7C 下工装皮带工装有无检测1"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN7C 下工装皮带工装有无检测1</v>
+                <v>IN7C bFrockBeltNoneCheck1</v>
+                <v>IN7C Vành đai công việc không có không có phát hiện 1</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"125"</v>
+              <v n="TextDefault">"IN7D 下工装皮带工装有无检测2"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN7D 下工装皮带工装有无检测2</v>
+                <v>IN7D bFrockBeltNoneCheck2</v>
+                <v>IN7D Vành đai công việc không có không có phát hiện 2</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"126"</v>
+              <v n="TextDefault">"IN7E 下工装皮带到位检测"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN7E 下工装皮带到位检测</v>
+                <v>IN7E bFrockBeltDone</v>
+                <v>IN7E Thắt lưng ở vị trí</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">"127"</v>
+              <v n="TextDefault">"IN7F 下工装皮带斜坡有无检测"</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v>IN7F 下工装皮带斜坡有无检测</v>
+                <v>IN7F bFrockBeltNoneCheck3</v>
+                <v>IN7F Công cụ vành đai dốc đã không được phát hiện</v>
+              </l>
+            </o>
+            <o>
+              <v n="TextID">""</v>
+              <v n="TextDefault">""</v>
+              <l n="LanguageTexts" t="ArrayList" cet="String">
+                <v></v>
+                <v></v>
+                <v></v>
+              </l>
+            </o>
+          </l>
+          <l n="Languages" t="ArrayList" cet="String">
+            <v>Chinese</v>
+            <v>English</v>
+            <v>Vietnamese</v>
+          </l>
+          <v n="GuidInit">{482b69a3-67ac-4290-874f-db9d391369d1}</v>
+          <v n="GuidReInit">{6523dc82-e905-4520-9884-3a9cb1b1ccc4}</v>
+          <v n="GuidExitX">{70e1f36a-76dd-43db-ab5c-dca164e5427d}</v>
+        </o>
+      </Data>
+      <TypeList>
+        <Type n="ArrayList">System.Collections.ArrayList</Type>
+        <Type n="Guid">System.Guid</Type>
+        <Type n="String">System.String</Type>
+        <Type n="TextListObject">{2bef0454-1bd3-412a-ac2c-af0f31dbc40f}</Type>
+        <Type n="TextListRow">{53da1be7-ad25-47c3-b0e8-e26286dad2e0}</Type>
+      </TypeList>
+    </XmlArchive>
+  </TextList>
+</TcPlcObject>

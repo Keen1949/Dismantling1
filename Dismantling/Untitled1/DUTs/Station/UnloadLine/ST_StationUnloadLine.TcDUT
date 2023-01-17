@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationUnloadLine" Id="{ae6bd8f4-d22d-4b72-9785-eff19c5117d9}">
+    <Declaration><![CDATA[TYPE ST_StationUnloadLine :
+STRUCT
+	fbDrive:				REFERENCE TO FB_Cylinder;// 推料气缸
+	fbLineAxis:             REFERENCE TO FB_LineAxis;// 线体
+	bCheck1:				BOOL;//有无检测1
+	bCheck2:				BOOL;//有无检测2
+	bBeltDone:				BOOL;//到位检测
+	bBeltNoneCheck:			BOOL;//斜坡有无检测 
+	bManualUnload:			BOOL;// 手动下料
+	stHandshake:			ST_StationUnloadLineHandshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

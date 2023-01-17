@@ -1,0 +1,333 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_StationLineLoad" Id="{579acd3f-6489-4f09-a350-48cf5a09e2bd}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StationLineLoad
+VAR_INPUT
+	Enable:				BOOL;
+	System:				REFERENCE TO ST_System;
+	Station:			REFERENCE TO ST_SystemStation;
+	Error:				REFERENCE TO ST_Error;
+	Setting:			REFERENCE TO ST_Setting;
+	Recipe:				REFERENCE TO ST_Recipe;
+	Parameter:			REFERENCE TO ST_StationLineLoad;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_i:					INT;
+	_arrTon:		    ARRAY[0..20] OF TON;
+	_arrFbErrorTag:		ARRAY[0..20] OF FB_ErrorTag;
+	_arrState:			ARRAY[0..20] OF BOOL;
+	
+	_stHandshake:		ST_StationLineLoadHandshake;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_Home();
+A_Auto();
+
+_arrTon[0](IN:=System.stInput.bStart , PT:=T#3S , Q=> , ET=> );]]></ST>
+    </Implementation>
+    <Action Name="A_Auto" Id="{dde61fd2-ed72-4615-be74-a8ed410891e0}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	1000:
+		Station.arrInfo[E_Language.Chinese]:="初始化完成 等待启动";
+		IF Enable THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1101:
+		Station.arrInfo[E_Language.Chinese]:="判断线体是否关闭";
+		Parameter.eState:=E_StationState.Busy;
+		 IF NOT Parameter.bIsClosed THEN
+			 Station.iStepNext:=SEL(Parameter.bManualLoad,1201,1151);
+		 END_IF
+	1151:
+		Station.arrInfo[E_Language.Chinese]:="等待手动上料后启动";
+		IF _arrTon[0].Q THEN
+			Station.iStepNext:=1701;
+		END_IF
+	1201:
+		Station.arrInfo[E_Language.Chinese]:="请求放料";
+		Parameter.eState:=E_StationState.Load;
+		Station.iStepNext:=1211;
+	1211:
+		Station.arrInfo[E_Language.Chinese]:="等待上料";
+		IF Parameter.stHandshake.bRequestLineLoad_P AND Station.iStepNext=Station.iStepNow THEN
+			Parameter.eState:=E_StationState.Busy;
+			Parameter.stHandshake.bResponseTake_P:=TRUE;
+			Station.iStepNext:=1251;
+		END_IF
+		IF Parameter.stHandshake.bRequestTake_P_M AND NOT System.stMode.bPause AND Station.iStepNext=Station.iStepNow THEN
+			Parameter.eState:=E_StationState.Busy;
+			Parameter.stHandshake.bResponseMachine_P:=TRUE;
+			Station.iStepNext:=1301;
+		END_IF
+	1251:
+		Station.arrInfo[E_Language.Chinese]:="等待复位放料请求信号";
+		IF NOT Parameter.stHandshake.bRequestLineLoad_P THEN
+			Parameter.stHandshake.bResponseTake_P:=FALSE;
+			Station.iStepNext:=1701;
+		END_IF
+	1301:
+		Station.arrInfo[E_Language.Chinese]:="顶升及提升气缸缩回";
+		_arrState[0]:=Parameter.fbLift.M_HomeRequest();
+		_arrState[1]:=Parameter.fbElevator.M_HomeRequest();
+		IF _arrState[0] AND _arrState[1]THEN
+			Station.iStepNext:=1351;
+		END_IF
+	1351:
+		Station.arrInfo[E_Language.Chinese]:="等待产品流入";
+		IF Parameter.bPalletCheck1 THEN
+			Station.iStepNext:=SEL(Parameter.bManualLoad,1401,1501);
+		END_IF
+	1401:
+		Station.arrInfo[E_Language.Chinese]:="等待上台设备复位放料信号";
+		IF NOT Parameter.stHandshake.bRequestTake_P_M  THEN
+			Parameter.stHandshake.bResponseMachine_P:=FALSE;
+		    Station.iStepNext:=1501;
+		END_IF
+	1501:
+		Station.arrInfo[E_Language.Chinese]:="等待产品到位";
+		IF Parameter.bPalletCheck2 THEN
+			Station.iStepNext:=1601;
+		END_IF
+	1601:
+		Station.arrInfo[E_Language.Chinese]:="顶升气缸伸出 提升气缸伸出";
+		IF  Parameter.fbLift.M_WorkRequest() AND Parameter.fbElevator.M_WorkRequest() THEN
+			Station.iStepNext:=1701;
+		END_IF
+	1701:
+		Station.arrInfo[E_Language.Chinese]:="阻挡气缸缩回 调宽气缸调宽";
+		_arrState[1]:=Parameter.fbPrevent.M_HomeRequest();
+		_arrState[2]:=M_AdjustWork();
+		IF  _arrState[1] AND _arrState[2] THEN
+			Station.iStepNext:=1801;
+		END_IF
+	1801:
+		Station.arrInfo[E_Language.Chinese]:="请求取料";
+		Parameter.eState:=E_StationState.Done;
+		Station.iStepNext:=1811;
+	1811:
+		Station.arrInfo[E_Language.Chinese]:="等待取料";
+		IF Parameter.stHandshake.bRequestLineLoad_T AND Station.iStepNext=Station.iStepNow THEN
+			Parameter.eState:=E_StationState.Busy;
+			Parameter.stHandshake.bResponseTake_T:=TRUE;
+			Station.iStepNext:=1861;
+		END_IF
+		IF Parameter.stHandshake.bRequestLineLoad_D AND Station.iStepNext=Station.iStepNow THEN
+			Parameter.eState:=E_StationState.Busy;
+			Parameter.stHandshake.bResponseDismantling_D:=TRUE;
+			Station.iStepNext:=2201;
+		END_IF
+	1861:
+		IF NOT Parameter.stHandshake.bRequestLineLoad_T THEN
+			Parameter.stHandshake.bResponseTake_T:=FALSE;
+			Station.iStepNext:=2501;
+		END_IF
+	2201:
+		Station.arrInfo[E_Language.Chinese]:="旋转气缸至工作位";
+		IF Parameter.fbRotate.M_WorkRequest() THEN
+			Station.iStepNext:=2301;
+		END_IF
+	2301:
+		Station.arrInfo[E_Language.Chinese]:="顶升气缸下降"; 
+		IF  Parameter.fbLift.M_HomeRequest() THEN
+			Station.iStepNext:=2401;
+		END_IF
+	2401:
+		Station.arrInfo[E_Language.Chinese]:="等待产品流走";
+		IF NOT Parameter.bPalletCheck2 AND NOT Parameter.bPalletCheck3 THEN
+			Station.iStepNext:=2451;
+		END_IF
+	2451:
+		Station.arrInfo[E_Language.Chinese]:="等待复位请求信号";
+		IF NOT Parameter.stHandshake.bRequestLineLoad_D THEN
+			Parameter.stHandshake.bResponseDismantling_D:=FALSE;
+			Station.iStepNext:=2501;
+		END_IF
+	2501:
+		Station.arrInfo[E_Language.Chinese]:="阻挡气缸伸出 调宽气缸复位 顶升气缸顶升";
+		_arrState[1]:=Parameter.fbPrevent.M_WorkRequest();
+		_arrState[2]:=M_AdjustHome();
+		_arrState[3]:=Parameter.fbLift.M_WorkRequest();
+		IF  _arrState[1] AND _arrState[2] AND _arrState[3] THEN
+			Station.iStepNext:=2601;
+		END_IF
+	2601:
+		Station.arrInfo[E_Language.Chinese]:="旋转气缸复位";
+		IF Parameter.fbRotate.M_HomeRequest() THEN
+			Station.iStepNext:=1101;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Home" Id="{da98f432-6322-4fd5-9a4e-cd656e53a3bd}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	0:
+		Station.arrInfo[E_Language.Chinese]:="等待初始化";
+		Parameter.eState:=E_StationState.None;
+		Parameter.stHandshake:=_stHandshake;
+		Station.iStepNext:=SEL(Enable,1000,50);
+	50:
+		Station.arrInfo[E_Language.Chinese]:="阻挡气缸伸出";
+		IF Parameter.fbPrevent.M_WorkRequest() THEN
+			Station.iStepNext:=100;
+		END_IF
+	100:
+		Station.arrInfo[E_Language.Chinese]:="提升气缸伸出";
+		IF Parameter.fbElevator.M_WorkRequest() THEN
+			Station.iStepNext:=200;
+		END_IF
+	200:
+		Station.arrInfo[E_Language.Chinese]:="顶升气缸伸出";
+		IF Parameter.fbLift.M_WorkRequest() THEN
+			Station.iStepNext:=300;
+		END_IF
+	300:
+		Station.arrInfo[E_Language.Chinese]:="旋转气缸复位";
+		IF Parameter.fbRotate.M_HomeRequest() THEN
+			Station.iStepNext:=400;
+		END_IF
+	400:
+		Station.arrInfo[E_Language.Chinese]:="调宽气缸缩回";
+		IF M_AdjustHome() THEN
+			Station.iStepNext:=1000;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Method Name="M_AdjustHome" Id="{b1da3dae-c79f-407b-b8cf-c61f991c9623}">
+      <Declaration><![CDATA[METHOD M_AdjustHome : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		M_AdjustHome:=TRUE;
+	E_MachineType.LH353,E_MachineType.RH353:
+		M_AdjustHome:=Parameter.fbAdjust1.M_HomeRequest();
+	E_MachineType.LH367,E_MachineType.RH367:
+		M_AdjustHome:=TRUE;
+	E_MachineType.LH201,E_MachineType.RH201:
+		M_AdjustHome:=TRUE;
+	E_MachineType.LH069,E_MachineType.RH069:
+		M_AdjustHome:=TRUE;
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_AdjustHome:=Parameter.fbAdjust1.M_HomeRequest();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_AdjustWork" Id="{b9874a2f-6abb-408a-9abe-6c8f6b90014b}">
+      <Declaration><![CDATA[METHOD M_AdjustWork : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE Recipe.eMachineType OF
+	E_MachineType.LH311,E_MachineType.RH311:
+		M_AdjustWork:=TRUE;
+	E_MachineType.LH353,E_MachineType.RH353:
+		M_AdjustWork:=Parameter.fbAdjust1.M_WorkRequest();
+	E_MachineType.LH367,E_MachineType.RH367:
+		M_AdjustWork:=TRUE;
+	E_MachineType.LH201,E_MachineType.RH201:
+		M_AdjustWork:=TRUE;
+	E_MachineType.LH069,E_MachineType.RH069:
+		M_AdjustWork:=TRUE;
+	E_MachineType.LH373,E_MachineType.RH373:
+		M_AdjustWork:=Parameter.fbAdjust1.M_WorkRequest();
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_StationLineLoad">
+      <LineId Id="47" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="71" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationLineLoad.A_Auto">
+      <LineId Id="418" Count="2" />
+      <LineId Id="627" Count="2" />
+      <LineId Id="422" Count="0" />
+      <LineId Id="621" Count="0" />
+      <LineId Id="624" Count="0" />
+      <LineId Id="622" Count="1" />
+      <LineId Id="620" Count="0" />
+      <LineId Id="632" Count="0" />
+      <LineId Id="636" Count="3" />
+      <LineId Id="536" Count="0" />
+      <LineId Id="539" Count="0" />
+      <LineId Id="537" Count="1" />
+      <LineId Id="430" Count="0" />
+      <LineId Id="625" Count="0" />
+      <LineId Id="661" Count="0" />
+      <LineId Id="664" Count="0" />
+      <LineId Id="662" Count="1" />
+      <LineId Id="660" Count="0" />
+      <LineId Id="433" Count="4" />
+      <LineId Id="447" Count="1" />
+      <LineId Id="557" Count="2" />
+      <LineId Id="556" Count="0" />
+      <LineId Id="452" Count="13" />
+      <LineId Id="598" Count="2" />
+      <LineId Id="596" Count="0" />
+      <LineId Id="470" Count="14" />
+      <LineId Id="486" Count="1" />
+      <LineId Id="540" Count="0" />
+      <LineId Id="542" Count="0" />
+      <LineId Id="541" Count="0" />
+      <LineId Id="543" Count="0" />
+      <LineId Id="488" Count="0" />
+      <LineId Id="626" Count="0" />
+      <LineId Id="671" Count="0" />
+      <LineId Id="675" Count="0" />
+      <LineId Id="672" Count="1" />
+      <LineId Id="670" Count="0" />
+      <LineId Id="566" Count="0" />
+      <LineId Id="589" Count="0" />
+      <LineId Id="567" Count="0" />
+      <LineId Id="570" Count="0" />
+      <LineId Id="568" Count="0" />
+      <LineId Id="577" Count="1" />
+      <LineId Id="580" Count="0" />
+      <LineId Id="582" Count="0" />
+      <LineId Id="581" Count="0" />
+      <LineId Id="502" Count="14" />
+      <LineId Id="603" Count="0" />
+      <LineId Id="614" Count="0" />
+      <LineId Id="605" Count="0" />
+      <LineId Id="607" Count="1" />
+      <LineId Id="604" Count="0" />
+      <LineId Id="517" Count="0" />
+      <LineId Id="650" Count="5" />
+      <LineId Id="644" Count="0" />
+      <LineId Id="640" Count="0" />
+      <LineId Id="647" Count="2" />
+      <LineId Id="646" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationLineLoad.A_Home">
+      <LineId Id="2" Count="2" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="2" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="18" Count="4" />
+      <LineId Id="35" Count="4" />
+      <LineId Id="23" Count="9" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationLineLoad.M_AdjustHome">
+      <LineId Id="9" Count="12" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationLineLoad.M_AdjustWork">
+      <LineId Id="9" Count="12" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

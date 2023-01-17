@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_Recipe" Id="{1801b7a3-a8e2-46a9-9f48-5dbe5b7f7fae}">
+    <Declaration><![CDATA[TYPE ST_Recipe :
+STRUCT
+	eMachineType:				E_MachineType;// 设备类型
+	eLoadPriority:				E_LoadPriority;// 上料优先级
+	eLoadClose:					E_LoadClose;// 上料屏蔽
+	eLineClose:					E_LineClose;// 屏蔽线体工位
+	
+	arrInputTon:				ARRAY[0..7,0..15] OF UINT;
+	arrOutputTon:				ARRAY[0..6,0..15] OF UINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

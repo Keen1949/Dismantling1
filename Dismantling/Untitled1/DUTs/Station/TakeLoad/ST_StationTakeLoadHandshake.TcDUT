@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationTakeLoadHandshake" Id="{902b2d53-8bd5-4a89-8d83-41f88aed2f65}">
+    <Declaration><![CDATA[TYPE ST_StationTakeLoadHandshake :
+STRUCT
+	bRequestLine0Buffer_T0:		BOOL;// 取料站 向线体0 请求 取料 只写
+	bResponseTake_T0:			BOOL;// 收到 取料站 取料请求 只读
+	
+	bRequestLineLoad_T1:	BOOL;// 取料站 请求取料 Line1 只写
+	bResponseTake_T1:		BOOL;// 收到 取料站 请求取料 Line1 只读
+	
+	bRequestLineLoad_T3:	BOOL;// 取料站 请求取料 Line2 只写
+	bResponseTake_T3:		BOOL;// 收到 取料站 请求取料 Line3 只读
+	
+	bRequestLineLoad_P3:	BOOL;// 取料站 请求放料 Lin3 只写
+	bResponseTake_P3:		BOOL;// 收到 取料站 请求放料 Line3 只读
+	
+	bRequestLineLoad_P1:	BOOL;// 取料站 请求放料 Lin1 只写
+	bResponseTake_P1:		BOOL;// 收到 取料站 请求放料 Line1 只读
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

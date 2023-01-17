@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <POU Name="FB_StationUnloadUc" Id="{dcbe9bfd-225c-40dc-b3fa-9b9a7e2d07df}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_StationUnloadUc
+VAR_INPUT
+	Enable:				BOOL;
+	System:				REFERENCE TO ST_System;
+	Station:			REFERENCE TO ST_SystemStation;
+	Error:				REFERENCE TO ST_Error;
+	Setting:			REFERENCE TO ST_Setting;
+	Recipe:				REFERENCE TO ST_Recipe;	
+	Parameter:			REFERENCE TO ST_StationUnloadUc;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_i:					INT;
+	_arrTon:		    ARRAY[0..20] OF TON;
+	_arrFbErrorTag:		ARRAY[0..20] OF FB_ErrorTag;
+	_arrState:			ARRAY[0..20] OF BOOL;
+	_stHandshake: 		ST_StationUnloadUcHandshake;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[A_Auto();
+A_Home();]]></ST>
+    </Implementation>
+    <Action Name="A_Auto" Id="{07211073-19ed-4810-8b75-27cce09f14a2}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	1000:
+		Station.arrInfo[E_Language.Chinese]:="初始化完成 等待启动";
+		IF Enable THEN
+			Station.iStepNext:=1101;
+		END_IF
+	1101:
+		Station.arrInfo[E_Language.Chinese]:="等待拆解站请求取料";
+		IF Parameter.stHandshake.bRequestUc THEN
+			Parameter.stHandshake.bResponseDismantling_Uc:=TRUE;
+			Station.iStepNext:=1201;
+		END_IF
+	1201:
+		Station.arrInfo[E_Language.Chinese]:="旋转气缸至取料位";
+		IF Parameter.fbRotate.M_HomeRequest() THEN
+			Station.iStepNext:=1251;
+		END_IF
+	1251:
+		Station.arrInfo[E_Language.Chinese]:="升降气缸下降";
+		IF  Parameter.fbLift.M_HomeRequest() THEN
+			Station.iStepNext:=1301;
+		END_IF
+	1301:
+		Station.arrInfo[E_Language.Chinese]:="夹紧气缸夹紧";
+		IF Parameter.fbClamp.M_WorkRequest() THEN
+			Station.iStepNext:=1401;
+		END_IF
+	1401:
+		Station.arrInfo[E_Language.Chinese]:="升降气缸上升";
+		IF Parameter.fbLift.M_WorkRequest() THEN
+			Station.iStepNext:=1451;
+		END_IF
+	1451:
+		Station.arrInfo[E_Language.Chinese]:="向下线体 请求放料";
+		Parameter.stHandshake.bRequestUnloadLine:=TRUE;
+		IF Parameter.stHandshake.bResponseUnladLine THEN
+			Station.iStepNext:=1501;
+		END_IF
+	1501:
+		Station.arrInfo[E_Language.Chinese]:="旋转气缸动作";
+		IF Parameter.fbRotate.M_WorkRequest() THEN
+			Station.iStepNext:=1551;
+		END_IF
+	1551:
+		Station.arrInfo[E_Language.Chinese]:="等待复位取料请求";
+		IF NOT Parameter.stHandshake.bRequestUc THEN
+			Parameter.stHandshake.bResponseDismantling_Uc:=FALSE;
+			Station.iStepNext:=1601;
+		END_IF
+	1601:
+		Station.arrInfo[E_Language.Chinese]:="夹紧气缸松开";
+		IF Parameter.fbClamp.M_HomeRequest() THEN
+			Station.iStepNext:=1801;
+		END_IF
+	1801:
+		Station.arrInfo[E_Language.Chinese]:="复位放料请求";
+		Parameter.stHandshake.bRequestUnloadLine:=FALSE;
+		IF NOT Parameter.stHandshake.bResponseUnladLine THEN
+			Station.iStepNext:=1101;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="A_Home" Id="{81728a20-c52b-4686-af61-ac93b7479c57}">
+      <Implementation>
+        <ST><![CDATA[CASE Station.iStepNow OF
+	0:
+		Station.arrInfo[E_Language.Chinese]:="等待初始化";
+		Parameter.stHandshake:=_stHandshake;
+		Station.iStepNext:=SEL(Enable,1000,200);
+	200:
+		Station.arrInfo[E_Language.Chinese]:="升降气缸上升";
+		IF Parameter.fbLift.M_WorkRequest() THEN
+			Station.iStepNext:=300;
+		END_IF
+	300:
+		Station.arrInfo[E_Language.Chinese]:="旋转气缸至下UC位";
+		IF Parameter.fbRotate.M_WorkRequest() THEN
+			Station.iStepNext:=400;
+		END_IF
+	400:
+		Station.arrInfo[E_Language.Chinese]:="夹紧气缸复位";
+		IF  Parameter.fbClamp.M_HomeRequest() THEN
+			Station.iStepNext:=1000;
+		END_IF
+END_CASE]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="FB_StationUnloadUc">
+      <LineId Id="9" Count="0" />
+      <LineId Id="27" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationUnloadUc.A_Auto">
+      <LineId Id="1" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="92" Count="1" />
+      <LineId Id="6" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="97" Count="1" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="19" Count="11" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="108" Count="4" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="119" Count="2" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="115" Count="3" />
+      <LineId Id="114" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="2" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="89" Count="2" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StationUnloadUc.A_Home">
+      <LineId Id="1" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="22" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="28" Count="2" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="25" Count="2" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="33" Count="3" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="3" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

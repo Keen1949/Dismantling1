@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationLine0BufferHandshake" Id="{f1a6678f-f0d8-497d-ab9f-5de7640fc85e}">
+    <Declaration><![CDATA[TYPE ST_StationLine0BufferHandshake :
+STRUCT
+	bRequestLine0Load:			BOOL;// 请求线体0 上料站 放料 只写
+	bResponseLine0Buffer:		BOOL;// 收到线体0 上料缓存站 放料请求 只读
+	
+	bRequestLine0Buffer_T:		BOOL;// 取料站 向线体0 请求 取料 只读
+	bResponseTake_T:			BOOL;// 收到 取料站 取料请求 只写
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

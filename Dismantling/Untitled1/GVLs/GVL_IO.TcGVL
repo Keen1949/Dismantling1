@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <GVL Name="GVL_IO" Id="{951e9ece-1571-4a00-b8ca-dbc09a4ec52d}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	I AT %I*:				ARRAY[0..7,0..15] OF  BOOL;
+	Q AT %Q*:				ARRAY[0..6,0..15] OF  BOOL;
+	
+	arrGetTorque AT %I*:	ARRAY[0..20] OF INT;
+	arrSetTorque AT %Q*:	ARRAY[0..20] OF UINT;
+	arrAxisInput AT %I*:	ARRAY[0..20] OF UDINT;
+	
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

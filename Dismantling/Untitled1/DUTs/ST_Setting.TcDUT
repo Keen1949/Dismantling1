@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_Setting" Id="{4fb4b8fd-6c29-4ce9-812b-f5529322fb81}">
+    <Declaration><![CDATA[TYPE ST_Setting :
+STRUCT
+	bDryRun:					BOOL;
+	eTakeMode:					E_TakeMode;// 取料状态
+	eTakeModeBuffer:			E_TakeMode;// 缓存取料状态
+	tHomeLine:					TIME:=T#5S;// 初始化线体正转延迟
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

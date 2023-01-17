@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationUnloadLineHandshake" Id="{1c88dd1b-4b4c-4a3c-8acb-1abe84301557}">
+    <Declaration><![CDATA[TYPE ST_StationUnloadLineHandshake :
+STRUCT
+	bRequestUnloadLine2:			BOOL;// 向下线体 请求放料 只读
+	bResponseUnladLine2:			BOOL;//  收到 向下线体 请求放料 只写
+	
+	bRequestUnloadLine3:			BOOL;// 向下线体 请求放料 只读
+	bResponseUnladLine3:			BOOL;//  收到 向下线体 请求放料 只写
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

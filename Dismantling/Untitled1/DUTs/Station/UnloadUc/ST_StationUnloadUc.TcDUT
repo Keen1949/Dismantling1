@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.3">
+  <DUT Name="ST_StationUnloadUc" Id="{970d0645-175b-4be5-837b-13261ee8803b}">
+    <Declaration><![CDATA[TYPE ST_StationUnloadUc :
+STRUCT
+	fbLift:				REFERENCE TO FB_Cylinder;// 升降气缸
+	fbClamp:			REFERENCE TO FB_Cylinder;// 夹紧气缸
+	fbRotate:			REFERENCE TO FB_Cylinder;// 旋转气缸
+	stHandshake:		ST_StationUnloadUcHandshake;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
